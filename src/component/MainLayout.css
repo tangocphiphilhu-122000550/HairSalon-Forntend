@@ -1,0 +1,11 @@
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Chiều cao tối thiểu bằng 100% màn hình */
+  }
+  
+  .content {
+    flex: 1; /* Đảm bảo nội dung mở rộng để đẩy footer xuống */
+    padding: 20px; /* Tùy chỉnh khoảng cách */
+  }
+  

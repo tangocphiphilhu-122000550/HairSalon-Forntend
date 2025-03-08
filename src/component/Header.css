@@ -1,0 +1,450 @@
+/* Base styles */
+.header {
+    background: #191919;
+    padding: 15px 0;
+    box-shadow: 0 4px 6px rgba(19, 15, 15, 0.1);
+    position: sticky; /* Giữ header cố định trên đầu */
+    top: 0;
+    z-index: 1000; /* Đảm bảo header trên cùng */
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    height: 60px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 30px;
+}
+
+.nav-links li {
+    margin: 0;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: color 0.3s;
+}
+
+.nav-links li a.active {
+    color: #b63620;
+    font-weight: bold;
+    border-bottom: 2px solid #b63620;
+}
+
+.nav-links a {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-links a:hover {
+    color: #ffcc00;
+}
+
+.left, .right {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.left {
+    justify-content: flex-end;
+    padding-right: 40px;
+}
+
+.right {
+    justify-content: flex-start;
+    padding-left: 40px;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.logo img {
+    height: auto;
+    width: 140px;
+}
+
+/* Biểu tượng giỏ hàng */
+.cart-icon-header {
+    position: absolute;
+    top: 50%;
+    right: 180px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+    color: white;
+}
+
+/* Số lượng trong giỏ hàng */
+.cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+/* User menu */
+.user-menu {
+    position: absolute;
+    top: 50%;
+    right: 100px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-icon {
+    color: white;
+    font-size: 30px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.user-icon:hover {
+    transform: scale(1.1);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    padding: 10px 0;
+    z-index: 1001;
+}
+
+.dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -17px;
+    right: 5px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+    padding: 12px 15px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    text-align: left;
+    background: none;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+    background: #f1f1f1;
+}
+
+/* Login button */
+.login-button-wrapper {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    transform: translateY(-50%);
+}
+
+.login-button {
+    background: linear-gradient(10deg, #D32F2F, #212121);
+    border: none;
+    padding: 10px 18px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.login-button:hover {
+    background: linear-gradient(220deg, #D32F2F, #212121);
+}
+
+/* Mobile Taskbar */
+.mobile-taskbar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(135deg, #444e94, #d1d1d1);
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+    padding: 8px 0;
+    transition: transform 0.3s ease;
+}
+
+.taskbar-hidden {
+    transform: translateY(100%);
+}
+
+.taskbar-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.taskbar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    position: relative;
+}
+
+.taskbar-item.active {
+    color: #ff7eb3;
+    font-weight: bold;
+}
+
+.taskbar-icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.mobile-user-menu {
+    cursor: pointer;
+}
+
+.mobile-dropdown-menu {
+    position: absolute;
+    bottom: 42px;
+    left: -70%;
+    transform: translateX(-50%);
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    width: 180px;
+    padding: 10px 0;
+    z-index: 1001;
+}
+
+.mobile-dropdown-menu::after {
+    content: "";
+    position: absolute;
+    bottom: -9px;
+    left: 80%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: white transparent transparent transparent;
+}
+
+.mobile-dropdown-menu a,
+.mobile-dropdown-menu button {
+    padding: 12px 15px;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    text-align: left;
+    background: none;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.mobile-dropdown-menu a:hover,
+.mobile-dropdown-menu button:hover {
+    background: #f1f1f1;
+}
+
+.mobile-dropdown-menu button {
+    color: #e74c3c;
+    font-weight: 600;
+    border-top: 1px solid #eee;
+    margin-top: 5px;
+}
+
+.mobile-only {
+    display: none;
+}
+
+/* Container chính (đảm bảo không bị đè) */
+.home-container {
+  padding-top: 0px; /* Thêm padding-top bằng chiều cao header + margin */
+}
+
+/* Responsive styles */
+@media screen and (max-width: 1024px) {
+    .navbar {
+        padding: 0 15px;
+    }
+    .nav-links {
+        gap: 15px;
+    }
+    .nav-links a {
+        font-size: 16px;
+    }
+    .left {
+        padding-right: 20px;
+    }
+    .right {
+        padding-left: 20px;
+    }
+    .logo img {
+        width: 120px;
+    }
+    .user-menu {
+        right: 80px;
+    }
+    .cart-icon-header {
+        right: 140px;
+    }
+    .login-button-wrapper {
+        right: 15px;
+    }
+}
+
+@media screen and (max-width: 912px) {
+    .header {
+        position: sticky;
+        top: 0;
+    }
+    .navbar {
+        height: 60px;
+        justify-content: center;
+        padding: 0 10px;
+    }
+    .nav-links.left,
+    .nav-links.right {
+        display: none; /* Ẩn nav-links trên màn hình nhỏ hơn 900px */
+    }
+    .mobile-taskbar {
+        display: block; /* Hiển thị taskbar mobile */
+    }
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .logo img {
+        width: 100px;
+    }
+    .desktop-only {
+        display: none;
+    }
+    .user-menu {
+        right: 60px;
+    }
+    .cart-icon-header {
+        right: 100px;
+    }
+    .login-button-wrapper {
+        right: 10px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .header {
+        position: sticky;
+        top: 0;
+    }
+    .navbar {
+        height: 60px;
+        justify-content: center;
+        padding: 0 10px;
+    }
+    .nav-links.left,
+    .nav-links.right {
+        display: none; /* Ẩn nav-links trên màn hình nhỏ hơn 900px */
+    }
+    .mobile-taskbar {
+        display: block; /* Hiển thị taskbar mobile */
+    }
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .logo img {
+        width: 100px;
+    }
+    .desktop-only {
+        display: none;
+    }
+    .user-menu {
+        right: 60px;
+    }
+    .cart-icon-header {
+        right: 100px;
+    }
+    .login-button-wrapper {
+        right: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar {
+        height: 50px;
+    }
+    .logo img {
+        width: 80px;
+    }
+    .mobile-taskbar {
+        padding: 5px 0;
+    }
+    .taskbar-icon {
+        font-size: 18px;
+    }
+    .taskbar-item {
+        font-size: 10px;
+    }
+    .user-menu {
+        right: 50px;
+    }
+    .cart-icon-header {
+        right: 80px;
+    }
+    .login-button-wrapper {
+        right: 5px;
+    }
+    .login-button {
+        padding: 8px 14px;
+        font-size: 14px;
+    }
+}

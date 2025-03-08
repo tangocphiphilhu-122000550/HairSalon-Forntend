@@ -1,0 +1,224 @@
+.profile-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(135deg, #ffffff, #f5f7fa);
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.profile-container:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+.profile-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.profile-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  border-radius: 3px;
+}
+
+.avatar-wrapper {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 25px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.avatar-wrapper:hover {
+  transform: scale(1.05);
+}
+
+.avatar-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+}
+
+.avatar-wrapper .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+}
+
+.avatar-wrapper:hover .overlay {
+  opacity: 1;
+}
+
+.profile-container p {
+  margin-bottom: 15px;
+  color: #444;
+  font-size: 16px;
+}
+
+.profile-container label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+  font-size: 16px;
+}
+
+.profile-container input[type="text"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 16px;
+  color: #333;
+  transition: all 0.3s;
+}
+
+.profile-container input[type="text"]:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  outline: none;
+  background-color: #fff;
+}
+
+.profile-container button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container button:hover {
+  background: linear-gradient(90deg, #2980b9, #8e44ad);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.profile-container button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Notification Styles */
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  min-width: 280px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.4s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.notification.success {
+  background-color: #ebf9eb;
+  border-left: 4px solid #2ecc71;
+}
+
+.notification.error {
+  background-color: #fcefef;
+  border-left: 4px solid #e74c3c;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+}
+
+.notification-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 12px;
+  color: #2ecc71;
+}
+
+.notification.error .notification-icon {
+  color: #e74c3c;
+}
+
+.notification-message {
+  flex: 1;
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px;
+    margin: 20px;
+  }
+  
+  .profile-container h2 {
+    font-size: 24px;
+  }
+  
+  .avatar-wrapper {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .notification {
+    min-width: 200px;
+    left: 20px;
+    right: 20px;
+  }
+}

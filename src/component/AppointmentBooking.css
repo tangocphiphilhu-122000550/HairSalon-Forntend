@@ -1,0 +1,840 @@
+/* Main container styles */
+.appointment-booking {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-booking h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.booking-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Service selection styles */
+.service-selection,
+.barber-selection,
+.date-time-selection {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.service-selection h2,
+.barber-selection h2,
+.date-time-selection h2 {
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  font-size: 1.8rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.service-selection h2:after,
+.barber-selection h2:after,
+.date-time-selection h2:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  border-radius: 2px;
+}
+
+/* Service cards */
+.service-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.service-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.service-card.selected {
+  border-color: #3498db;
+  background-color: #f0f9ff;
+}
+
+.service-card h3 {
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+  font-size: 1.3rem;
+}
+
+.service-card p {
+  margin-bottom: 1rem;
+  color: #7f8c8d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.service-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #3498db;
+  font-weight: 600;
+}
+
+/* Barber selection styles */
+.barber-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.barber-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.barber-card.selected {
+  border-color: #0969da;
+  background-color: #f0f8ff;
+}
+
+.barber-avatar {
+  width: 180px;
+  height: 250px;
+  margin-bottom: 10px;
+}
+
+.barber-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+}
+
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ccc;
+  color: white;
+  font-size: 2rem;
+  border-radius: 10px;
+  text-transform: uppercase;
+}
+
+.barber-card h3 {
+  margin: 5px 0;
+  font-size: 1.2rem;
+}
+
+.barber-card p {
+  margin: 0;
+  color: #666;
+}
+
+/* Date and time selection styles */
+.date-picker {
+  margin-bottom: 2rem;
+}
+
+.date-picker label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.date-picker input[type="date"] {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  font-size: 1rem;
+  background-color: white;
+  color: #333;
+  transition: border-color 0.3s;
+}
+
+.date-picker input[type="date"]:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.time-slots h3 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.time-slot-legend {
+  display: flex;
+  margin-bottom: 1rem;
+  gap: 1.5rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  margin-right: 0.5rem;
+}
+
+.legend-color.available {
+  background-color: #f0f9ff;
+  border: 1px solid #3498db;
+}
+
+.legend-color.pending {
+  background-color: #fff8e1;
+  border: 1px solid #ffc107;
+}
+
+.legend-color.confirmed {
+  background-color: #e8f5e9;
+  border: 1px solid #4caf50;
+}
+
+.time-slot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.time-slot {
+  padding: 0.8rem;
+  border-radius: 5px;
+  border: none;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.time-slot.past {
+  background-color: #e0e0e0;
+  color: #999;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.legend-color.past {
+  background-color: #e0e0e0;
+}
+
+.time-slot.available {
+  background-color: #f0f9ff;
+  color: #3498db;
+  border: 1px solid #bde0fd;
+}
+
+.time-slot.available:hover {
+  background-color: #e1f5fe;
+  transform: translateY(-2px);
+}
+
+.time-slot.pending {
+  background-color: #fff8e1;
+  color: #ffc107;
+  border: 1px solid #ffe082;
+  cursor: not-allowed;
+}
+
+.time-slot.confirmed {
+  background-color: #e8f5e9;
+  color: #4caf50;
+  border: 1px solid #c8e6c9;
+  cursor: not-allowed;
+}
+
+.time-slot.selected {
+  background-color: #3498db;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.time-slot:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Booking summary styles */
+.booking-summary {
+  background-color: #f0f9ff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  border: 1px solid #bde0fd;
+}
+
+.booking-summary h3 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-size: 1.3rem;
+}
+
+.booking-summary p {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.book-button {
+  width: 100%;
+  padding: 1rem;
+  margin-top: 1.5rem;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.book-button:hover {
+  background: linear-gradient(90deg, #2980b9, #27ae60);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.book-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Confirmation dialog styles */
+.confirmation-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+
+.confirmation-dialog {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.confirmation-dialog h2 {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.confirmation-dialog p {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #7f8c8d;
+}
+
+.confirmation-details {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+}
+
+.confirmation-details p {
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.confirmation-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.confirm-button,
+.cancel-button {
+  flex: 1;
+  padding: 0.8rem;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.confirm-button {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.confirm-button:hover {
+  background-color: #27ae60;
+}
+
+.cancel-button {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #c0392b;
+}
+
+.confirm-button:disabled,
+.cancel-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Error and success messages */
+.error-message,
+.success-message {
+  padding: 1rem;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #e74c3c;
+  border: 1px solid #ffcdd2;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2ecc71;
+  border: 1px solid #c8e6c9;
+}
+
+/* Loading indicator */
+.loading {
+  text-align: center;
+  padding: 1.5rem;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+/* Success notification */
+.success-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  min-width: 300px;
+}
+
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.success-message i {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3498db;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2980b9;
+}
+
+/* Smooth transitions for all elements */
+* {
+  transition: all 0.2s ease;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .appointment-booking {
+    padding: 1rem; /* Giảm padding trên mobile */
+  }
+
+  .appointment-booking h1 {
+    font-size: 1.8rem; /* Giảm kích thước chữ tiêu đề */
+    margin-bottom: 1.5rem;
+  }
+
+  .service-selection,
+  .barber-selection,
+  .date-time-selection {
+    padding: 1rem; /* Giảm padding trong các section */
+  }
+
+  .service-selection h2,
+  .barber-selection h2,
+  .date-time-selection h2 {
+    font-size: 1.5rem; /* Giảm kích thước chữ tiêu đề section */
+    margin-bottom: 1rem;
+  }
+
+  .service-list {
+    display: flex; /* Chuyển sang flex để cuộn ngang */
+    overflow-x: auto; /* Cho phép cuộn ngang */
+    gap: 1rem;
+    padding-bottom: 0.5rem; /* Thêm padding để tránh che scrollbar */
+    -webkit-overflow-scrolling: touch; /* Cải thiện cuộn trên mobile */
+    -ms-overflow-style: none; /* Ẩn scrollbar trên IE/Edge */
+    scrollbar-width: none; /* Ẩn scrollbar trên Firefox */
+    height: 300px; /* Đặt chiều cao cố định cho khung chứa các service-card */
+    align-items: flex-start; /* Căn các card từ trên xuống */
+  }
+
+  .service-list::-webkit-scrollbar {
+    display: none; /* Ẩn scrollbar trên Chrome/Safari */
+  }
+
+  .service-card {
+    flex: 0 0 220px; /* Đặt chiều rộng cố định cho card */
+    height: 250px; /* Giữ chiều cao cố định cho card */
+    padding: 1rem; /* Giảm padding trong service card */
+    display: flex; /* Sử dụng flex để kiểm soát nội dung bên trong */
+    flex-direction: column; /* Xếp nội dung theo cột */
+    justify-content: space-between; /* Phân bố đều không gian */
+    overflow: hidden; /* Ẩn nội dung tràn ra ngoài nếu quá dài */
+  }
+
+  /* Vô hiệu hóa hover trên mobile */
+  .service-card:hover {
+    background-color: initial; /* Đặt lại màu nền về mặc định */
+    transform: none; /* Loại bỏ hiệu ứng phóng to */
+    transition: none; /* Loại bỏ hiệu ứng chuyển động */
+  }
+
+  .service-card h3 {
+    font-size: 1.1rem; /* Giảm kích thước chữ tiêu đề dịch vụ */
+    margin: 0; /* Loại bỏ margin mặc định */
+    overflow-wrap: break-word; /* Tự động xuống hàng nếu tiêu đề quá dài */
+    word-wrap: break-word; /* Tương thích với các trình duyệt cũ */
+  }
+
+  .service-card p {
+    font-size: 0.85rem; /* Giảm kích thước chữ mô tả */
+    margin: 0.5rem 0; /* Điều chỉnh margin */
+    overflow-wrap: break-word; /* Tự động xuống hàng nếu mô tả quá dài */
+    word-wrap: break-word; /* Tương thích với các trình duyệt cũ */
+  }
+
+  .service-details {
+    font-size: 0.8rem; /* Giảm kích thước chữ chi tiết */
+    display: flex; /* Sử dụng flex để xếp thành cột */
+    flex-direction: column; /* Xếp giá và thời gian thành 2 hàng */
+    gap: 0.25rem; /* Thêm khoảng cách nhỏ giữa các dòng */
+    overflow-wrap: break-word; /* Tự động xuống hàng nếu chi tiết quá dài */
+    word-wrap: break-word; /* Tương thích với các trình duyệt cũ */
+  }
+
+  .barber-list {
+    display: flex; /* Chuyển sang flex để cuộn ngang */
+    overflow-x: auto; /* Cho phép cuộn ngang */
+    gap: 1rem;
+    padding-bottom: 0.5rem; /* Thêm padding để tránh che scrollbar */
+    -webkit-overflow-scrolling: touch; /* Cải thiện cuộn trên mobile */
+    -ms-overflow-style: none; /* Ẩn scrollbar trên IE/Edge */
+    scrollbar-width: none; /* Ẩn scrollbar trên Firefox */
+  }
+
+  .barber-list::-webkit-scrollbar {
+    display: none; /* Ẩn scrollbar trên Chrome/Safari */
+  }
+
+  .barber-card {
+    flex: 0 0 150px; /* Đặt chiều rộng cố định cho card */
+    padding: 10px; /* Giảm padding trong barber card */
+  }
+
+  .barber-avatar {
+    width: 120px; /* Giảm kích thước ảnh barber */
+    height: 160px;
+  }
+
+  .avatar-placeholder {
+    width: 60px; /* Giảm kích thước placeholder */
+    height: 60px;
+    font-size: 1.5rem;
+  }
+
+  .barber-card h3 {
+    font-size: 1rem; /* Giảm kích thước chữ tên barber */
+  }
+
+  .barber-card p {
+    font-size: 0.85rem; /* Giảm kích thước chữ kinh nghiệm */
+  }
+
+  .date-picker {
+    margin-bottom: 1.5rem; /* Giảm khoảng cách */
+  }
+
+  .date-picker label {
+    font-size: 0.9rem; /* Giảm kích thước chữ nhãn */
+  }
+
+  .date-picker input[type="date"] {
+    padding: 0.6rem; /* Giảm padding ô input */
+    font-size: 0.9rem;
+  }
+
+  .time-slots h3 {
+    font-size: 1rem; /* Giảm kích thước chữ tiêu đề khung giờ */
+  }
+
+  .time-slot-legend {
+    gap: 1rem; /* Giảm khoảng cách giữa các chú thích */
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu không đủ chỗ */
+  }
+
+  .legend-item {
+    font-size: 0.75rem; /* Giảm kích thước chữ chú thích */
+  }
+
+  .time-slot-grid {
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); /* Giảm kích thước tối thiểu của time slot */
+    gap: 0.75rem;
+  }
+
+  .time-slot {
+    padding: 0.6rem; /* Giảm padding trong time slot */
+    font-size: 0.85rem;
+  }
+
+  .booking-summary {
+    padding: 1rem; /* Giảm padding trong summary */
+  }
+
+  .booking-summary h3 {
+    font-size: 1.1rem; /* Giảm kích thước chữ tiêu đề summary */
+  }
+
+  .booking-summary p {
+    font-size: 0.9rem; /* Giảm kích thước chữ nội dung summary */
+  }
+
+  .book-button {
+    padding: 0.8rem; /* Giảm padding nút */
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+
+  .confirmation-dialog {
+    padding: 1.5rem; /* Giảm padding trong dialog */
+    width: 95%;
+    max-width: 400px;
+  }
+
+  .confirmation-dialog h2 {
+    font-size: 1.5rem; /* Giảm kích thước chữ tiêu đề dialog */
+  }
+
+  .confirmation-dialog p {
+    font-size: 0.9rem; /* Giảm kích thước chữ nội dung dialog */
+  }
+
+  .confirmation-details {
+    padding: 0.75rem; /* Giảm padding trong chi tiết xác nhận */
+  }
+
+  .confirmation-details p {
+    font-size: 0.85rem; /* Giảm kích thước chữ chi tiết */
+  }
+
+  .confirm-button,
+  .cancel-button {
+    padding: 0.6rem; /* Giảm padding nút */
+    font-size: 0.9rem;
+  }
+
+  .success-notification {
+    min-width: 250px; /* Giảm chiều rộng tối thiểu trên mobile */
+  }
+
+  .success-message {
+    padding: 10px 15px; /* Giảm padding thông báo */
+    font-size: 0.9rem;
+  }
+
+  .success-message i {
+    font-size: 16px; /* Giảm kích thước icon */
+  }
+}
+
+@media (max-width: 480px) {
+  .appointment-booking h1 {
+    font-size: 1.5rem; /* Giảm thêm kích thước chữ tiêu đề */
+  }
+
+  .service-list {
+    display: flex; /* Giữ cuộn ngang */
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none; /* Ẩn scrollbar trên IE/Edge */
+    scrollbar-width: none; /* Ẩn scrollbar trên Firefox */
+    height: 200px; /* Đặt chiều cao cố định cho khung chứa các service-card */
+    align-items: flex-start; /* Căn các card từ trên xuống */
+  }
+
+  .service-list::-webkit-scrollbar {
+    display: none; /* Ẩn scrollbar trên Chrome/Safari */
+  }
+
+  .service-card {
+    flex: 0 0 200px; /* Giảm chiều rộng card trên màn hình rất nhỏ */
+    height: 180px; /* Giữ chiều cao cố định cho card */
+    padding: 1rem; /* Giảm padding trong service card */
+    display: flex; /* Sử dụng flex để kiểm soát nội dung bên trong */
+    flex-direction: column; /* Xếp nội dung theo cột */
+    justify-content: space-between; /* Phân bố đều không gian */
+    overflow: hidden; /* Ẩn nội dung tràn ra ngoài nếu quá dài */
+  }
+
+  /* Vô hiệu hóa hover trên mobile */
+  .service-card:hover {
+    background-color: initial; /* Đặt lại màu nền về mặc định */
+    transform: none; /* Loại bỏ hiệu ứng phóng to */
+    transition: none; /* Loại bỏ hiệu ứng chuyển động */
+  }
+
+  .service-details {
+    font-size: 0.8rem; /* Giữ kích thước chữ chi tiết */
+    display: flex; /* Sử dụng flex để xếp thành cột */
+    flex-direction: column; /* Xếp giá và thời gian thành 2 hàng */
+    gap: 0.25rem; /* Thêm khoảng cách nhỏ giữa các dòng */
+    overflow-wrap: break-word; /* Tự động xuống hàng nếu chi tiết quá dài */
+    word-wrap: break-word; /* Tương thích với các trình duyệt cũ */
+  }
+
+  .barber-list {
+    display: flex; /* Giữ cuộn ngang */
+    overflow-x: auto;
+    gap: 1rem;
+    padding-bottom: 0.5rem;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none; /* Ẩn scrollbar trên IE/Edge */
+    scrollbar-width: none; /* Ẩn scrollbar trên Firefox */
+  }
+
+  .barber-list::-webkit-scrollbar {
+    display: none; /* Ẩn scrollbar trên Chrome/Safari */
+  }
+
+  .barber-card {
+    flex: 0 0 130px; /* Giảm chiều rộng card trên màn hình rất nhỏ */
+  }
+
+  .barber-avatar {
+    width: 100px; /* Giảm thêm kích thước ảnh barber */
+    height: 130px;
+  }
+
+  .time-slot-grid {
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); /* Giảm thêm kích thước time slot */
+  }
+
+  .confirmation-dialog {
+    max-width: 300px; /* Giảm kích thước dialog trên màn hình siêu nhỏ */
+  }
+}

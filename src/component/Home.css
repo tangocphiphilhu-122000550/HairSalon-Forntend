@@ -1,0 +1,605 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Container chính */
+.home-container {
+  text-align: center;
+  background: url("P:/haircut-frontend/public/backrougnfeedback.jpg") center/cover no-repeat;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Header */
+.home-header {
+  padding: 40px 15px;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.home-header h1 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.home-header p {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* Nút CTA */
+.cta-button {
+  background: linear-gradient(10deg, #d32f2f, #212121);
+  border: none;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: bounce 1.3s infinite ease-in-out;
+}
+
+.cta-button:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* Hiệu ứng tưng tưng */
+@keyframes bounce {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, -60%); }
+}
+
+/* Footer */
+.home-footer {
+  padding: 15px;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Banner */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 88vh;
+  background: url("P:/haircut-frontend/public/banner.jpg") no-repeat center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Phần dịch vụ */
+.services {
+  position: relative;
+  width: 100%;
+  padding: 60px 15px;
+  text-align: center;
+  color: white;
+  background: url("P:/haircut-frontend/public/kingkong.jpg") center/cover no-repeat;
+}
+
+.overlayhome {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.services-content {
+  position: relative;
+  z-index: 2;
+  width: 100%; /* Full bề ngang */
+  margin: 0; /* Bỏ margin để không có khoảng trống */
+  overflow: hidden;
+}
+
+.services-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.services-grid {
+  animation: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  padding: 0;
+}
+
+.service-item {
+  padding: 30px;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+  text-align: center;
+}
+
+.service-item:first-child {
+  border-left: none; /* Bỏ viền trái cho thẻ đầu tiên */
+}
+
+.service-item:last-child {
+  border-right: none; /* Bỏ viền phải cho thẻ cuối cùng */
+}
+
+.service-item:hover {
+  transform: scale(1.05);
+}
+
+.service-item img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 15px;
+}
+
+.service-item h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.service-item p {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Hairstyle Gallery */
+.hairstyle-gallery {
+  padding: 40px 0; /* Bỏ padding ngang, chỉ giữ padding dọc */
+  background: linear-gradient(to right, #201d1b 0%, #141413 100%);
+  text-align: center;
+  overflow: hidden;
+  width: 100%; /* Full bề ngang */
+}
+
+.hairstyle-title {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #fff;
+  position: relative;
+  display: inline-block;
+}
+
+.hairstyle-title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(to right, #ff4500, #ff8c00);
+  border-radius: 2px;
+}
+
+.hairstyle-subtitle {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #ccc;
+}
+
+.hairstyle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hairstyle-card {
+  min-width: 230px; /* Kích thước mặc định cho desktop */
+  height: 264px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.hairstyle-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.hairstyle-card:hover img {
+  transform: scale(1.05);
+}
+
+.hairstyle-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.hairstyle-card:hover .hairstyle-info {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hairstyle-name {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.hairstyle-description {
+  font-size: 12px;
+  color: #ddd;
+}
+
+/* Hiệu ứng cuộn vô hạn chung */
+@keyframes infiniteScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .home-header h1 {
+    font-size: 24px;
+  }
+
+  .banner {
+    position: relative;
+    width: 100%;
+    height: 29vh;
+    background: url("P:/haircut-frontend/public/banner.jpg") no-repeat center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .home-header p {
+    font-size: 14px;
+  }
+
+  .services-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .services-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 20px;
+    padding: 0; /* Bỏ padding ngang */
+    margin: 0; /* Bỏ margin ngang */
+    width: max-content;
+    animation: infiniteScroll 20s linear infinite;
+  }
+
+  .service-item {
+    min-width: 280px;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    flex: 0 0 auto;
+    text-align: center;
+    border-left: 1px solid rgba(255, 255, 255, 0.2); /* Thêm viền trái */
+    border-right: 1px solid rgba(255, 255, 255, 0.2); /* Thêm viền phải */
+  }
+  .service-item h3 {
+    font-size: 16px;
+  }
+
+  .service-item p {
+    font-size: 13px;
+  }
+
+  .service-item img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .hairstyle-title {
+    font-size: 20px;
+  }
+
+  .hairstyle-subtitle {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+
+  .hairstyle-grid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 15px;
+    padding: 0; /* Bỏ padding ngang để full bề ngang */
+    width: max-content;
+    animation: infiniteScroll 25s linear infinite;
+  }
+
+  .hairstyle-card {
+    max-width: 60px; /* Giảm chiều rộng cho mobile nhỏ */
+    height: 200px; /* Giảm chiều cao cho mobile nhỏ */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    flex: 0 0 auto;
+    position: relative;
+  }
+
+  .hairstyle-card img {
+    width: 100%;
+    height: 85%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .hairstyle-name {
+    font-size: 14px;
+  }
+
+  .hairstyle-description {
+    font-size: 10px;
+  }
+
+.hairstyle-info {
+    position: absolute;
+    bottom: 33px;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    text-align: left;
+  }
+
+  /* Nút CTA */
+  .cta-button {
+    background: linear-gradient(10deg, #d32f2f, #212121);
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: bounce 1.3s infinite ease-in-out;
+  }
+
+  .cta-button:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+@media (max-width: 768px) and (min-width: 481px) {
+  .hairstyle-card {
+    min-width: 200px; /* Kích thước trung gian cho tablet nhỏ */
+    height: 220px;
+  }
+
+  .hairstyle-name {
+    font-size: 15px;
+  }
+
+  .hairstyle-description {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 980px) and (min-width: 768px) {
+  .home-header {
+    padding: 60px 20px;
+  }
+
+  .banner {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    background: url("P:/haircut-frontend/public/banner.jpg") no-repeat center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .home-header h1 {
+    font-size: 36px;
+  }
+
+  .home-header p {
+    font-size: 18px;
+  }
+
+
+  .services-title {
+    font-size: 32px;
+  }
+
+  .services-grid {
+    animation: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    padding: 0;
+  }
+
+  .service-item {
+    min-width: unset;
+    border-left: none; /* Bỏ viền trên tablet/desktop */
+    border-right: none;
+  }
+
+  .hairstyle-title {
+    font-size: 2.2rem;
+  }
+
+  .hairstyle-subtitle {
+    font-size: 1rem;
+  }
+
+  .hairstyle-grid {
+    animation: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    padding: 0;
+  }
+
+  .hairstyle-card {
+    min-width: unset; /* Để grid tự điều chỉnh */
+    height: 240px; /* Kích thước phù hợp cho tablet */
+  }
+
+  .hairstyle-card:hover .hairstyle-info {
+    opacity: 1;
+    transform: translateY(1);
+  }
+  .hairstyle-info {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    text-align: left;
+  }
+  /* Nút CTA */
+  .cta-button {
+    background: linear-gradient(10deg, #d32f2f, #212121);
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: bounce 1.3s infinite ease-in-out;
+  }
+
+  .cta-button:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+@media (max-width: 824px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .hairstyle-grid {   
+    grid-template-columns: repeat(2, 1fr); /* Chia thành 3 cột */
+    gap: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+    justify-content: center; /* Căn giữa */
+  }
+
+  .services-title {
+    font-size: 24px;
+  }
+
+  .banner {
+    position: relative;
+    width: 100%;
+    height: 29vh;
+    background: url("P:/haircut-frontend/public/banner.jpg") no-repeat center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Nút CTA */
+  .cta-button {
+    background: linear-gradient(10deg, #d32f2f, #212121);
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: bounce 1.3s infinite ease-in-out;
+  }
+
+  .cta-button:hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+
+  .hairstyle-title {
+    font-size: 1.7rem;
+    margin-bottom: 24px;
+  }
+
+  .hairstyle-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hairstyle-card {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 264px;
+    width: 90%; /* Để card tự động căn chỉnh kích thước */
+    max-width: 223px; /* Đặt giới hạn kích thước */
+    border-radius: 10px; /* Đảm bảo bo góc */
+    margin: 4px auto; /* Căn giữa card */
+  }
+
+  .hairstyle-card img {
+    border-radius: 10px; /* Bo góc ảnh bên trong */
+    width: 100%;
+    height: 90%;
+    object-fit: cover;
+  }
+
+  .hairstyle-info {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    text-align: left;
+  }
+}
