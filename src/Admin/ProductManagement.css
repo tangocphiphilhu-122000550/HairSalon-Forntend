@@ -1,0 +1,254 @@
+.product-management-tab {
+  padding: 20px;
+}
+
+.product-management-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-search-container {
+  position: relative;
+}
+
+.product-search-form {
+  display: flex;
+  align-items: center;
+}
+
+.product-search-input {
+  padding: 8px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.product-search-btn {
+  padding: 8px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.product-add-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-add-btn:hover {
+  background-color: #45a049;
+}
+
+.product-add-form {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.product-add-form h3 {
+  margin-bottom: 15px;
+}
+
+.product-add-input,
+.product-add-textarea,
+.product-add-file {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.product-item {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-image1 {
+  max-width: 100px;
+  height: auto;
+  margin-top: 10px;
+}
+
+.product-description {
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.product-description.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-description.expanded {
+  display: block;
+  white-space: pre-wrap;
+}
+
+.product-see-more {
+  color: #007bff;
+  margin-left: 5px;
+}
+
+.product-see-more:hover {
+  text-decoration: underline;
+}
+
+.product-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.product-edit-input,
+.product-edit-textarea {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.product-edit-actions,
+.product-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.product-edit-btn,
+.product-delete-btn,
+.product-save-btn,
+.product-cancel-btn,
+.product-confirm-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.product-save-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.product-save-btn:hover {
+  background-color: #45a049;
+}
+
+.product-delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.product-delete-btn:hover {
+  background-color: #da190b;
+}
+
+.product-cancel-btn {
+  background-color: #ccc;
+  color: black;
+}
+
+.product-cancel-btn:hover {
+  background-color: #bbb;
+}
+
+.product-edit-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.product-edit-btn:hover {
+  background-color: #0069d9;
+}
+
+.product-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+.product-notification.success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.product-notification.error {
+  background-color: #f44336;
+  color: white;
+}
+
+.product-confirmation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: center;
+}
+
+.product-confirmation-actions {
+  margin-top: 15px;
+}
+
+.product-confirm-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.product-confirm-btn:hover {
+  background-color: #45a049;
+}
+
+.product-suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 300px;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.product-suggestion-item:hover {
+  background-color: #f0f0f0;
+}

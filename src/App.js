@@ -14,10 +14,22 @@ import ProductDetail from "./component/ProductDetail.jsx";
 import Cart from "./component/Cart.jsx";
 import { CartProvider } from "./CartContext";
 import OrderHistory from "./component/OrderHistory";
+import About from "./component/About";
+import ProtectedRoute from "./component/ProtectedRoute";
+import Admin from "./Admin/Admin.js";
+import UserManagement from "./Admin/UserManagement.js";
+import ServiceManagement from "./Admin/ServiceManagement.js";
+import ProductManagement from "./Admin/ProductManagement.js";
+import OrderManagement from "./Admin/OrderManagement.js"
+import ReviewManagement from "./Admin/ReviewManagement.js";
+import AppointmentManagement from "./Admin/AppointmentManagement.js";
+import { AppointmentProvider } from "./context/AppointmentContext";
+
 
 function App() {
   return (
     <CartProvider>
+      <AppointmentProvider>
     <Router>
       <Routes>
         <Route path="/auth" element={<Auth />} />
@@ -32,8 +44,18 @@ function App() {
         <Route path="/ProductDetail/:name" element={<MainLayout><ProductDetail /></MainLayout>} />
         <Route path="/cart" element={<MainLayout><Cart /></MainLayout>} />
         <Route path="/OrderHistory" element={<MainLayout><OrderHistory /></MainLayout>} />
+        <Route path="/About" element={<MainLayout><About /></MainLayout>} />
+        <Route path="/ProtectedRoute" element={<MainLayout><ProtectedRoute /></MainLayout>} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/UserManagement" element={<UserManagement />} />
+        <Route path="/ServiceManagement" element={<ServiceManagement />} />
+        <Route path="/ProductManagement" element={<ProductManagement />} /> 
+        <Route path="/OrderManagement" element={<OrderManagement />} />
+        <Route path="/ReviewManagement" element={<ReviewManagement />} />
+        <Route path="/AppointmentManagement" element={<AppointmentManagement />} />
       </Routes>
     </Router>
+    </AppointmentProvider>
     </CartProvider>
   );
 }

@@ -255,7 +255,7 @@ const AppointmentHistory = () => {
     switch (status) {
       case 'pending':
         return 'status-pending';
-      case 'confirmed':
+      case 'completed':
         return 'status-confirmed';
       case 'cancelled':
         return 'status-cancelled';
@@ -268,7 +268,7 @@ const AppointmentHistory = () => {
     switch (status) {
       case 'pending':
         return 'Chờ xác nhận';
-      case 'confirmed':
+      case 'completed':
         return 'Đã xác nhận';
       case 'cancelled':
         return 'Đã hủy';

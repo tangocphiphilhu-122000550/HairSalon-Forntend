@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import api from "../utils/api"; // Import instance axios đã cấu hình
-import { setToken, setUsername } from "../utils/tokenStorage"; // Import hàm từ tokenStorage
+import api from "../utils/api";
+import { setToken, setUsername } from "../utils/tokenStorage";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import "./Auth.css"; // Giữ file CSS gốc nếu cần thêm style bổ sung
+import "./Auth.css";
+import { jwtDecode } from "jwt-decode";
+
 
 const API_URL = "https://hairsalon-m4jx.onrender.com/api/auth";
 
@@ -19,7 +21,7 @@ const Auth = () => {
   const [message, setMessage] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // State để toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     return () => setMessage("");
@@ -27,6 +29,15 @@ const Auth = () => {
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const resetForm = () => {
+    setForm({
+      username: "",
+      email: "",
+      password: "",
+      phone: "",
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -42,7 +53,7 @@ const Auth = () => {
             password: form.password,
             phone: form.phone,
           };
-      console.log("Data sent to server:", data); // Log để kiểm tra
+      console.log("Data sent to server:", data);
       const res = await api.post(`${API_URL}${endpoint}`, data);
       setMessage(res.data.message);
 
@@ -50,12 +61,27 @@ const Auth = () => {
         const { token } = res.data;
         await setToken(token); // Lưu token vào IndexedDB
         await setUsername(form.username); // Lưu username vào IndexedDB
+
+        // Giải mã token để lấy thông tin user_type_id
+        const decodedToken = jwtDecode(token);
+        const userTypeId = decodedToken.user_type_id;
+
         setTimeout(() => {
-          navigate("/");
+          if (userTypeId === 1) {
+            // Nếu là admin, chuyển hướng đến trang admin
+            navigate("/admin");
+          } else if (userTypeId === 2) {
+            // Nếu là user, chuyển hướng đến trang chủ
+            navigate("/");
+          } else {
+            // Trường hợp không xác định, chuyển về trang chủ mặc định
+            navigate("/");
+          }
         }, 1000);
       } else {
         setTimeout(() => {
-          setIsLogin(true); // Chuyển sang form login sau khi đăng ký
+          setIsLogin(true); // Chuyển sang form login
+          resetForm(); // Reset form về rỗng sau khi đăng ký
         }, 1000);
       }
     } catch (error) {
@@ -230,19 +256,19 @@ const Auth = () => {
   );
 };
 
+// Styled-components giữ nguyên như code gốc của bạn
 const StyledWrapper = styled.div`
-  /* Thêm container để căn giữa toàn bộ form */
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Chiều cao tối thiểu bằng toàn màn hình */
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Gradient nền nhẹ nhàng */
-  padding: 20px; /* Padding để tránh sát mép trên mobile */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 20px;
 
   .card {
     --p: 32px;
     --h-form: auto;
-    --w-form: 400px; /* Tăng chiều rộng form một chút cho đẹp */
+    --w-form: 400px;
     --input-px: 0.75rem;
     --input-py: 0.65rem;
     --submit-h: 38px;
@@ -266,8 +292,8 @@ const StyledWrapper = styled.div`
     -webkit-user-select: none;
     user-select: none;
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho khung viền */
-    border: 1px solid rgba(0, 0, 0, 0.05); /* Viền nhẹ */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .avatar {
@@ -279,14 +305,14 @@ const StyledWrapper = styled.div`
     height: var(--sz-avatar);
     min-height: var(--sz-avatar);
     max-height: var(--sz-avatar);
-    border: 2px solid #707070; /* Tăng độ dày viền avatar */
+    border: 2px solid #707070;
     border-radius: 9999px;
     overflow: hidden;
     cursor: pointer;
     z-index: 2;
     perspective: 80px;
     position: relative;
-    margin: 0 auto 1rem; /* Căn giữa và thêm khoảng cách dưới */
+    margin: 0 auto 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -374,7 +400,7 @@ const StyledWrapper = styled.div`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ nhẹ cho nút */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   .card label.blind_input:before {
     content: "";
@@ -418,7 +444,7 @@ const StyledWrapper = styled.div`
     padding-bottom: 1rem;
     color: rgba(0, 0, 0, 0.7);
     border-bottom: 2px solid rgba(0, 0, 0, 0.3);
-    text-align: center; /* Căn giữa tiêu đề */
+    text-align: center;
   }
 
   .form .label_input {
@@ -448,7 +474,7 @@ const StyledWrapper = styled.div`
     color: #000000b3;
     margin: var(--space-y) 0;
     transition: all 0.25s ease;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); /* Thêm bóng đổ nhẹ bên trong */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
   }
   .form .input#password-input {
     padding-right: calc(var(--blind-w) + var(--input-px) + 4px);
@@ -497,7 +523,7 @@ const StyledWrapper = styled.div`
     padding: 0.5rem 1rem;
     border-radius: 0.25rem;
     margin: var(--space-y) 0 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ cho nút */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   .form .submit:hover {
     background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.18) 0%, rgba(17, 17, 17, 0.08) 100%);

@@ -124,7 +124,7 @@ const Header = () => {
               <Link to="/products" className={location.pathname === "/products" ? "active" : ""}>Sản phẩm</Link>
             </li>
             <li>
-              <Link to="/about" className={location.pathname === "/about" ? "active" : ""}>Giới thiệu</Link>
+              <Link to="/About" className={location.pathname === "/about" ? "active" : ""}>Giới thiệu</Link>
             </li>
           </ul>
 
@@ -171,7 +171,7 @@ const Header = () => {
             <FaBoxOpen className="taskbar-icon" />
             <span>Sản phẩm</span>
           </Link>
-          <Link to="/about" className={`taskbar-item ${location.pathname === "/about" ? "active" : ""}`}>
+          <Link to="/About" className={`taskbar-item ${location.pathname === "/about" ? "active" : ""}`}>
             <FaInfoCircle className="taskbar-icon" />
             <span>Giới thiệu</span>
           </Link>

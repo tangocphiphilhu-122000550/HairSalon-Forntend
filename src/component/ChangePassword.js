@@ -59,16 +59,10 @@ const ChangePassword = () => {
         }
     };
 
-    const handleBackToHome = () => {
-        navigate("/"); // Điều hướng về trang chủ
-    };
 
     return (
         <div className="change-password-page">
-            {/* Nút quay lại trang chủ ở góc trái phía trên */}
-            <button className="back-to-home-button" onClick={handleBackToHome}>
-                <FaArrowLeft /> Trang chủ
-            </button>
+
 
             <div className="change-password-container">
                 <h2>Đổi Mật Khẩu</h2>

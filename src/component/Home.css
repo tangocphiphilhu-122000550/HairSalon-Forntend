@@ -114,7 +114,7 @@
   margin-bottom: 30px;
 }
 
-.services-grid {
+.services-grid1 {
   animation: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -122,7 +122,7 @@
   padding: 0;
 }
 
-.service-item {
+.service-item1 {
   padding: 30px;
   border-radius: 10px;
   transition: transform 0.3s ease-in-out;
@@ -141,19 +141,19 @@
   transform: scale(1.05);
 }
 
-.service-item img {
+.service-item1 img {
   width: 80px;
   height: 80px;
   margin-bottom: 15px;
 }
 
-.service-item h3 {
+.service-item1 h3 {
   font-size: 18px;
   margin-bottom: 8px;
   font-weight: bold;
 }
 
-.service-item p {
+.service-item1 p {
   font-size: 14px;
   line-height: 1.4;
 }
@@ -283,7 +283,7 @@
     margin-bottom: 20px;
   }
 
-  .services-grid {
+  .services-grid1 {
     display: flex;
     flex-wrap: nowrap;
     gap: 20px;
@@ -293,7 +293,7 @@
     animation: infiniteScroll 20s linear infinite;
   }
 
-  .service-item {
+  .service-item1 {
     min-width: 280px;
     padding: 20px;
     border-radius: 10px;
@@ -303,15 +303,15 @@
     border-left: 1px solid rgba(255, 255, 255, 0.2); /* Thêm viền trái */
     border-right: 1px solid rgba(255, 255, 255, 0.2); /* Thêm viền phải */
   }
-  .service-item h3 {
+  .service-item1 h3 {
     font-size: 16px;
   }
 
-  .service-item p {
+  .service-item1 p {
     font-size: 13px;
   }
 
-  .service-item img {
+  .service-item1 img {
     width: 50px;
     height: 50px;
   }
@@ -439,7 +439,7 @@
     font-size: 32px;
   }
 
-  .services-grid {
+  .services-grid1 {
     animation: none;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -447,7 +447,7 @@
     padding: 0;
   }
 
-  .service-item {
+  .service-item1 {
     min-width: unset;
     border-left: none; /* Bỏ viền trên tablet/desktop */
     border-right: none;
@@ -514,7 +514,7 @@
 }
 
 @media (max-width: 824px) {
-  .services-grid {
+  .services-grid1 {
     grid-template-columns: repeat(3, 1fr);
   }
 

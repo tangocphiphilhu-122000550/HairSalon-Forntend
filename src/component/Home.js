@@ -35,34 +35,34 @@ const Home = () => {
           <div className="overlayhome"></div>
           <div className="services-content">
             <h2 className="services-title">Dịch Vụ Tại Barbershop Nguyễn Hoài</h2>
-            <div className="services-grid">
-              <div className="service-item">
+            <div className="services-grid1">
+              <div className="service-item1">
               <img src="/CT1.png" alt="Cắt tóc" />
 
                 <h3>Cắt Tóc Đẹp</h3>
                 <p>Đội ngũ chuyên nghiệp giúp bạn có mái tóc phù hợp với phong cách cá nhân.</p>
               </div>
-              <div className="service-item">
+              <div className="service-item1">
                 <img src="/CT2.png" alt="Tạo kiểu" />
                 <h3>Uốn Tạo Kiểu</h3>
                 <p>Uốn tóc hiện đại, phù hợp với phong cách và nhu cầu cá nhân.</p>
               </div>
-              <div className="service-item">
+              <div className="service-item1">
                 <img src="/CT3.png" alt="Nhuộm tóc" />
                 <h3>Nhuộm Màu Tóc</h3>
                 <p>Chuyên nghiệp trong việc tạo màu tóc đẹp với kỹ thuật hiện đại.</p>
               </div>
-              <div className="service-item">
+              <div className="service-item1">
                 <img src="/CT4.png" alt="Gội đầu massage" />
                 <h3>Gội Đầu Massage</h3>
                 <p>Thư giãn tuyệt đối với dịch vụ gội đầu massage tại Barbershop.</p>
               </div>
-              <div className="service-item">
+              <div className="service-item1">
                 <img src="/CT5.png" alt="Ép tóc" />
                 <h3>Ép Tóc Đẹp</h3>
                 <p>Giúp bạn có mái tóc đẹp, suôn mượt với công nghệ tiên tiến.</p>
               </div>
-              <div className="service-item">
+              <div className="service-item1">
                 <img src="/CT6.png" alt="Bấm khuyên tai" />
                 <h3>Bấm Khuyên Tai</h3>
                 <p>Chuyên nghiệp, an toàn với quy trình bấm khuyên tai nhẹ nhàng.</p>

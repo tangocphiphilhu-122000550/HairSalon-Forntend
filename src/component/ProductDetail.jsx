@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaShoppingCart, FaStar } from "react-icons/fa"; // Thêm FaStar
+import { FaShoppingCart, FaStar } from "react-icons/fa";
 import api from "../utils/api";
 import { useCart } from "../CartContext";
 import "./ProductDetail.css";
@@ -38,7 +38,10 @@ const ProductDetail = () => {
   };
 
   const handleBuyNow = () => {
-    localStorage.setItem("cart", JSON.stringify([{ product_name: product.name, quantity, price: product.price }]));
+    // First add to cart using the same method as handleAddToCart
+    addToCart(product, quantity);
+    
+    // Then navigate to cart page
     navigate("/cart");
   };
 
