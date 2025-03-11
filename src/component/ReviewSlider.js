@@ -10,20 +10,20 @@ const ReviewSlider = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [retryCount, setRetryCount] = useState(0);
-  const maxRetries = 3; // Số lần thử lại tối đa
+  const maxRetries = 3;
 
   const fetchReviews = async () => {
     try {
       setLoading(true);
       const controller = new AbortController();
       const timeoutId = setTimeout(() => {
-        controller.abort(); // Hủy yêu cầu sau 2 giây
+        controller.abort();
       }, 5000);
 
       const response = await fetch("https://hairsalon-m4jx.onrender.com/api/reviews", {
         signal: controller.signal,
       });
-      clearTimeout(timeoutId); // Xóa timeout nếu yêu cầu hoàn thành trước 2 giây
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
         throw new Error("Không thể tải đánh giá");
@@ -33,21 +33,20 @@ const ReviewSlider = () => {
       const fiveStarReviews = data.filter((review) => review.rating === 5);
       setReviews(fiveStarReviews);
       setError(null);
-      setRetryCount(0); // Reset retry count khi thành công
+      setRetryCount(0);
     } catch (error) {
       console.error("Lỗi khi lấy đánh giá:", error);
       if (error.name === "AbortError" && retryCount < maxRetries) {
-        // Nếu bị hủy do timeout và chưa vượt quá số lần thử lại
         setRetryCount((prev) => prev + 1);
         setError(`Đang thử lại lần ${retryCount + 1}/${maxRetries}...`);
-        fetchReviews(); // Gọi lại API
+        fetchReviews();
       } else {
         setError("Không thể tải đánh giá. Vui lòng thử lại sau.");
         setLoading(false);
       }
     } finally {
       if (retryCount >= maxRetries || !error) {
-        setLoading(false); // Chỉ dừng loading khi hết lượt thử hoặc thành công
+        setLoading(false);
       }
     }
   };
@@ -81,6 +80,20 @@ const ReviewSlider = () => {
   return (
     <section className="testimonial-section">
       <div className="testimonial-left">
+        {/* Thêm div cho ảnh nền thay vì ::before */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "url('/kingkong.jpg') no-repeat center center",
+            backgroundSize: "70%",
+            opacity: 0.1,
+            zIndex: -1,
+          }}
+        />
         <h2 className="testimonial-title">Đánh Giá Từ Khách Hàng</h2>
         <p className="testimonial-subtitle">
           Quý khách hàng đến với KingKong Barber Shop luôn hài lòng với dịch vụ và sản phẩm của chúng tôi.
