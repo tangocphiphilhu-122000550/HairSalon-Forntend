@@ -1,54 +1,118 @@
-.product-management-tab {
+/* ProductManagement.css */
+
+/* Reset cơ bản */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.pm-tab {
   padding: 20px;
 }
 
-.product-management-header {
+.pm-tab h2 {
+  font-size: 1.8rem;
+  color: #2a5298;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.pm-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.product-search-container {
+.pm-search-container {
   position: relative;
+  flex: 1;
+  max-width: 400px;
+  width: 100%;
 }
 
-.product-search-form {
+.pm-search-form {
   display: flex;
   align-items: center;
+  width: 100%;
 }
 
-.product-search-input {
+.pm-search-input {
   padding: 8px;
-  width: 300px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 4px 0 0 4px;
+  font-size: 1rem;
+  outline: none;
+  flex: 1;
+  transition: border-color 0.3s ease;
 }
 
-.product-search-btn {
+.pm-search-input:focus {
+  border-color: #007bff;
+}
+
+.pm-search-btn {
   padding: 8px;
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 4px;
-  margin-left: 10px;
+  border-radius: 0 4px 4px 0;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.product-add-btn {
+.pm-search-btn:hover {
+  background-color: #0069d9;
+}
+
+.pm-suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pm-suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.pm-suggestion-item:hover {
+  background-color: #f0f0f0;
+}
+
+.pm-add-btn {
   background-color: #4caf50;
   color: white;
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
 }
 
-.product-add-btn:hover {
+.pm-add-btn:hover {
   background-color: #45a049;
 }
 
-.product-add-form {
+.pm-add-form {
   background-color: #fff;
   padding: 15px;
   border-radius: 8px;
@@ -56,45 +120,65 @@
   margin-bottom: 20px;
 }
 
-.product-add-form h3 {
+.pm-add-form h3 {
   margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #2a5298;
 }
 
-.product-add-input,
-.product-add-textarea,
-.product-add-file {
+.pm-add-input,
+.pm-add-textarea,
+.pm-add-file {
   padding: 8px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
 }
 
-.product-list {
+.pm-add-input:focus,
+.pm-add-textarea:focus,
+.pm-add-file:focus {
+  border-color: #007bff;
+}
+
+.pm-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
 }
 
-.product-item {
+.pm-item {
   background-color: #fff;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Đảm bảo các phần tử xếp dọc */
+  min-height: 250px; /* Đặt chiều cao tối thiểu để các card đồng đều */
 }
 
-.product-image1 {
-  max-width: 100px;
-  height: auto;
-  margin-top: 10px;
+.pm-item h3 {
+  font-size: 1.2rem;
+  color: #2a5298;
+  margin-bottom: 0.5rem;
 }
 
-.product-description {
+.pm-item p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0.3rem 0;
+}
+
+.pm-description {
   margin: 5px 0;
   cursor: pointer;
 }
 
-.product-description.collapsed {
+.pm-description.collapsed {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -102,107 +186,129 @@
   text-overflow: ellipsis;
 }
 
-.product-description.expanded {
+.pm-description.expanded {
   display: block;
   white-space: pre-wrap;
 }
 
-.product-see-more {
+.pm-see-more {
   color: #007bff;
   margin-left: 5px;
 }
 
-.product-see-more:hover {
+.pm-see-more:hover {
   text-decoration: underline;
 }
 
-.product-edit-form {
+.pm-image {
+  max-width: 100px;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 4px;
+}
+
+.pm-edit-form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.product-edit-input,
-.product-edit-textarea {
+.pm-edit-input,
+.pm-edit-textarea {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
 }
 
-.product-edit-actions,
-.product-actions {
+.pm-edit-input:focus,
+.pm-edit-textarea:focus {
+  border-color: #007bff;
+}
+
+.pm-edit-actions,
+.pm-actions {
   display: flex;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: auto; /* Đẩy các nút xuống dưới cùng */
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.product-edit-btn,
-.product-delete-btn,
-.product-save-btn,
-.product-cancel-btn,
-.product-confirm-btn {
+.pm-edit-btn,
+.pm-delete-btn,
+.pm-save-btn,
+.pm-cancel-btn,
+.pm-confirm-btn {
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+  flex: 1;
+  max-width: 120px;
 }
 
-.product-save-btn {
+.pm-save-btn {
   background-color: #4caf50;
   color: white;
 }
 
-.product-save-btn:hover {
+.pm-save-btn:hover {
   background-color: #45a049;
 }
 
-.product-delete-btn {
+.pm-delete-btn {
   background-color: #f44336;
   color: white;
 }
 
-.product-delete-btn:hover {
+.pm-delete-btn:hover {
   background-color: #da190b;
 }
 
-.product-cancel-btn {
+.pm-cancel-btn {
   background-color: #ccc;
   color: black;
 }
 
-.product-cancel-btn:hover {
+.pm-cancel-btn:hover {
   background-color: #bbb;
 }
 
-.product-edit-btn {
+.pm-edit-btn {
   background-color: #007bff;
   color: white;
 }
 
-.product-edit-btn:hover {
+.pm-edit-btn:hover {
   background-color: #0069d9;
 }
 
-.product-notification {
+.pm-notification {
   position: fixed;
   top: 20px;
   right: 20px;
   padding: 10px 20px;
   border-radius: 4px;
   z-index: 1000;
+  max-width: 90%;
+  text-align: center;
 }
 
-.product-notification.success {
+.pm-notification.success {
   background-color: #4caf50;
   color: white;
 }
 
-.product-notification.error {
+.pm-notification.error {
   background-color: #f44336;
   color: white;
 }
 
-.product-confirmation {
+.pm-confirmation {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -213,42 +319,135 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
   text-align: center;
+  max-width: 90%;
 }
 
-.product-confirmation-actions {
+.pm-confirmation-actions {
   margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-.product-confirm-btn {
+.pm-confirm-btn {
   background-color: #4caf50;
   color: white;
 }
 
-.product-confirm-btn:hover {
+.pm-confirm-btn:hover {
   background-color: #45a049;
 }
 
-.product-suggestions-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 300px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1000;
-  list-style: none;
-  padding: 0;
-  margin: 0;
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .pm-list {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+
+  .pm-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pm-search-container,
+  .pm-add-btn {
+    max-width: none;
+  }
+
+  .pm-item {
+    min-height: 200px; /* Giảm chiều cao tối thiểu trên tablet */
+  }
 }
 
-.product-suggestion-item {
-  padding: 8px;
-  cursor: pointer;
+@media (max-width: 768px) {
+  .pm-tab h2 {
+    font-size: 1.5rem;
+  }
+
+  .pm-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pm-search-input,
+  .pm-search-btn {
+    border-radius: 4px;
+  }
+
+  .pm-search-btn {
+    margin-left: 0;
+  }
+
+  .pm-list {
+    grid-template-columns: 1fr;
+  }
+
+  .pm-notification {
+    top: 10px;
+    right: 10px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .pm-confirmation {
+    padding: 15px;
+  }
+
+  .pm-confirm-btn,
+  .pm-cancel-btn {
+    padding: 6px 12px;
+    max-width: 100px;
+  }
+
+  .pm-item {
+    min-height: auto; /* Tắt chiều cao cố định trên mobile */
+  }
 }
 
-.product-suggestion-item:hover {
-  background-color: #f0f0f0;
+@media (max-width: 480px) {
+  .pm-tab h2 {
+    font-size: 1.3rem;
+  }
+
+  .pm-search-input {
+    padding: 6px;
+    font-size: 0.9rem;
+  }
+
+  .pm-search-btn {
+    padding: 6px;
+  }
+
+  .pm-add-btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+
+  .pm-add-form,
+  .pm-item {
+    padding: 10px;
+  }
+
+  .pm-item h3 {
+    font-size: 1rem;
+  }
+
+  .pm-item p {
+    font-size: 0.8rem;
+  }
+
+  .pm-image {
+    max-width: 80px;
+  }
+
+  .pm-edit-btn,
+  .pm-delete-btn,
+  .pm-save-btn,
+  .pm-cancel-btn,
+  .pm-confirm-btn {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    max-width: 90px;
+  }
 }

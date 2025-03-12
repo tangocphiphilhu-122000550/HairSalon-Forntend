@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { getUsername } from '../utils/tokenStorage';
+import { getUsername, getToken } from '../utils/tokenStorage'; // Thêm getToken
 import './AppointmentBooking.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ const AppointmentBooking = () => {
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false); // Thêm state cho thông báo đăng nhập
 
   const timeSlots = [
     '08:00', '09:00', '10:00', '11:00', '12:00',
@@ -66,7 +67,10 @@ const AppointmentBooking = () => {
   const fetchAppointments = async () => {
     try {
       setLoading(true);
-      const response = await api.get('/api/appointments/all');
+      const token = await getToken();
+      const response = await api.get('/api/appointments/all', {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
       const filteredAppointments = response.data.filter((appointment) => {
         const appointmentDate = new Date(appointment.appointment_date);
         const selectedDateObj = new Date(selectedDate);
@@ -137,11 +141,18 @@ const AppointmentBooking = () => {
     }
   };
 
-  const handleBookingRequest = () => {
+  const handleBookingRequest = async () => {
     if (!selectedService || !selectedBarber || !selectedDate || !selectedTimeSlot) {
       setError('Vui lòng chọn đầy đủ thông tin');
       return;
     }
+
+    const token = await getToken();
+    if (!token) {
+      setShowLoginPrompt(true); // Hiển thị thông báo yêu cầu đăng nhập
+      return;
+    }
+
     setShowConfirmation(true);
   };
 
@@ -183,6 +194,11 @@ const AppointmentBooking = () => {
 
   const cancelConfirmation = () => {
     setShowConfirmation(false);
+  };
+
+  const handleLoginRedirect = () => {
+    setShowLoginPrompt(false);
+    navigate('/auth');
   };
 
   const formatDate = (dateString) => {
@@ -364,6 +380,20 @@ const AppointmentBooking = () => {
                 Hủy
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showLoginPrompt && (
+        <div className="login-prompt-overlay">
+          <div className="login-prompt">
+            <p>Bạn cần đăng nhập trước khi đặt lịch!</p>
+            <button className="login-button" onClick={handleLoginRedirect}>
+              Đăng nhập ngay
+            </button>
+            <button className="cancel-button" onClick={() => setShowLoginPrompt(false)}>
+              Hủy
+            </button>
           </div>
         </div>
       )}

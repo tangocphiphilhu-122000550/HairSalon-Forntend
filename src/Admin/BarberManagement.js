@@ -154,17 +154,17 @@ const BarberManagement = () => {
   };
 
   return (
-    <div className="barber-management">
+    <div className="bm-management">
       <h2>Quản lý Thợ cắt tóc</h2>
 
       {notification.message && (
-        <div className={`notification ${notification.type}`}>
+        <div className={`bm-notification ${notification.type}`}>
           <span>{notification.message}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="barber-form">
-        <div className="form-group">
+      <form onSubmit={handleSubmit} className="bm-form">
+        <div className="bm-form-group">
           <input
             type="text"
             name="full_name"
@@ -174,7 +174,7 @@ const BarberManagement = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="bm-form-group">
           <DatePicker
             selected={formData.date_of_birth}
             onChange={handleDateChange}
@@ -187,7 +187,7 @@ const BarberManagement = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="bm-form-group">
           <input
             type="number"
             name="experience_years"
@@ -197,7 +197,7 @@ const BarberManagement = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="bm-form-group">
           <input
             type="tel"
             name="phone"
@@ -207,7 +207,7 @@ const BarberManagement = () => {
             required
           />
         </div>
-        <div className="form-group">
+        <div className="bm-form-group">
           <input
             type="text"
             name="address"
@@ -217,39 +217,39 @@ const BarberManagement = () => {
             required
           />
         </div>
-        <div className="form-group image-upload">
+        <div className="bm-image-upload">
           <input
             type="file"
-            id="image-upload"
+            id="bm-image-upload"
             onChange={handleFileChange}
             accept="image/*"
             style={{ display: "none" }}
           />
-          <div className="image-upload-container">
-            <label htmlFor="image-upload" className="image-preview">
+          <div className="bm-image-upload-container">
+            <label htmlFor="bm-image-upload" className="bm-image-preview">
               {previewImage ? (
                 <img src={previewImage} alt="Preview" />
               ) : (
-                <div className="image-placeholder">Nhấn để chọn ảnh</div>
+                <div className="bm-image-placeholder">Nhấn để chọn ảnh</div>
               )}
             </label>
           </div>
         </div>
-        <div className="form-actions">
-          <button type="submit" className="submit-btn">
+        <div className="bm-form-actions">
+          <button type="submit" className="bm-submit-btn">
             {editingId ? "Cập nhật" : "Thêm mới"}
           </button>
           {editingId && (
-            <button type="button" className="cancel-btn" onClick={resetForm}>
+            <button type="button" className="bm-cancel-btn" onClick={resetForm}>
               Hủy
             </button>
           )}
         </div>
       </form>
 
-      {error && <p className="error">{error}</p>}
+      {error && <p className="bm-error">{error}</p>}
 
-      <div className="barber-list1">
+      <div className="bm-list">
         <table>
           <thead>
             <tr>
@@ -266,20 +266,20 @@ const BarberManagement = () => {
             {barbers.map((barber) => (
               <tr key={barber.id}>
                 <td>{barber.full_name}</td>
-                <td>{formatDate(barber.date_of_birth)}</td> {/* Sử dụng hàm formatDate */}
+                <td>{formatDate(barber.date_of_birth)}</td>
                 <td>{barber.experience_years} năm</td>
                 <td>{barber.phone}</td>
                 <td>{barber.address}</td>
                 <td>
                   {barber.image && (
-                    <img src={barber.image} alt={barber.full_name} className="barber-image" />
+                    <img src={barber.image} alt={barber.full_name} className="bm-barber-image" />
                   )}
                 </td>
                 <td>
-                  <button className="edit-btn" onClick={() => handleEdit(barber)}>
+                  <button className="bm-edit-btn" onClick={() => handleEdit(barber)}>
                     Sửa
                   </button>
-                  <button className="delete-btn" onClick={() => handleDelete(barber.id)}>
+                  <button className="bm-delete-btn" onClick={() => handleDelete(barber.id)}>
                     Xóa
                   </button>
                 </td>

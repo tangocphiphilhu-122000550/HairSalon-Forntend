@@ -21,7 +21,7 @@ const AppointmentManagement = () => {
   const [formData, setFormData] = useState({ status: "" });
   const [searchUsername, setSearchUsername] = useState("");
   const [selectedAppointmentId, setSelectedAppointmentId] = useState(null);
-  const { newAppointmentCount, setNewAppointmentCount } = useAppointmentContext(); // Thêm newAppointmentCount để kiểm tra
+  const { newAppointmentCount, setNewAppointmentCount } = useAppointmentContext();
 
   const clearNotification = () => {
     setTimeout(() => {
@@ -39,7 +39,7 @@ const AppointmentManagement = () => {
         (a) => a.status === "pending" || a.status === "confirmed"
       );
       setNewAppointments(newApps);
-      setNewAppointmentCount(newApps.length); // Đồng bộ số lượng với danh sách thực tế
+      setNewAppointmentCount(newApps.length);
     } catch (err) {
       setError("Lỗi khi tải danh sách lịch hẹn");
       setNotification({ message: "Không thể tải danh sách lịch hẹn!", type: "error" });
@@ -61,7 +61,7 @@ const AppointmentManagement = () => {
       setNotification({ message: data.message, type: "success" });
       setNewAppointments((prev) => {
         const updatedNewApps = [data.appointment, ...prev];
-        setNewAppointmentCount(updatedNewApps.length); // Đồng bộ ngay khi có lịch mới
+        setNewAppointmentCount(updatedNewApps.length);
         return updatedNewApps;
       });
       setAppointments((prev) => [data.appointment, ...prev]);
@@ -128,7 +128,7 @@ const AppointmentManagement = () => {
       if (formData.status === "completed" || formData.status === "cancelled") {
         setNewAppointments((prev) => {
           const updatedNewApps = prev.filter((a) => a.id !== appointmentId);
-          setNewAppointmentCount(updatedNewApps.length); // Đồng bộ khi xóa khỏi newAppointments
+          setNewAppointmentCount(updatedNewApps.length);
           return updatedNewApps;
         });
       }
@@ -149,7 +149,7 @@ const AppointmentManagement = () => {
         setAppointments(appointments.filter((a) => a.id !== appointmentId));
         setNewAppointments((prev) => {
           const updatedNewApps = prev.filter((a) => a.id !== appointmentId);
-          setNewAppointmentCount(updatedNewApps.length); // Đồng bộ khi xóa
+          setNewAppointmentCount(updatedNewApps.length);
           return updatedNewApps;
         });
         setSelectedAppointmentId(null);
@@ -174,7 +174,7 @@ const AppointmentManagement = () => {
       );
       setNewAppointments((prev) => {
         const updatedNewApps = prev.filter((a) => a.id !== appointmentId);
-        setNewAppointmentCount(updatedNewApps.length); // Đồng bộ khi hoàn thành
+        setNewAppointmentCount(updatedNewApps.length);
         return updatedNewApps;
       });
       setNotification({ message: "Lịch hẹn đã hoàn thành!", type: "success" });
@@ -203,217 +203,351 @@ const AppointmentManagement = () => {
   };
 
   return (
-    <div className="appointment-management">
+    <div className="am10-management">
       <h2>Quản lý Lịch hẹn</h2>
 
       {notification.message && (
-        <div className={`notification ${notification.type}`}>
+        <div className={`am10-notification ${notification.type}`}>
           <span>{notification.message}</span>
         </div>
       )}
 
       {newAppointments.length > 0 && (
-        <div className="new-appointments">
+        <div className="am10-new-appointments">
           <h3>Lịch hẹn mới</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Người dùng</th>
-                <th>Thợ cắt tóc</th>
-                <th>Dịch vụ</th>
-                <th>Ngày hẹn</th>
-                <th>Trạng thái</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {newAppointments.map((appointment) => (
-                <tr key={appointment.id}>
-                  <td>{appointment.user_name || "Không xác định"}</td>
-                  <td>{appointment.barber_name || "Không xác định"}</td>
-                  <td>{appointment.service_name || "Không xác định"}</td>
-                  <td>{formatDateTime(appointment.appointment_date)}</td>
-                  <td>{appointment.status}</td>
-                  <td>
+          <div className="am10-table-wrapper">
+            <table className="am10-table">
+              <thead className="am10-thead">
+                <tr>
+                  <th>Người dùng</th>
+                  <th>Thợ cắt tóc</th>
+                  <th>Dịch vụ</th>
+                  <th>Ngày hẹn</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                {newAppointments.map((appointment) => (
+                  <tr key={appointment.id} className="am10-row">
+                    <td data-label="Người dùng">{appointment.user_name || "Không xác định"}</td>
+                    <td data-label="Thợ cắt tóc">{appointment.barber_name || "Không xác định"}</td>
+                    <td data-label="Dịch vụ">{appointment.service_name || "Không xác định"}</td>
+                    <td data-label="Ngày hẹn">{formatDateTime(appointment.appointment_date)}</td>
+                    <td data-label="Trạng thái">{appointment.status}</td>
+                    <td data-label="Hành động">
+                      <button
+                        className="am10-complete-btn"
+                        onClick={() => handleComplete(appointment.id)}
+                      >
+                        Hoàn thành
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="am10-card-view">
+            {newAppointments.map((appointment) => (
+              <div key={appointment.id} className="am10-card">
+                <div className="am10-card-row">
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Người dùng:</span>
+                    <span>{appointment.user_name || "Không xác định"}</span>
+                  </div>
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Thợ cắt tóc:</span>
+                    <span>{appointment.barber_name || "Không xác định"}</span>
+                  </div>
+                </div>
+                <div className="am10-card-row">
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Dịch vụ:</span>
+                    <span>{appointment.service_name || "Không xác định"}</span>
+                  </div>
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Ngày hẹn:</span>
+                    <span>{formatDateTime(appointment.appointment_date)}</span>
+                  </div>
+                </div>
+                <div className="am10-card-row">
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Trạng thái:</span>
+                    <span>{appointment.status}</span>
+                  </div>
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Hành động:</span>
                     <button
-                      className="complete-btn"
+                      className="am10-complete-btn"
                       onClick={() => handleComplete(appointment.id)}
                     >
                       Hoàn thành
                     </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      <div className="search-bar">
+      <div className="am10-search-bar">
         <input
           type="text"
           placeholder="Nhập username để tìm lịch hẹn"
           value={searchUsername}
           onChange={(e) => setSearchUsername(e.target.value)}
         />
-        <button onClick={fetchAppointmentsByUsername}>Tìm kiếm</button>
-        <button onClick={fetchAppointments}>Hiển thị tất cả</button>
+        <button className="am10-button" onClick={fetchAppointmentsByUsername}>Tìm kiếm</button>
+        <button className="am10-button" onClick={fetchAppointments}>Hiển thị tất cả</button>
       </div>
 
       {loading ? (
         <p>Đang tải...</p>
       ) : error ? (
-        <p className="error">{error}</p>
+        <p className="am10-error">{error}</p>
       ) : (
-        <div className="appointment-list">
+        <div className="am10-appointment-list">
           <h3>Tất cả lịch hẹn</h3>
-          <table>
-            <thead>
-              <tr>
-                <th>Người dùng</th>
-                <th>Thợ cắt tóc</th>
-                <th>Dịch vụ</th>
-                <th>Ngày hẹn</th>
-                <th>Trạng thái</th>
-                <th>Tổng tiền</th>
-                <th>Đánh giá</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              {appointments.map((appointment) => (
-                <React.Fragment key={appointment.id}>
-                  <tr
-                    onClick={() => toggleDropdown(appointment.id)}
-                    className={selectedAppointmentId === appointment.id ? "selected" : ""}
-                  >
-                    <td>{appointment.user_name || "Không xác định"}</td>
-                    <td>{appointment.barber_name || "Không xác định"}</td>
-                    <td>{appointment.service_name || "Không xác định"}</td>
-                    <td>{formatDateTime(appointment.appointment_date)}</td>
-                    <td>
-                      {editingId === appointment.id ? (
-                        <select
-                          name="status"
-                          value={formData.status}
-                          onChange={handleFormChange}
-                        >
-                          <option value="pending">Chờ xử lý</option>
-                          <option value="confirmed">Đã xác nhận</option>
-                          <option value="completed">Hoàn thành</option>
-                          <option value="cancelled">Đã hủy</option>
-                        </select>
-                      ) : (
-                        appointment.status
-                      )}
-                    </td>
-                    <td>{appointment.total_amount} VNĐ</td>
-                    <td>
+          <div className="am10-table-wrapper">
+            <table className="am10-table">
+              <thead className="am10-thead">
+                <tr>
+                  <th>Người dùng</th>
+                  <th>Thợ cắt tóc</th>
+                  <th>Dịch vụ</th>
+                  <th>Ngày hẹn</th>
+                  <th>Trạng thái</th>
+                  <th>Tổng tiền</th>
+                  <th>Đánh giá</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                {appointments.map((appointment) => (
+                  <React.Fragment key={appointment.id}>
+                    <tr
+                      onClick={() => toggleDropdown(appointment.id)}
+                      className={`am10-row ${selectedAppointmentId === appointment.id ? "am10-selected" : ""}`}
+                    >
+                      <td data-label="Người dùng">{appointment.user_name || "Không xác định"}</td>
+                      <td data-label="Thợ cắt tóc">{appointment.barber_name || "Không xác định"}</td>
+                      <td data-label="Dịch vụ">{appointment.service_name || "Không xác định"}</td>
+                      <td data-label="Ngày hẹn">{formatDateTime(appointment.appointment_date)}</td>
+                      <td data-label="Trạng thái">
+                        {editingId === appointment.id ? (
+                          <select
+                            className="am10-select"
+                            name="status"
+                            value={formData.status}
+                            onChange={handleFormChange}
+                          >
+                            <option value="pending">Chờ xử lý</option>
+                            <option value="confirmed">Đã xác nhận</option>
+                            <option value="completed">Hoàn thành</option>
+                            <option value="cancelled">Đã hủy</option>
+                          </select>
+                        ) : (
+                          appointment.status
+                        )}
+                      </td>
+                      <td data-label="Tổng tiền">{appointment.total_amount} VNĐ</td>
+                      <td data-label="Đánh giá">
+                        {appointment.rating
+                          ? `${appointment.rating}/5${appointment.review_text ? ` - ${appointment.review_text}` : ""}`
+                          : "Chưa đánh giá"}
+                      </td>
+                      <td data-label="Hành động">
+                        {editingId === appointment.id ? (
+                          <>
+                            <button
+                              className="am10-save-btn"
+                              onClick={() => handleUpdate(appointment.id)}
+                            >
+                              Lưu
+                            </button>
+                            <button
+                              className="am10-cancel-btn"
+                              onClick={() => setEditingId(null)}
+                            >
+                              Hủy
+                            </button>
+                          </>
+                        ) : (
+                          <span>Nhấn để xem</span>
+                        )}
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="am10-card-view">
+            {appointments.map((appointment) => (
+              <div
+                key={appointment.id}
+                className={`am10-card ${selectedAppointmentId === appointment.id ? "am10-selected" : ""}`}
+                onClick={() => toggleDropdown(appointment.id)}
+              >
+                <div className="am10-card-row">
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Người dùng:</span>
+                    <span>{appointment.user_name || "Không xác định"}</span>
+                  </div>
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Thợ cắt tóc:</span>
+                    <span>{appointment.barber_name || "Không xác định"}</span>
+                  </div>
+                </div>
+                <div className="am10-card-row">
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Dịch vụ:</span>
+                    <span>{appointment.service_name || "Không xác định"}</span>
+                  </div>
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Ngày hẹn:</span>
+                    <span>{formatDateTime(appointment.appointment_date)}</span>
+                  </div>
+                </div>
+                <div className="am10-card-row">
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Trạng thái:</span>
+                    {editingId === appointment.id ? (
+                      <select
+                        className="am10-select"
+                        name="status"
+                        value={formData.status}
+                        onChange={handleFormChange}
+                      >
+                        <option value="pending">Chờ xử lý</option>
+                        <option value="confirmed">Đã xác nhận</option>
+                        <option value="completed">Hoàn thành</option>
+                        <option value="cancelled">Đã hủy</option>
+                      </select>
+                    ) : (
+                      <span>{appointment.status}</span>
+                    )}
+                  </div>
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Tổng tiền:</span>
+                    <span>{appointment.total_amount} VNĐ</span>
+                  </div>
+                </div>
+                <div className="am10-card-row">
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Đánh giá:</span>
+                    <span>
                       {appointment.rating
                         ? `${appointment.rating}/5${appointment.review_text ? ` - ${appointment.review_text}` : ""}`
                         : "Chưa đánh giá"}
-                    </td>
-                    <td>
-                      {editingId === appointment.id ? (
-                        <>
-                          <button
-                            className="save-btn"
-                            onClick={() => handleUpdate(appointment.id)}
-                          >
-                            Lưu
-                          </button>
-                          <button
-                            className="cancel-btn"
-                            onClick={() => setEditingId(null)}
-                          >
-                            Hủy
-                          </button>
-                        </>
-                      ) : (
-                        <span>Nhấn để xem</span>
-                      )}
-                    </td>
-                  </tr>
-                  {selectedAppointmentId === appointment.id && (
-                   <div className="dropdown-modal">
-                   <div className="dropdown-content">
-                     <span
-                       className="close-dropdown"
-                       onClick={(e) => {
-                         e.stopPropagation();
-                         setSelectedAppointmentId(null);
-                       }}
-                     >
-                       ×
-                     </span>
-                     
-                     <h3 style={{ marginTop: 0, marginBottom: 20 }}>Chi tiết lịch hẹn</h3>
-                     
-                     <div className="appointment-details">
-                       <div className="detail-item">
-                         <span className="detail-label">ID:</span>
-                         <span className="detail-value">{appointment.id}</span>
-                       </div>
-                       
-                       <div className="detail-item">
-                         <span className="detail-label">Người dùng:</span>
-                         <span className="detail-value">{appointment.user_name || "Không xác định"}</span>
-                       </div>
-                       
-                       <div className="detail-item">
-                         <span className="detail-label">Thợ cắt tóc:</span>
-                         <span className="detail-value">{appointment.barber_name || "Không xác định"}</span>
-                       </div>
-                       
-                       <div className="detail-item">
-                         <span className="detail-label">Dịch vụ:</span>
-                         <span className="detail-value">{appointment.service_name || "Không xác định"}</span>
-                       </div>
-                       
-                       <div className="detail-item">
-                         <span className="detail-label">Ngày hẹn:</span>
-                         <span className="detail-value">{formatDateTime(appointment.appointment_date)}</span>
-                       </div>
-                       
-                       <div className="detail-item">
-                         <span className="detail-label">Trạng thái:</span>
-                         <span className="detail-value">{appointment.status}</span>
-                       </div>
-                       
-                       <div className="detail-item">
-                         <span className="detail-label">Tổng tiền:</span>
-                         <span className="detail-value">{appointment.total_amount} VNĐ</span>
-                       </div>
-                       
-                       <div className="detail-item">
-                         <span className="detail-label">Đánh giá:</span>
-                         <span className="detail-value">{appointment.rating ? `${appointment.rating}/5` : "Chưa đánh giá"}</span>
-                       </div>
-                       
-                       <div className="review-section">
-                         <span className="detail-label">Nội dung đánh giá:</span>
-                         <p className="detail-value" style={{ margin: '5px 0' }}>{appointment.review_text || "Không có"}</p>
-                       </div>
-                     </div>
-                     
-                     <div className="dropdown-actions">
-                       <button
-                         className="delete-btn"
-                         onClick={(e) => {
-                           e.stopPropagation();
-                           handleDelete(appointment.id);
-                         }}
-                       >
-                         Xóa
-                       </button>
-                     </div>
-                   </div>
-                 </div>
-                  )}
-                </React.Fragment>
+                    </span>
+                  </div>
+                  <div className="am10-card-item">
+                    <span className="am10-card-label">Hành động:</span>
+                    {editingId === appointment.id ? (
+                      <>
+                        <button
+                          className="am10-save-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleUpdate(appointment.id);
+                          }}
+                        >
+                          Lưu
+                        </button>
+                        <button
+                          className="am10-cancel-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setEditingId(null);
+                          }}
+                        >
+                          Hủy
+                        </button>
+                      </>
+                    ) : (
+                      <span>Nhấn để xem chi tiết</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {selectedAppointmentId && (
+        <div className="am10-dropdown-modal">
+          <div className="am10-dropdown-content">
+            <span
+              className="am10-close-dropdown"
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedAppointmentId(null);
+              }}
+            >
+              ×
+            </span>
+
+            <h3 style={{ marginTop: 0, marginBottom: 20 }}>Chi tiết lịch hẹn</h3>
+
+            {appointments
+              .filter((appointment) => appointment.id === selectedAppointmentId)
+              .map((appointment) => (
+                <div key={appointment.id} className="am10-appointment-details">
+                  <div className="am10-detail-item">
+                    <span className="am10-detail-label">ID:</span>
+                    <span className="am10-detail-value">{appointment.id}</span>
+                  </div>
+                  <div className="am10-detail-item">
+                    <span className="am10-detail-label">Người dùng:</span>
+                    <span className="am10-detail-value">{appointment.user_name || "Không xác định"}</span>
+                  </div>
+                  <div className="am10-detail-item">
+                    <span className="am10-detail-label">Thợ cắt tóc:</span>
+                    <span className="am10-detail-value">{appointment.barber_name || "Không xác định"}</span>
+                  </div>
+                  <div className="am10-detail-item">
+                    <span className="am10-detail-label">Dịch vụ:</span>
+                    <span className="am10-detail-value">{appointment.service_name || "Không xác định"}</span>
+                  </div>
+                  <div className="am10-detail-item">
+                    <span className="am10-detail-label">Ngày hẹn:</span>
+                    <span className="am10-detail-value">{formatDateTime(appointment.appointment_date)}</span>
+                  </div>
+                  <div className="am10-detail-item">
+                    <span className="am10-detail-label">Trạng thái:</span>
+                    <span className="am10-detail-value">{appointment.status}</span>
+                  </div>
+                  <div className="am10-detail-item">
+                    <span className="am10-detail-label">Tổng tiền:</span>
+                    <span className="am10-detail-value">{appointment.total_amount} VNĐ</span>
+                  </div>
+                  <div className="am10-detail-item">
+                    <span className="am10-detail-label">Đánh giá:</span>
+                    <span className="am10-detail-value">{appointment.rating ? `${appointment.rating}/5` : "Chưa đánh giá"}</span>
+                  </div>
+                  <div className="am10-review-section">
+                    <span className="am10-detail-label">Nội dung đánh giá:</span>
+                    <p className="am10-detail-value" style={{ margin: "5px 0" }}>{appointment.review_text || "Không có"}</p>
+                  </div>
+                </div>
               ))}
-            </tbody>
-          </table>
+
+            <div className="am10-dropdown-actions">
+              <button
+                className="am10-delete-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(selectedAppointmentId);
+                }}
+              >
+                Xóa
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

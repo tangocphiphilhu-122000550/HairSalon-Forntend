@@ -1,33 +1,41 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { getToken } from "../utils/tokenStorage"; // Hàm lấy token từ IndexedDB
+import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom"; // Bỏ Outlet nếu không cần
+import { getToken } from "../utils/tokenStorage";
 import { jwtDecode } from "jwt-decode";
+import Admin from "../Admin/Admin.js"; // Import trực tiếp Admin
 
+const ProtectedRoute = ({ allowedUserTypeId = 1 }) => {
+  const [userTypeId, setUserTypeId] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    const checkUserType = async () => {
+      try {
+        const token = await getToken();
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          setUserTypeId(decodedToken.user_type_id);
+        } else {
+          setUserTypeId(null);
+        }
+      } catch (error) {
+        setUserTypeId(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-const ProtectedRoute = ({ children }) => {
-  const token = getToken();
+    checkUserType();
+  }, []);
 
-  if (!token) {
-    // Nếu không có token, chuyển hướng về trang đăng nhập
-    return <Navigate to="/auth" replace />;
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
-  try {
-    const decodedToken = jwtDecode(token);
-    const userTypeId = decodedToken.user_type_id;
-
-    if (userTypeId !== 1) {
-      // Nếu không phải admin, chuyển hướng về trang chủ
-      return <Navigate to="/" replace />;
-    }
-
-    // Nếu là admin, cho phép truy cập
-    return children;
-  } catch (error) {
-    // Nếu token không hợp lệ, chuyển hướng về trang đăng nhập
-    return <Navigate to="/auth" replace />;
+  if (userTypeId !== allowedUserTypeId) {
+    return <Navigate to="/" replace />;
   }
+  return <Admin />; // Render trực tiếp thay vì Outlet
 };
 
 export default ProtectedRoute;

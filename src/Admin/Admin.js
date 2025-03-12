@@ -18,7 +18,7 @@ import ProductManagement from "./ProductManagement";
 import OrderManagement from "./OrderManagement";
 import BarberManagement from "./BarberManagement";
 import AppointmentManagement from "./AppointmentManagement";
-import StatsManagement from "./StatsManagement"; // Import component mới
+import StatsManagement from "./StatsManagement";
 import { useAppointmentContext } from "../context/AppointmentContext";
 import api from "../utils/api";
 import io from "socket.io-client";
@@ -37,6 +37,7 @@ const Admin = () => {
   const { newAppointmentCount, setNewAppointmentCount } = useAppointmentContext();
   const [newOrderCount, setNewOrderCount] = useState(0);
   const [notification, setNotification] = useState({ message: "", type: "" });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // State cho toggle sidebar
 
   const clearNotification = () => {
     setTimeout(() => {
@@ -107,9 +108,13 @@ const Admin = () => {
     navigate("/auth");
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <div className="admin-page">
-      <aside className="admin-sidebar">
+      <aside className={`admin-sidebar ${isSidebarOpen ? "open" : ""}`}>
         <div className="sidebar-header">
           <h2>Admin Panel</h2>
         </div>
@@ -118,37 +123,37 @@ const Admin = () => {
             className={activeTab === "users" ? "active" : ""}
             onClick={() => setActiveTab("users")}
           >
-            <FaUsers className="menu-icon" /> Quản lý người dùng
+            <FaUsers className="menu-icon" /> <span>Quản lý người dùng</span>
           </li>
           <li
             className={activeTab === "stats" ? "active" : ""}
             onClick={() => setActiveTab("stats")}
           >
-            <FaChartLine className="menu-icon" /> Thống kê
+            <FaChartLine className="menu-icon" /> <span>Thống kê</span>
           </li>
           <li
             className={activeTab === "services" ? "active" : ""}
             onClick={() => setActiveTab("services")}
           >
-            <FaCog className="menu-icon" /> Quản lý dịch vụ
+            <FaCog className="menu-icon" /> <span>Quản lý dịch vụ</span>
           </li>
           <li
             className={activeTab === "reviews" ? "active" : ""}
             onClick={() => setActiveTab("reviews")}
           >
-            <FaStar className="menu-icon" /> Quản lý Review
+            <FaStar className="menu-icon" /> <span>Quản lý Review</span>
           </li>
           <li
             className={activeTab === "products" ? "active" : ""}
             onClick={() => setActiveTab("products")}
           >
-            <FaBox className="menu-icon" /> Quản lý Sản phẩm
+            <FaBox className="menu-icon" /> <span>Quản lý Sản phẩm</span>
           </li>
           <li
             className={activeTab === "orders" ? "active" : ""}
             onClick={() => setActiveTab("orders")}
           >
-            <FaShoppingCart className="menu-icon" /> Quản lý Đơn hàng
+            <FaShoppingCart className="menu-icon" /> <span>Quản lý Đơn hàng</span>
             {newOrderCount > 0 && (
               <span className="new-appointment-count">{newOrderCount}</span>
             )}
@@ -157,24 +162,27 @@ const Admin = () => {
             className={activeTab === "barbers" ? "active" : ""}
             onClick={() => setActiveTab("barbers")}
           >
-            <FaCut className="menu-icon" /> Quản lý Thợ cắt tóc
+            <FaCut className="menu-icon" /> <span>Quản lý Thợ cắt tóc</span>
           </li>
           <li
             className={activeTab === "appointments" ? "active" : ""}
             onClick={() => setActiveTab("appointments")}
           >
-            <FaCalendarAlt className="menu-icon" /> Quản lý Lịch hẹn
+            <FaCalendarAlt className="menu-icon" /> <span>Quản lý Lịch hẹn</span>
             {newAppointmentCount > 0 && (
               <span className="new-appointment-count">{newAppointmentCount}</span>
             )}
           </li>
           <li onClick={handleLogout}>
-            <FaSignOutAlt className="menu-icon" /> Đăng xuất
+            <FaSignOutAlt className="menu-icon" /> <span>Đăng xuất</span>
           </li>
         </ul>
       </aside>
 
       <main className="admin-content">
+        <button className="sidebar-toggle" onClick={toggleSidebar}>
+          ☰
+        </button>
         <header className="admin-header">
           <h1>Chào mừng đến với Bảng điều khiển Admin</h1>
         </header>
@@ -187,7 +195,7 @@ const Admin = () => {
 
         <section className="tab-content">
           {activeTab === "users" && <UserManagement />}
-          {activeTab === "stats" && <StatsManagement />} {/* Sử dụng component mới */}
+          {activeTab === "stats" && <StatsManagement />}
           {activeTab === "services" && <ServiceManagement />}
           {activeTab === "reviews" && <ReviewManagement />}
           {activeTab === "products" && <ProductManagement />}

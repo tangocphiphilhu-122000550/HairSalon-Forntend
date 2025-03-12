@@ -46,7 +46,7 @@ function App() {
         <Route path="/OrderHistory" element={<MainLayout><OrderHistory /></MainLayout>} />
         <Route path="/About" element={<MainLayout><About /></MainLayout>} />
         <Route path="/ProtectedRoute" element={<MainLayout><ProtectedRoute /></MainLayout>} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<ProtectedRoute allowedUserTypeId={1} />} />
         <Route path="/UserManagement" element={<UserManagement />} />
         <Route path="/ServiceManagement" element={<ServiceManagement />} />
         <Route path="/ProductManagement" element={<ProductManagement />} /> 

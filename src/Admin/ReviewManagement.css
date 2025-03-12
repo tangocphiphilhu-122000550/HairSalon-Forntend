@@ -61,44 +61,46 @@
     border-radius: 4px;
   }
   
-  .edit-actions,
-  .review-actions {
+  .edit-actions2,
+  .review-actions2 {
     display: flex;
     gap: 10px;
     margin-top: 10px;
   }
   
-  .action-btn {
+  .action-btn2 {
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
   
-  .save-btn {
+  .save-btn2 {
     background-color: #4caf50;
     color: white;
   }
   
-  .save-btn:hover {
+  .save-btn2:hover {
     background-color: #45a049;
   }
   
-  .delete-btn {
-    background-color: #f44336;
+  .action-btn-delete-btn2 {
+    background-color: #b95149;
     color: white;
+    width: 96px;
+    border-radius: 10px;
   }
   
-  .delete-btn:hover {
+  .action-btn-delete-btn2:hover {
     background-color: #da190b;
   }
   
-  .cancel-btn {
+  .cancel-btn2 {
     background-color: #ccc;
     color: black;
   }
   
-  .cancel-btn:hover {
+  .cancel-btn2:hover {
     background-color: #bbb;
   }
   
@@ -134,20 +136,20 @@
     text-align: center;
   }
   
-  .confirmation-actions {
+  .confirmation-actions2 {
     margin-top: 15px;
   }
   
-  .confirmation-actions button {
+  .confirmation-actions2 button {
     margin: 0 26px;
     padding: 8px 16px;
   }
   
-  .confirm-btn {
+  .confirm-btn2 {
     background-color: #4caf50;
     color: white;
   }
   
-  .confirm-btn:hover {
+  .confirm-btn2:hover {
     background-color: #45a049;
   }

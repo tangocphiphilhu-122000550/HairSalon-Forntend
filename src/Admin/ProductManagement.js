@@ -191,29 +191,29 @@ const ProductManagement = () => {
   };
 
   return (
-    <div className="product-management-tab">
+    <div className="pm-tab">
       <h2>Quản lý Sản phẩm</h2>
-      <div className="product-management-header">
-        <div className="product-search-container">
-          <form className="product-search-form">
+      <div className="pm-header">
+        <div className="pm-search-container">
+          <form className="pm-search-form">
             <input
               type="text"
               placeholder="Tìm kiếm theo tên sản phẩm..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="product-search-input"
+              className="pm-search-input"
             />
-            <button type="submit" className="product-search-btn" disabled>
+            <button type="submit" className="pm-search-btn" disabled>
               <FaSearch />
             </button>
           </form>
           {suggestions.length > 0 && (
-            <ul className="product-suggestions-dropdown">
+            <ul className="pm-suggestions-dropdown">
               {suggestions.map((product) => (
                 <li
                   key={product.name}
                   onClick={() => handleSuggestionClick(product)}
-                  className="product-suggestion-item"
+                  className="pm-suggestion-item"
                 >
                   {product.name}
                 </li>
@@ -221,16 +221,13 @@ const ProductManagement = () => {
             </ul>
           )}
         </div>
-        <button
-          className="product-add-btn"
-          onClick={() => setShowAddForm(true)}
-        >
+        <button className="pm-add-btn" onClick={() => setShowAddForm(true)}>
           Thêm sản phẩm
         </button>
       </div>
 
       {showAddForm && (
-        <div className="product-add-form">
+        <div className="pm-add-form">
           <h3>Thêm sản phẩm mới</h3>
           <input
             type="text"
@@ -238,7 +235,7 @@ const ProductManagement = () => {
             value={addFormData.name}
             onChange={handleAddFormChange}
             placeholder="Tên sản phẩm"
-            className="product-add-input"
+            className="pm-add-input"
           />
           <input
             type="number"
@@ -246,7 +243,7 @@ const ProductManagement = () => {
             value={addFormData.price}
             onChange={handleAddFormChange}
             placeholder="Giá (VNĐ)"
-            className="product-add-input"
+            className="pm-add-input"
           />
           <input
             type="number"
@@ -254,33 +251,27 @@ const ProductManagement = () => {
             value={addFormData.stock}
             onChange={handleAddFormChange}
             placeholder="Số lượng tồn kho"
-            className="product-add-input"
+            className="pm-add-input"
           />
           <textarea
             name="description"
             value={addFormData.description}
             onChange={handleAddFormChange}
             placeholder="Mô tả"
-            className="product-add-textarea"
+            className="pm-add-textarea"
           />
           <input
             type="file"
             name="image"
             accept="image/*"
             onChange={handleAddFormChange}
-            className="product-add-file"
+            className="pm-add-file"
           />
-          <div className="product-edit-actions">
-            <button
-              className="product-save-btn"
-              onClick={handleConfirmAdd}
-            >
+          <div className="pm-edit-actions">
+            <button className="pm-save-btn" onClick={handleConfirmAdd}>
               Thêm
             </button>
-            <button
-              className="product-cancel-btn"
-              onClick={() => setShowAddForm(false)}
-            >
+            <button className="pm-cancel-btn" onClick={() => setShowAddForm(false)}>
               Hủy
             </button>
           </div>
@@ -288,19 +279,19 @@ const ProductManagement = () => {
       )}
 
       {notification.message && (
-        <div className={`product-notification ${notification.type}`}>
+        <div className={`pm-notification ${notification.type}`}>
           <span>{notification.message}</span>
         </div>
       )}
 
       {confirmAction && (
-        <div className="product-confirmation">
+        <div className="pm-confirmation">
           <p>{confirmAction.message}</p>
-          <div className="product-confirmation-actions">
-            <button className="product-confirm-btn" onClick={confirmActionHandler}>
+          <div className="pm-confirmation-actions">
+            <button className="pm-confirm-btn" onClick={confirmActionHandler}>
               Xác nhận
             </button>
-            <button className="product-cancel-btn" onClick={cancelActionHandler}>
+            <button className="pm-cancel-btn" onClick={cancelActionHandler}>
               Hủy
             </button>
           </div>
@@ -310,19 +301,19 @@ const ProductManagement = () => {
       {loading ? (
         <p>Đang tải...</p>
       ) : (
-        <div className="product-list">
+        <div className="pm-list">
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
-              <div key={product.name} className="product-item">
+              <div key={product.name} className="pm-item">
                 {editProduct === product.name ? (
-                  <div className="product-edit-form">
+                  <div className="pm-edit-form">
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleFormChange}
                       placeholder="Tên sản phẩm"
-                      className="product-edit-input"
+                      className="pm-edit-input"
                     />
                     <input
                       type="number"
@@ -330,7 +321,7 @@ const ProductManagement = () => {
                       value={formData.price}
                       onChange={handleFormChange}
                       placeholder="Giá (VNĐ)"
-                      className="product-edit-input"
+                      className="pm-edit-input"
                     />
                     <input
                       type="number"
@@ -338,26 +329,23 @@ const ProductManagement = () => {
                       value={formData.stock}
                       onChange={handleFormChange}
                       placeholder="Số lượng tồn kho"
-                      className="product-edit-input"
+                      className="pm-edit-input"
                     />
                     <textarea
                       name="description"
                       value={formData.description}
                       onChange={handleFormChange}
                       placeholder="Mô tả"
-                      className="product-edit-textarea"
+                      className="pm-edit-textarea"
                     />
-                    <div className="product-edit-actions">
+                    <div className="pm-edit-actions">
                       <button
-                        className="product-save-btn"
+                        className="pm-save-btn"
                         onClick={() => handleConfirmUpdate(product.name)}
                       >
                         Lưu
                       </button>
-                      <button
-                        className="product-cancel-btn"
-                        onClick={() => setEditProduct(null)}
-                      >
+                      <button className="pm-cancel-btn" onClick={() => setEditProduct(null)}>
                         Hủy
                       </button>
                     </div>
@@ -368,30 +356,23 @@ const ProductManagement = () => {
                     <p>Giá: {product.price} VNĐ</p>
                     <p>Số lượng tồn kho: {product.stock}</p>
                     <p
-                      className={`product-description ${expandedDescriptions[product.name] ? "expanded" : "collapsed"}`}
+                      className={`pm-description ${expandedDescriptions[product.name] ? "expanded" : "collapsed"}`}
                       onClick={() => toggleDescription(product.name)}
                     >
                       Mô tả: {product.description || "Chưa có"}
                       {!expandedDescriptions[product.name] && product.description && (
-                        <span className="product-see-more">... Xem thêm</span>
+                        <span className="pm-see-more">... Xem thêm</span>
                       )}
                     </p>
                     {product.image_url && (
-                      <img
-                        src={product.image_url}
-                        alt={product.name}
-                        className="product-image1"
-                      />
+                      <img src={product.image_url} alt={product.name} className="pm-image" />
                     )}
-                    <div className="product-actions">
-                      <button
-                        className="product-edit-btn"
-                        onClick={() => handleEdit(product)}
-                      >
+                    <div className="pm-actions">
+                      <button className="pm-edit-btn" onClick={() => handleEdit(product)}>
                         Chỉnh sửa
                       </button>
                       <button
-                        className="product-delete-btn"
+                        className="pm-delete-btn"
                         onClick={() => handleConfirmDelete(product.name)}
                       >
                         Xóa

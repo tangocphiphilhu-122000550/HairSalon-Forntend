@@ -306,15 +306,15 @@ const ServiceManagement = () => {
                       onChange={handleFormChange}
                       placeholder="Thời gian (phút)"
                     />
-                    <div className="edit-actions">
+                    <div className="edit-actions1">
                       <button
-                        className="action-btn save-btn"
+                        className="action-btn save-btn1"
                         onClick={() => handleConfirmUpdate(service.service_name)}
                       >
                         Lưu
                       </button>
                       <button
-                        className="action-btn cancel-btn"
+                        className="action-btn cancel-btn1"
                         onClick={() => setEditService(null)}
                       >
                         Hủy
@@ -327,15 +327,15 @@ const ServiceManagement = () => {
                     <p>Mô tả: {service.description || "Chưa có"}</p>
                     <p>Giá: {service.price} VNĐ</p>
                     <p>Thời gian: {service.duration_minutes} phút</p>
-                    <div className="service-actions">
+                    <div className="service-actions1">
                       <button
-                        className="action-btn"
+                        className="action-btn1"
                         onClick={() => handleEdit(service)}
                       >
                         Chỉnh sửa
                       </button>
                       <button
-                        className="action-btn delete-btn"
+                        className="action-btn delete-btn1"
                         onClick={() => handleConfirmDelete(service.service_name)}
                       >
                         Xóa

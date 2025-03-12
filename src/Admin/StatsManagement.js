@@ -21,10 +21,18 @@ const StatsManagement = () => {
   const [monthlyData, setMonthlyData] = useState({});
   const [quarterlyData, setQuarterlyData] = useState({});
   const [yearlyData, setYearlyData] = useState({});
-  const [viewMode, setViewMode] = useState("month"); // Chế độ xem
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); // Năm được chọn
+  const [viewMode, setViewMode] = useState("month");
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth); // Theo dõi chiều rộng màn hình
+
+  // Theo dõi kích thước màn hình để điều chỉnh biểu đồ
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -92,14 +100,8 @@ const StatsManagement = () => {
         setQuarterlyData(quarterlyStats);
         setYearlyData(yearlyStats);
 
-        console.log("Doanh thu theo ngày:", dailyStats);
-        console.log("Doanh thu theo tháng:", monthlyStats);
-        console.log("Doanh thu theo quý:", quarterlyStats);
-        console.log("Doanh thu theo năm:", yearlyStats);
-
         setError("");
       } catch (err) {
-        console.error("Lỗi khi lấy dữ liệu thống kê:", err);
         setError("Không thể tải dữ liệu thống kê");
       } finally {
         setLoading(false);
@@ -109,7 +111,7 @@ const StatsManagement = () => {
     fetchStats();
   }, []);
 
-  // Hàm lấy dữ liệu biểu đồ dựa trên chế độ xem và năm được chọn
+  // Hàm lấy dữ liệu biểu đồ với logic responsive
   const getChartData = () => {
     let labels = [];
     let appointmentsData = [];
@@ -117,7 +119,6 @@ const StatsManagement = () => {
     let title = `Doanh thu năm ${selectedYear} (VNĐ)`;
 
     if (viewMode === "day") {
-      // Hiển thị tất cả ngày trong tháng hiện tại của năm được chọn
       const daysInMonth = new Date(selectedYear, new Date().getMonth() + 1, 0).getDate();
       for (let day = 1; day <= daysInMonth; day++) {
         const dayKey = `${selectedYear}-${String(new Date().getMonth() + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
@@ -127,7 +128,6 @@ const StatsManagement = () => {
       }
       title = `Doanh thu theo ngày (Tháng ${new Date().getMonth() + 1}/${selectedYear})`;
     } else if (viewMode === "month") {
-      // Hiển thị 12 tháng trong năm được chọn
       for (let month = 1; month <= 12; month++) {
         const monthKey = `${selectedYear}-${month}`;
         labels.push(`Tháng ${month}`);
@@ -136,7 +136,6 @@ const StatsManagement = () => {
       }
       title = `Doanh thu theo tháng (${selectedYear})`;
     } else if (viewMode === "quarter") {
-      // Hiển thị 4 quý trong năm được chọn
       for (let quarter = 1; quarter <= 4; quarter++) {
         const quarterKey = `${selectedYear}-Q${quarter}`;
         labels.push(`Q${quarter}`);
@@ -145,7 +144,6 @@ const StatsManagement = () => {
       }
       title = `Doanh thu theo quý (${selectedYear})`;
     } else if (viewMode === "year") {
-      // Hiển thị 5 năm gần nhất từ năm được chọn
       for (let i = 4; i >= 0; i--) {
         const year = selectedYear - i;
         const yearKey = `${year}`;
@@ -178,23 +176,55 @@ const StatsManagement = () => {
     };
   };
 
+  // Tùy chỉnh chart options dựa trên kích thước màn hình
   const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false, // Cho phép biểu đồ co giãn tự do
     plugins: {
-      legend: { position: "top" },
-      title: { display: true, text: getChartData().title },
+      legend: {
+        position: windowWidth <= 768 ? "bottom" : "top", // Chuyển legend xuống dưới trên mobile
+        labels: {
+          font: {
+            size: windowWidth <= 480 ? 10 : 12, // Giảm font-size trên mobile nhỏ
+          },
+        },
+      },
+      title: {
+        display: true,
+        text: getChartData().title,
+        font: {
+          size: windowWidth <= 480 ? 14 : 16, // Giảm font-size tiêu đề trên mobile nhỏ
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.dataset.label}: ${context.raw.toLocaleString("vi-VN")} VNĐ`,
+        },
+      },
     },
     scales: {
+      x: {
+        ticks: {
+          maxRotation: windowWidth <= 768 ? 45 : 0, // Xoay nhãn trục x trên mobile
+          minRotation: windowWidth <= 768 ? 45 : 0,
+          font: {
+            size: windowWidth <= 480 ? 10 : 12, // Giảm font-size trên mobile nhỏ
+          },
+        },
+      },
       y: {
         beginAtZero: true,
         ticks: {
           callback: (value) => value.toLocaleString("vi-VN"),
+          font: {
+            size: windowWidth <= 480 ? 10 : 12, // Giảm font-size trên mobile nhỏ
+          },
         },
       },
     },
   };
 
-  // Doanh thu hiện tại dựa trên viewMode và selectedYear
+  // Doanh thu hiện tại
   const now = new Date();
   const currentKey =
     viewMode === "day"
@@ -275,7 +305,7 @@ const StatsManagement = () => {
             </div>
           </div>
           <div className="stats-chart">
-            <Bar data={getChartData()} options={chartOptions} />
+            <Bar data={getChartData()} options={chartOptions} height={windowWidth <= 768 ? 300 : 400} />
           </div>
         </>
       )}

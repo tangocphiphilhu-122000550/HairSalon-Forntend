@@ -169,11 +169,11 @@ const ReviewManagement = () => {
       {confirmAction && (
         <div className="confirmation-dropdown">
           <p>{confirmAction.message}</p>
-          <div className="confirmation-actions">
-            <button className="action-btn confirm-btn" onClick={confirmActionHandler}>
+          <div className="confirmation-actions2">
+            <button className="action-btn confirm-btn2" onClick={confirmActionHandler}>
               Xác nhận
             </button>
-            <button className="action-btn cancel-btn" onClick={cancelActionHandler}>
+            <button className="action-btn cancel-btn2" onClick={cancelActionHandler}>
               Hủy
             </button>
           </div>
@@ -204,15 +204,15 @@ const ReviewManagement = () => {
                       onChange={handleFormChange}
                       placeholder="Nhận xét"
                     />
-                    <div className="edit-actions">
+                    <div className="edit-actions2">
                       <button
-                        className="action-btn save-btn"
+                        className="action-btn save-btn2"
                         onClick={() => handleConfirmUpdate(review.id)}
                       >
                         Lưu
                       </button>
                       <button
-                        className="action-btn cancel-btn"
+                        className="action-btn cancel-btn2"
                         onClick={() => setEditReview(null)}
                       >
                         Hủy
@@ -224,15 +224,15 @@ const ReviewManagement = () => {
                     <h3>{review.username || "Không có tên"}</h3>
                     <p>Điểm: {review.rating}</p>
                     <p>Nhận xét: {review.comment || "Chưa có"}</p>
-                    <div className="review-actions">
+                    <div className="review-actions2">
                       <button
-                        className="action-btn"
+                        className="action-btn2"
                         onClick={() => handleEdit(review)}
                       >
                         Chỉnh sửa
                       </button>
                       <button
-                        className="action-btn delete-btn"
+                        className="action-btn-delete-btn2"
                         onClick={() => handleConfirmDelete(review.id)}
                       >
                         Xóa

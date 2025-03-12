@@ -17,6 +17,7 @@
   position: fixed;
   height: 100%;
   transition: width 0.3s ease;
+  z-index: 1000;
 }
 
 .sidebar-header {
@@ -28,6 +29,7 @@
   font-size: 1.8rem;
   font-weight: 700;
   color: #fff;
+  margin: 0;
 }
 
 .sidebar-menu {
@@ -44,6 +46,7 @@
   cursor: pointer;
   border-radius: 8px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .sidebar-menu li:hover,
@@ -55,16 +58,21 @@
 .menu-icon {
   margin-right: 1rem;
   font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.sidebar-menu li span {
+  font-size: 1rem;
 }
 
 .new-appointment-count {
-  position: absolute; /* Đặt vị trí tuyệt đối */
-  top: 2px; /* Cách đỉnh 2px */
-  right: 2px; /* Cách phải 2px */
+  position: absolute;
+  top: 2px;
+  right: 2px;
   background-color: red;
   color: white;
   border-radius: 50%;
-  padding: 2px 6px; /* Giảm padding một chút để nhỏ gọn hơn */
+  padding: 2px 6px;
   font-size: 12px;
 }
 
@@ -73,8 +81,30 @@
   flex: 1;
   margin-left: 250px;
   padding: 2rem;
+  transition: margin-left 0.3s ease;
 }
 
+/* Sidebar Toggle Button */
+.sidebar-toggle {
+  display: none; /* Ẩn trên desktop */
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1100;
+  background: #1e3c72;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.8rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.sidebar-toggle:hover {
+  background: #2a5298;
+}
+
+/* Admin Header */
 .admin-header {
   background: #fff;
   padding: 1.5rem;
@@ -135,38 +165,164 @@
   margin: 0;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* Responsive Design */
+@media (max-width: 1024px) {
+  /* Tablet */
   .admin-sidebar {
-    width: 80px;
-    padding: 1rem;
+    width: 200px;
+    padding: 1.5rem 0rem;
   }
 
-  .sidebar-header h2,
-  .sidebar-menu li span {
-    display: none;
+  .sidebar-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .sidebar-menu li {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .menu-icon {
+    margin-right: 0.8rem;
   }
 
   .admin-content {
-    margin-left: 80px;
+    margin-left: 200px;
+    padding: 1.5rem;
+  }
+
+  .admin-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile lớn */
+  .admin-sidebar {
+    width: 0; /* Ẩn sidebar mặc định */
+    overflow: hidden;
+  }
+
+  .admin-sidebar.open {
+    width: 200px; /* Mở rộng khi toggle */
+  }
+
+  .sidebar-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .sidebar-menu li {
+    padding: 1rem 0.8rem;
+  }
+
+  .menu-icon {
+    margin-right: 0.8rem;
+    font-size: 1.4rem;
+  }
+
+  .new-appointment-count {
+    top: 2px;
+    right: 5px;
+    padding: 1px 10px;
+  }
+
+  .admin-content {
+    margin-left: 0; /* Không còn sidebar mặc định */
+    padding: 1rem;
+  }
+
+  .sidebar-toggle {
+    display: block; /* Hiện nút toggle */
+  }
+
+  .admin-header {
+    padding: 1rem;
   }
 
   .admin-header h1 {
     font-size: 1.5rem;
   }
 
-  .tab-content h2 {
+  .tab-content {
+    padding: 1rem;
+  }
+
+  .stats-tab h2 {
     font-size: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+
+  .stat-card {
+    padding: 1.5rem;
+  }
+
+  .stat-card h3 {
+    font-size: 1rem;
+  }
+
+  .stat-card p {
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .admin-sidebar {
-    width: 60px;
+  /* Mobile nhỏ */
+  .admin-sidebar.open {
+    width: 230px; /* Giảm chiều rộng sidebar khi mở */
+  }
+
+  .sidebar-header h2 {
+    font-size: 1.3rem;
+    margin-left: 35px;
+  }
+
+  .sidebar-menu li {
+    padding: 0.8rem 0.5rem;
   }
 
   .admin-content {
-    margin-left: 60px;
+    padding: 0.5rem;
+  }
+
+  .admin-header {
+    padding: 0.8rem;
+  }
+
+  .admin-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .tab-content {
+    padding: 0.8rem;
+  }
+
+  .stats-tab h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr; /* Một cột */
+    gap: 0.8rem;
+  }
+
+  .stat-card {
     padding: 1rem;
+  }
+
+  .stat-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .stat-card p {
+    font-size: 1.1rem;
   }
 }
