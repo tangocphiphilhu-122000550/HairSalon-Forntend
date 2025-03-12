@@ -67,7 +67,7 @@ const About = () => {
         </div>
         <div className="hero-image">
           <div className="image-container">
-            <img src="/images/barber-shop.jpg" alt="Barber Shop" />
+            <img src="/baberHoai.jpg" alt="Barber Shop" />
           </div>
         </div>
       </section>
@@ -119,37 +119,17 @@ const About = () => {
         <div className="team-grid">
           <div className="team-member">
             <div className="member-image">
-              <img src="/images/barber1.jpg" alt="Trần Văn A" />
+              <img src="/baberHoai.jpg" alt="Trần Văn A" />
             </div>
             <div className="member-info">
-              <h3>Trần Văn A</h3>
+              <h3>Nguyễn Văn Hoài</h3>
               <p>Giám đốc & Thợ cắt tóc</p>
               <p>15 năm kinh nghiệm</p>
             </div>
           </div>
           <div className="team-member">
             <div className="member-image">
-              <img src="/images/barber2.jpg" alt="Nguyễn Văn B" />
-            </div>
-            <div className="member-info">
-              <h3>Nguyễn Văn B</h3>
-              <p>Thợ cắt tóc cao cấp</p>
-              <p>10 năm kinh nghiệm</p>
-            </div>
-          </div>
-          <div className="team-member">
-            <div className="member-image">
-              <img src="/images/barber3.jpg" alt="Lê Văn C" />
-            </div>
-            <div className="member-info">
-              <h3>Lê Văn C</h3>
-              <p>Chuyên gia tạo kiểu</p>
-              <p>8 năm kinh nghiệm</p>
-            </div>
-          </div>
-          <div className="team-member">
-            <div className="member-image">
-              <img src="/images/barber4.jpg" alt="Phạm Văn D" />
+              <img src="/baberHoai.jpg" alt="Phạm Văn D" />
             </div>
             <div className="member-info">
               <h3>Phạm Văn D</h3>
@@ -199,7 +179,7 @@ const About = () => {
         <div className="services-grid">
           <div className="service-item">
             <div className="service-image">
-              <img src="/images/haircut.jpg" alt="Cắt tóc nam" />
+              <img src="/DVCatToc.jpg" alt="Cắt tóc nam" />
             </div>
             <div className="service-info">
               <h3>Cắt Tóc Nam</h3>
@@ -208,7 +188,7 @@ const About = () => {
           </div>
           <div className="service-item">
             <div className="service-image">
-              <img src="/images/beard.jpg" alt="Cạo râu" />
+              <img src="/DVCaoRau.jpg" alt="Cạo râu" />
             </div>
             <div className="service-info">
               <h3>Cạo Râu & Tỉa Râu</h3>
@@ -217,7 +197,7 @@ const About = () => {
           </div>
           <div className="service-item">
             <div className="service-image">
-              <img src="/images/facial.jpg" alt="Chăm sóc da" />
+              <img src="/DVChamDa.jpg" alt="Chăm sóc da" />
             </div>
             <div className="service-info">
               <h3>Chăm Sóc Da</h3>
@@ -226,7 +206,7 @@ const About = () => {
           </div>
           <div className="service-item">
             <div className="service-image">
-              <img src="/images/hair-color.jpg" alt="Nhuộm tóc" />
+              <img src="/DVNhuomToc.png" alt="Nhuộm tóc" />
             </div>
             <div className="service-info">
               <h3>Nhuộm Tóc Nam</h3>
