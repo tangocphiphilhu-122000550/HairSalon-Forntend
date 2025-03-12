@@ -1,7 +1,6 @@
 /* About.css */
 .about-container {
   width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Hero Section */
@@ -13,7 +12,6 @@
   color: white;
   position: relative;
   opacity: 0;
-  transform: translateY(50px);
   transition: opacity 1s ease, transform 1s ease;
 }
 
