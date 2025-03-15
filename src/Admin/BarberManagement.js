@@ -249,44 +249,47 @@ const BarberManagement = () => {
 
       {error && <p className="bm-error">{error}</p>}
 
-      <div className="bm-list">
-        <table>
-          <thead>
-            <tr>
-              <th>Họ tên</th>
-              <th>Ngày sinh</th>
-              <th>Kinh nghiệm</th>
-              <th>SĐT</th>
-              <th>Địa chỉ</th>
-              <th>Ảnh</th>
-              <th>Hành động</th>
-            </tr>
-          </thead>
-          <tbody>
-            {barbers.map((barber) => (
-              <tr key={barber.id}>
-                <td>{barber.full_name}</td>
-                <td>{formatDate(barber.date_of_birth)}</td>
-                <td>{barber.experience_years} năm</td>
-                <td>{barber.phone}</td>
-                <td>{barber.address}</td>
-                <td>
-                  {barber.image && (
-                    <img src={barber.image} alt={barber.full_name} className="bm-barber-image" />
-                  )}
-                </td>
-                <td>
-                  <button className="bm-edit-btn" onClick={() => handleEdit(barber)}>
-                    Sửa
-                  </button>
-                  <button className="bm-delete-btn" onClick={() => handleDelete(barber.id)}>
-                    Xóa
-                  </button>
-                </td>
+      {/* Khung scrollable cho bảng danh sách */}
+      <div className="bm-list-container">
+        <div className="bm-list">
+          <table>
+            <thead>
+              <tr>
+                <th>Họ tên</th>
+                <th>Ngày sinh</th>
+                <th>Kinh nghiệm</th>
+                <th>SĐT</th>
+                <th>Địa chỉ</th>
+                <th>Ảnh</th>
+                <th>Hành động</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {barbers.map((barber) => (
+                <tr key={barber.id}>
+                  <td>{barber.full_name}</td>
+                  <td>{formatDate(barber.date_of_birth)}</td>
+                  <td>{barber.experience_years} năm</td>
+                  <td>{barber.phone}</td>
+                  <td>{barber.address}</td>
+                  <td>
+                    {barber.image && (
+                      <img src={barber.image} alt={barber.full_name} className="bm-barber-image" />
+                    )}
+                  </td>
+                  <td>
+                    <button className="bm-edit-btn" onClick={() => handleEdit(barber)}>
+                      Sửa
+                    </button>
+                    <button className="bm-delete-btn" onClick={() => handleDelete(barber.id)}>
+                      Xóa
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

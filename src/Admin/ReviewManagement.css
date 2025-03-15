@@ -1,155 +1,535 @@
+/* ReviewManagement.css */
+
+/* Biến màu */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2ecc71;
+  --danger-color: #e74c3c;
+  --text-color: #2c3e50;
+  --light-color: #ecf0f1;
+  --dark-color: #34495e;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+}
+
+/* Styles chung */
 .reviews-tab {
-    padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+}
+
+.reviews-tab h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--dark-color);
+  font-size: 2.2rem;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.reviews-tab h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+  border-radius: 3px;
+}
+
+/* Header và Search */
+.reviews-header {
+  margin-bottom: 30px;
+}
+
+.search-container {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-form {
+  display: flex;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  transition: all var(--transition-speed);
+}
+
+.search-form:focus-within {
+  box-shadow: 0 6px 18px rgba(52, 152, 219, 0.2);
+  transform: translateY(-2px);
+}
+
+.search-input {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  border-radius: var(--border-radius) 0 0 var(--border-radius);
+}
+
+.search-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.search-btn:hover {
+  background-color: #2980b9;
+}
+
+.search-btn:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* Suggestions dropdown */
+.suggestions-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+  box-shadow: 0 4px 12px var(--shadow-color);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.suggestions-dropdown li {
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+  list-style: none;
+}
+
+.suggestions-dropdown li:hover {
+  background-color: #f5f7fa;
+  color: var(--primary-color);
+}
+
+/* Notification dropdown */
+.notification-dropdown {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: var(--border-radius);
+  color: white;
+  font-weight: 500;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  z-index: 100;
+  animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-in 2.7s forwards;
+}
+
+.notification-dropdown.success {
+  background-color: var(--secondary-color);
+}
+
+.notification-dropdown.error {
+  background-color: var(--danger-color);
+}
+
+/* Confirmation dropdown */
+.confirmation-dropdown {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  z-index: 20;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  animation: zoomIn 0.3s ease-out;
+}
+
+.confirmation-dropdown p {
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+.confirmation-actions2 {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.action-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all var(--transition-speed);
+}
+
+.confirm-btn2 {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.confirm-btn2:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.cancel-btn2 {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.cancel-btn2:hover {
+  background-color: #7f8c8d;
+  transform: translateY(-2px);
+}
+
+/* Reviews list */
+.reviews-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.review-card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: 0 4px 12px var(--shadow-color);
+  transition: all var(--transition-speed);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.review-card h3 {
+  color: var(--dark-color);
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.review-card p {
+  margin-bottom: 10px;
+  line-height: 1.5;
+  color: black;
+}
+
+/* Review actions */
+.review-actions2 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.action-btn2 {
+  padding: 8px 15px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  background-color: var(--primary-color);
+  color: white;
+  transition: all var(--transition-speed);
+}
+
+.action-btn2:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.action-btn-delete-btn2 {
+  padding: 8px 15px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 500;
+  background-color: var(--danger-color);
+  color: white;
+  transition: all var(--transition-speed);
+}
+
+.action-btn-delete-btn2:hover {
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Form chỉnh sửa */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.edit-form input,
+.edit-form textarea {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color var(--transition-speed);
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.edit-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.edit-actions2 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.save-btn2 {
+  background-color: var(--secondary-color);
+  color: white;
+}
+
+.save-btn2:hover {
+  background-color: #27ae60;
+}
+
+/* Animation keyframes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .reviews-tab {
+    padding: 15px;
   }
   
-  .reviews-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .search-container {
-    position: relative;
-  }
-  
-  .search-form {
-    display: flex;
-    align-items: center;
-  }
-  
-  .search-input {
-    padding: 8px;
-    width: 300px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .search-btn {
-    padding: 8px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    margin-left: 10px;
-    cursor: pointer;
+  .reviews-tab h2 {
+    font-size: 1.8rem;
   }
   
   .reviews-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
   
-  .review-card {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .search-input {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .reviews-tab {
+    padding: 10px;
   }
   
-  .edit-form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  .reviews-tab h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
   }
   
-  .edit-form input,
-  .edit-form textarea {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+  .reviews-list {
+    grid-template-columns: 1fr;
   }
   
-  .edit-actions2,
-  .review-actions2 {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+  .search-input {
+    padding: 10px;
   }
   
-  .action-btn2 {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .save-btn2 {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .save-btn2:hover {
-    background-color: #45a049;
-  }
-  
-  .action-btn-delete-btn2 {
-    background-color: #b95149;
-    color: white;
-    width: 96px;
-    border-radius: 10px;
-  }
-  
-  .action-btn-delete-btn2:hover {
-    background-color: #da190b;
-  }
-  
-  .cancel-btn2 {
-    background-color: #ccc;
-    color: black;
-  }
-  
-  .cancel-btn2:hover {
-    background-color: #bbb;
-  }
-  
-  .notification-dropdown {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    border-radius: 4px;
-    z-index: 1000;
-  }
-  
-  .notification-dropdown.success {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .notification-dropdown.error {
-    background-color: #f44336;
-    color: white;
+  .search-btn {
+    padding: 0 15px;
   }
   
   .confirmation-dropdown {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    text-align: center;
   }
   
-  .confirmation-actions2 {
-    margin-top: 15px;
+  .action-btn {
+    padding: 8px 15px;
+  }
+}
+
+/* Overlay khi hiển thị confirmation */
+.reviews-tab::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 15;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-speed);
+}
+
+.confirmation-dropdown:not(:empty) ~ .reviews-tab::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Loading state */
+.reviews-tab p:only-child {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: var(--dark-color);
+}
+
+/* Hiệu ứng hover cho mỗi review card */
+.review-card:nth-child(odd):hover {
+  border-left: 4px solid var(--primary-color);
+}
+
+.review-card:nth-child(even):hover {
+  border-left: 4px solid var(--secondary-color);
+}
+
+/* Hiệu ứng trống rỗng */
+.reviews-list:empty::before {
+  content: 'Không có dữ liệu';
+  display: block;
+  text-align: center;
+  padding: 40px;
+  font-size: 1.1rem;
+  color: var(--dark-color);
+  grid-column: 1 / -1;
+}
+
+/* Hiệu ứng pulse cho loading */
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.reviews-tab p:only-child:not(:empty) {
+  animation: pulse 1.5s infinite;
+}
+
+/* Thanh scroll tùy chỉnh */
+.reviews-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.reviews-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.reviews-list::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 10px;
+}
+
+.reviews-list::-webkit-scrollbar-thumb:hover {
+  background: #2980b9;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --light-color: #2c3e50;
+    --dark-color: #ecf0f1;
+    --text-color: #f5f7fa;
+    --shadow-color: rgba(0, 0, 0, 0.3);
   }
   
-  .confirmation-actions2 button {
-    margin: 0 26px;
-    padding: 8px 16px;
+  body {
+    background-color: #1a1a1a;
   }
   
-  .confirm-btn2 {
-    background-color: #4caf50;
-    color: white;
+  .reviews-tab {
+    background-color: #2c3e50;
   }
   
-  .confirm-btn2:hover {
-    background-color: #45a049;
+  .search-input,
+  .review-card,
+  .confirmation-dropdown,
+  .edit-form input,
+  .edit-form textarea {
+    background-color: #34495e;
+    color: var(--text-color);
   }
+  
+  .suggestions-dropdown {
+    background-color: #2c3e50;
+  }
+  
+  .suggestions-dropdown li:hover {
+    background-color: #3d5a76;
+  }
+  
+  .review-card {
+    border: 1px solid #3d5a76;
+  }
+}

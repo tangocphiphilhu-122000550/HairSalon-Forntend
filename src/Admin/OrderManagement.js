@@ -380,7 +380,7 @@ const OrderManagement = ({ newOrderCount, setNewOrderCount }) => {
           <form className="search-form">
             <input
               type="text"
-              placeholder="Tìm kiếm theo tên người dùng..."
+              placeholder="Tìm kiếm theo tên user..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="search-input"
