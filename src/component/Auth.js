@@ -68,31 +68,32 @@ const Auth = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-
+  
     // Kiểm tra xem CAPTCHA đã được xác minh chưa
     if (!captchaToken) {
       setMessage("Vui lòng xác minh rằng bạn không phải robot!");
       setMessageType("error");
       return;
     }
-
+  
     try {
       const endpoint = isLogin ? "/login" : "/register";
       const data = isLogin
-        ? { username: form.username, password: form.password, captchaToken }
+        ? { username: form.username, password: form.password, recaptchaToken: captchaToken }
         : {
             username: form.username,
             email: form.email,
             password: form.password,
             phone: form.phone,
-            captchaToken,
+            recaptchaToken: captchaToken,
           };
-
+  
       const res = await api.post(`${API_URL}${endpoint}`, data, {
         withCredentials: true,
       });
       setMessage(res.data.message);
       setMessageType("success");
+
 
       if (isLogin) {
         const { token } = res.data;
