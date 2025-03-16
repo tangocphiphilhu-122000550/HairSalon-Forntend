@@ -4,6 +4,7 @@ import { FaUserCircle, FaHome, FaBoxOpen, FaInfoCircle, FaCog, FaSignInAlt, FaSh
 import api from "../utils/api";
 import { getToken, clearToken, clearUsername } from "../utils/tokenStorage";
 import { useCart } from "../CartContext";
+import { jwtDecode } from "jwt-decode";
 import "./Header.css";
 
 const Header = () => {
@@ -20,9 +21,23 @@ const Header = () => {
     const checkAuthStatus = async () => {
       try {
         const token = await getToken();
-        setIsLoggedIn(!!token);
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          const currentTime = Math.floor(Date.now() / 1000);
+          if (decodedToken.exp < currentTime) {
+            await clearToken();
+            await clearUsername();
+            setIsLoggedIn(false);
+          } else {
+            setIsLoggedIn(true);
+          }
+        } else {
+          setIsLoggedIn(false);
+        }
       } catch (error) {
         console.error("Lỗi khi kiểm tra trạng thái đăng nhập:", error);
+        await clearToken();
+        await clearUsername();
         setIsLoggedIn(false);
       }
     };
@@ -33,41 +48,40 @@ const Header = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPosition = window.scrollY;
-
-      // Nếu ở đỉnh trang (scrollY = 0), luôn hiện taskbar
       if (currentScrollPosition <= 0) {
         setHideTaskbar(false);
-      } 
-      // Cuộn xuống: ẩn taskbar
-      else if (currentScrollPosition > lastScrollPosition.current) {
+      } else if (currentScrollPosition > lastScrollPosition.current) {
         setHideTaskbar(true);
-        setShowMobileDropdown(false); // Ẩn dropdown nếu đang mở
-      } 
-      // Cuộn lên: hiện taskbar
-      else if (currentScrollPosition < lastScrollPosition.current) {
+        setShowMobileDropdown(false);
+      } else if (currentScrollPosition < lastScrollPosition.current) {
         setHideTaskbar(false);
       }
-
       lastScrollPosition.current = currentScrollPosition;
     };
 
-    // Thêm sự kiện scroll
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleLogout = async () => {
     try {
-      await api.post("/api/auth/logout", {});
-      await clearToken();
-      await clearUsername();
-      resetCart();
+      const res = await api.post("/api/auth/logout", {});
+      const { clearToken: shouldClearToken } = res.data; // Lấy giá trị clearToken từ phản hồi
+
+      // Nếu backend yêu cầu xóa token, thực hiện xóa token trong IndexedDB
+      if (shouldClearToken) {
+        await clearToken();
+        await clearUsername();
+        resetCart();
+      }
+
       setIsLoggedIn(false);
       setShowDropdown(false);
       setShowMobileDropdown(false);
       navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
+      // Trong trường hợp lỗi, vẫn xóa token để đảm bảo an toàn
       await clearToken();
       await clearUsername();
       resetCart();
@@ -151,7 +165,7 @@ const Header = () => {
             </div>
           ) : (
             <Link to="/auth" className="login-button-wrapper desktop-only">
-              <button className="login-button">Đăng Nhập</button>
+              <button className="login-button">Register</button>
             </Link>
           )}
         </nav>
@@ -185,7 +199,7 @@ const Header = () => {
                     <Link to="/profile" onClick={() => setShowMobileDropdown(false)}>Thông tin cá nhân</Link>
                     <Link to="/OrderHistory" onClick={() => setShowMobileDropdown(false)}>Lịch sử đặt hàng</Link>
                     <Link to="/History" onClick={() => setShowDropdown(false)}>Lịch sử cắt</Link>
-                  <Link to="/ChangePassword" onClick={() => setShowMobileDropdown(false)}>Đổi mật khẩu</Link>
+                    <Link to="/ChangePassword" onClick={() => setShowMobileDropdown(false)}>Đổi mật khẩu</Link>
                     <button onClick={handleLogout}>Đăng xuất</button>
                   </div>
                 )}
@@ -193,7 +207,7 @@ const Header = () => {
             ) : (
               <>
                 <FaSignInAlt className="taskbar-icon" />
-                <span>Đăng nhập</span>
+                <span>Đăng nhập / Đăng ký</span>
               </>
             )}
           </div>

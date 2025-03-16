@@ -8,8 +8,8 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  color: #fff;
   background: #1f2029;
+  color: #fff;
   overflow-x: hidden;
 }
 
@@ -21,307 +21,240 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  perspective: 1000px;
+  background: linear-gradient(166deg, #ff6b6b, #3d3b3e91);
 }
 
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-.shape {
-  position: absolute;
-  background: linear-gradient(45deg, #ff6b6b, #ffb88c);
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.5;
-  animation: move 15s infinite alternate;
-}
-
-.shape:nth-child(1) {
-  top: -200px;
-  left: -200px;
-  width: 800px;
-  height: 800px;
-  animation-delay: 0s;
-}
-
-.shape:nth-child(2) {
-  bottom: -200px;
-  right: -200px;
-  width: 600px;
-  height: 600px;
-  background: linear-gradient(45deg, #2b86c5, #784ba0);
-  animation-delay: -5s;
-}
-
-@keyframes move {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-  }
-  100% {
-    transform: translate(50px, 50px) rotate(10deg);
-  }
-}
-
-.card-3d-container {
+.container {
   position: relative;
   width: 100%;
-  max-width: 400px;
-  height: 620px;
-  margin: 0 auto;
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  transition: all 0.8s ease;
+  max-width: 900px;
+  height: 550px;
+  background: transparent;
+  overflow: hidden;
+  display: flex;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
-.card-3d-container.show-forgot {
-  transform: rotateY(180deg);
-}
-
-.card-3d-wrapper {
-  width: 100%;
+.left-panel,
+.right-panel {
+  width: 50%;
   height: 100%;
-  position: absolute;
-  transform-style: preserve-3d;
-  transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.card-3d-wrapper.is-flipped {
-  transform: rotateY(180deg);
-}
-
-.card-front, .card-back, .card-forgot {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(18, 22, 33, 0.95);
-  border-radius: 16px;
-  padding: 30px;
   position: absolute;
   top: 0;
+  transition: all 0.6s ease-in-out;
+}
+
+.left-panel {
   left: 0;
-  overflow: hidden;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
-
-.card-front {
-  transform: rotateY(0deg);
-}
-
-.card-back {
-  transform: rotateY(180deg);
-}
-
-.card-forgot {
-  transform: rotateY(180deg);
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.card-3d-container.show-forgot .card-back {
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.card-3d-container.show-forgot .card-forgot {
-  opacity: 1;
-  pointer-events: auto;
   z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.center-wrap {
-  position: absolute;
-  width: 100%;
-  padding: 0 30px;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
+.right-panel {
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
 }
 
-.section {
-  position: relative;
-  width: 100%;
-  display: block;
+.overlay-content {
+  text-align: center;
+  padding: 0 40px;
+  max-width: 100%;
 }
 
-.auth-title {
+.overlay-content h1 {
   font-size: 32px;
   font-weight: 700;
-  margin-bottom: 30px;
-  background: linear-gradient(to right, #ff6b6b, #ce4eff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  color: #FF3030;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.form-group {
-  position: relative;
-  display: block;
-  margin: 0;
-  padding: 0;
-}
-
-.form-style {
-  padding: 15px 20px;
-  padding-left: 45px;
-  height: 50px;
-  width: 100%;
-  font-weight: 500;
-  border-radius: 8px;
+.overlay-content p {
   font-size: 14px;
-  line-height: 22px;
-  letter-spacing: 0.5px;
-  outline: none;
-  color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: none;
-  transition: all 0.3s ease;
+  color: #FF3030;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.form-style:focus,
-.form-style:active {
-  border: none;
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(149, 96, 229, 0.3);
-  background-color: rgba(255, 255, 255, 0.15);
-}
-
-.form-style::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.form-style::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.form-style:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.form-style::-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.form-style::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.input-icon {
-  position: absolute;
-  top: 15px;
-  left: 18px;
-  height: 20px;
-  font-size: 18px;
-  line-height: 20px;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.mt-2 {
-  margin-top: 20px;
-}
-
-.mt-4 {
-  margin-top: 35px;
-}
-
-.mb-0 {
-  margin-bottom: 0;
-}
-
-.btn {
-  padding: 14px 30px;
-  text-decoration: none;
-  border-radius: 8px;
+.ghost-btn {
+  padding: 12px 30px;
+  border: 2px solid #fff;
+  border-radius: 25px;
+  background: transparent;
+  color: #fff;
   font-size: 14px;
   font-weight: 600;
-  color: #fff;
-  background: linear-gradient(45deg, #ff6b6b, #ce4eff);
-  box-shadow: 0 8px 24px rgba(149, 96, 229, 0.4);
-  transition: all 0.3s ease;
-  border: none;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-.btn:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
+.ghost-btn:hover {
+  background: #fff;
+  color: #FF3030;
+  transform: translateY(-2px);
+}
+
+/* Default state: Login form on right, Overlay on left */
+.left-panel {
+  transform: translateX(0);
+}
+
+.right-panel {
+  transform: translateX(0);
+}
+
+/* When Register pressed: Overlay slides right, Register form appears on left */
+.container.right-panel-active .left-panel {
+  transform: translateX(100%);
+}
+
+.container.right-panel-active .right-panel {
+  transform: translateX(-100%);
+}
+
+/* When Forgot Password pressed: Forgot Password form appears on right */
+.container.forgot-active .right-panel {
+  transform: translateX(0);
+}
+
+.form {
   width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: all 0.5s ease;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 30px rgba(149, 96, 229, 0.5);
-}
-
-.btn:hover:before {
-  left: 100%;
-}
-
-.btn:active {
-  transform: translateY(1px);
-  box-shadow: 0 4px 16px rgba(149, 96, 229, 0.3);
-}
-
-.text-center {
+.form h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1f2029;
+  margin-bottom: 20px;
   text-align: center;
 }
 
-.link {
-  color: #ce4eff;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  margin-left: 8px;
+.form input {
+  width: 100%;
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  background: #f9f9f9;
+  color: #1f2029;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.form input:focus {
+  border: 1px solid #ce4eff;
+}
+
+.password-container {
   position: relative;
-  display: inline-block;
-}
-
-.link:after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 1px;
-  bottom: -2px;
-  left: 0;
-  background: linear-gradient(to right, #ff6b6b, #ce4eff);
-  transition: all 0.3s ease;
-}
-
-.link:hover {
-  color: #ff6b6b;
-}
-
-.link:hover:after {
   width: 100%;
 }
 
-.message {
-  margin-bottom: 20px;
+.password-container input {
+  padding-right: 60px; /* Space for toggle password */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #1f2029;
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.password-toggle:hover {
+  color: #ce4eff;
+}
+
+.form button {
   padding: 12px;
-  border-radius: 8px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(166deg, #ff6b6b, #3d3b3e91);
+  color: #fff;
   font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.form a {
+  color: #ce4eff;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: right;
+  display: block;
+  margin-top: 5px;
+}
+
+.form p {
+  font-size: 12px;
+  color: #1f2029;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.social-login {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.social-login p {
+  font-size: 12px;
+  color: #1f2029;
+  margin-bottom: 10px;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.social-icons svg {
+  font-size: 18px;
+  color: #1f2029;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.social-icons svg:hover {
+  color: #ce4eff;
+}
+
+.message {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 12px;
   background-color: rgba(76, 175, 80, 0.2);
   color: #4CAF50;
   animation: fadeIn 0.5s ease;
-  word-wrap: break-word;
+}
+
+.message.error {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #F44336;
 }
 
 @keyframes fadeIn {
@@ -335,301 +268,160 @@ body {
   }
 }
 
-.password-toggle {
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.password-toggle:hover {
-  color: #fff;
-}
-
-/* 3D Hover Effects */
-.card-front:before, 
-.card-back:before, 
-.card-forgot:before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(225deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 60%);
-  pointer-events: none;
-}
-
-/* Custom Error Message */
-.message.error {
-  background-color: rgba(244, 67, 54, 0.2);
-  color: #F44336;
-}
-
-/* Enhanced Responsive Styles */
-@media (max-width: 992px) {
-  .shape:nth-child(1) {
-    width: 600px;
-    height: 600px;
-  }
-  
-  .shape:nth-child(2) {
-    width: 500px;
+/* Responsive Design */
+@media (max-width: 900px) {
+  .container {
+    max-width: 760px;
     height: 500px;
   }
   
-  .card-3d-container {
-    max-width: 380px;
+  .overlay-content h1 {
+    font-size: 28px;
   }
   
-  .center-wrap {
-    padding: 0 25px;
+  .overlay-content p {
+    font-size: 13px;
+  }
+  
+  .form {
+    max-width: 320px;
   }
 }
 
 @media (max-width: 768px) {
-  .shape:nth-child(1) {
-    width: 400px;
-    height: 400px;
-    top: -150px;
-    left: -150px;
+  .container {
+    max-width: 600px;
+    height: 480px;
   }
   
-  .shape:nth-child(2) {
-    width: 350px;
-    height: 350px;
-    bottom: -150px;
-    right: -150px;
+  .right-panel {
+    padding: 30px;
   }
   
-  .card-3d-container {
-    max-width: 360px;
-    height: 600px;
+  .overlay-content {
+    padding: 0 30px;
   }
   
-  .auth-title {
-    font-size: 28px;
-    margin-bottom: 25px;
-  }
-  
-  .center-wrap {
-    padding: 0 20px;
-  }
-  
-  .btn {
-    padding: 12px 25px;
-  }
-}
-
-@media (max-width: 576px) {
-  .auth-container {
-    padding: 15px;
-  }
-  
-  .shape:nth-child(1) {
-    width: 300px;
-    height: 300px;
-    filter: blur(40px);
-  }
-  
-  .shape:nth-child(2) {
-    width: 250px;
-    height: 250px;
-    filter: blur(40px);
-  }
-  
-  .card-3d-container {
-    max-width: 340px;
-    height: 580px;
-  }
-  
-  .card-front, .card-back, .card-forgot {
-    padding: 20px;
-    border-radius: 12px;
-  }
-  
-  .center-wrap {
-    padding: 0 15px;
-  }
-  
-  .auth-title {
+  .overlay-content h1 {
     font-size: 24px;
-    margin-bottom: 20px;
   }
   
-  .form-style {
-    padding: 12px 15px;
-    padding-left: 40px;
-    height: 45px;
+  .overlay-content p {
     font-size: 13px;
   }
   
-  .input-icon {
-    top: 12px;
-    left: 15px;
-    font-size: 16px;
-  }
-  
-  .mt-2 {
-    margin-top: 15px;
-  }
-  
-  .mt-4 {
-    margin-top: 25px;
-  }
-  
-  .btn {
-    padding: 12px 20px;
+  .ghost-btn {
+    padding: 10px 25px;
     font-size: 13px;
+  }
+  
+  .form h2 {
+    font-size: 22px;
+  }
+  
+  .form input, 
+  .form button {
+    padding: 10px 15px;
+    font-size: 13px;
+  }
+  
+  .form {
+    max-width: 280px;
   }
 }
 
-@media (max-width: 400px) {
-  .card-3d-container {
-    max-width: 100%;
-    height: 560px;
+/* Màn hình nhỏ thay đổi kiểu hiệu ứng từ trái-phải sang lên-xuống */
+@media (max-width: 576px) {
+  .container {
+    max-width: 450px;
+    height: auto;
+    flex-direction: column;
+    min-height: 700px;
   }
   
-  .card-front, .card-back, .card-forgot {
-    padding: 15px;
+  .left-panel,
+  .right-panel {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    left: 0;
   }
   
-  .center-wrap {
-    padding: 0 10px;
+  .left-panel {
+    top: 0;
+    transform: translateY(0);
   }
   
-  .auth-title {
+  .right-panel {
+    top: 50%;
+    transform: translateY(0);
+  }
+  
+  /* Chuyển đổi hiệu ứng sang lên-xuống */
+  .container.right-panel-active .left-panel {
+    transform: translateY(100%);
+  }
+  
+  .container.right-panel-active .right-panel {
+    transform: translateY(-100%);
+  }
+  
+  .overlay-content {
+    padding: 0 30px;
+  }
+  
+  .overlay-content h1 {
     font-size: 22px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
   
-  .form-style {
-    height: 42px;
+  .overlay-content p {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+  
+  .ghost-btn {
+    padding: 8px 20px;
     font-size: 12px;
   }
   
-  .mt-2 {
-    margin-top: 12px;
+  .form {
+    max-width: 300px;
+    padding: 20px 0;
   }
   
-  .mt-4 {
-    margin-top: 20px;
-  }
-  
-  /* Cải thiện khả năng nhấn cho liên kết trên mobile */
-  .link {
-    padding: 5px 0;
-  }
-  
-  /* Điều chỉnh khoảng cách giữa các liên kết và phần còn lại của đoạn văn */
-  p.mb-0.mt-4 {
-    margin-top: 18px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-  
-  p.mb-0.mt-4 .link {
-    margin-left: 0;
-  }
-  
-  /* Điều chỉnh nút hiển thị/ẩn mật khẩu để dễ nhấn hơn */
-  .password-toggle {
-    padding: 6px 8px;
-    right: 8px;
-  }
-}
-
-/* Fix cho thiết bị có chiều cao thấp */
-@media (max-height: 700px) {
-  .card-3d-container {
-    height: 540px;
-  }
-  
-  .form-style {
-    height: 40px;
-    margin-bottom: 8px;
-  }
-  
-  .mt-2 {
-    margin-top: 10px;
-  }
-  
-  .mt-4 {
-    margin-top: 18px;
-  }
-  
-  .auth-title {
+  .form h2 {
+    font-size: 20px;
     margin-bottom: 15px;
   }
   
-  .btn {
-    padding: 10px 20px;
+  .form input, 
+  .form button {
+    padding: 10px 15px;
+    font-size: 12px;
   }
 }
 
-/* Sửa lỗi cho thiết bị quá nhỏ */
-@media (max-width: 320px) {
-  .auth-container {
-    padding: 10px;
+@media (max-width: 375px) {
+  .container {
+    max-width: 350px;
+    min-height: 650px;
   }
   
-  .card-3d-container {
-    height: 530px;
-  }
-  
-  .card-front, .card-back, .card-forgot {
-    padding: 12px;
-  }
-  
-  .center-wrap {
-    padding: 0 8px;
-  }
-  
-  .auth-title {
+  .overlay-content h1 {
     font-size: 20px;
   }
   
-  .form-style {
+  .overlay-content p {
     font-size: 11px;
   }
   
-  /* Xử lý overflow text trên màn hình nhỏ */
-  .message {
-    font-size: 12px;
-    padding: 8px;
-  }
-}
-
-/* Touch device optimizations */
-@media (hover: none) {
-  .btn:hover {
-    transform: none;
-    box-shadow: 0 8px 24px rgba(149, 96, 229, 0.4);
+  .ghost-btn {
+    padding: 8px 18px;
+    font-size: 11px;
   }
   
-  .btn:active {
-    transform: translateY(1px);
+  .form {
+    max-width: 280px;
   }
-  
-  .link:after {
-    display: none;
-  }
-}
-
-/* Accessibility improvements */
-.form-style:focus {
-  box-shadow: 0 0 0 3px rgba(149, 96, 229, 0.5);
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #070606;
-  transition: background-color 5000s ease-in-out 0s;
-  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.1) inset;
 }
