@@ -425,3 +425,20 @@ body {
     max-width: 280px;
   }
 }
+
+/* Auth.css */
+
+/* Container cho reCAPTCHA */
+.recaptcha-container {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+/* Responsive cho mobile */
+@media (max-width: 576px) {
+  .recaptcha-container {
+    transform: scale(0.85); /* Thu nhỏ reCAPTCHA trên mobile nếu cần */
+    transform-origin: center;
+  }
+}
