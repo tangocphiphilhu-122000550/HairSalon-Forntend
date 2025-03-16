@@ -27,7 +27,8 @@
     "socket.io-client": "^4.8.1",
     "styled-components": "^6.1.15",
     "swiper": "^11.2.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yocto-queue": "^1.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
