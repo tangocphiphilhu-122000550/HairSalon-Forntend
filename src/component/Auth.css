@@ -432,7 +432,7 @@ body {
 .recaptcha-container {
   display: flex;
   justify-content: center;
-  margin: 15px 0;
+  margin: -7px 0;
 }
 
 /* Responsive cho mobile */
