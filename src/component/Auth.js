@@ -266,7 +266,7 @@ const Auth = () => {
               <div className="recaptcha-container">
                 <ReCAPTCHA
                   ref={recaptchaRef}
-                  sitekey="6LdIDvYqAAAAABWhCliKOkTk3lG4L4WpzRfsvfJT" // Site Key từ Google reCAPTCHA
+                  sitekey="6LeUJfYqAAAAAO6afJrKKKgBuNb1_08zpfNoe1kq" // Site Key từ Google reCAPTCHA
                   onChange={handleCaptchaChange}
                 />
               </div>
@@ -319,7 +319,7 @@ const Auth = () => {
               <div className="recaptcha-container">
                 <ReCAPTCHA
                   ref={recaptchaRef}
-                  sitekey="6LdIDvYqAAAAABWhCliKOkTk3lG4L4WpzRfsvfJT" // Site Key từ Google reCAPTCHA
+                  sitekey="6LeUJfYqAAAAAO6afJrKKKgBuNb1_08zpfNoe1kq" // Site Key từ Google reCAPTCHA
                   onChange={handleCaptchaChange}
                 />
               </div>
