@@ -347,7 +347,7 @@ body {
   }
   
   .left-panel {
-    top: 0;
+    top: 141px;
     height: 40%; /* Giảm chiều cao từ 50% xuống 40% */
     transform: translateY(0);
   }
