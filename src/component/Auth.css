@@ -28,7 +28,8 @@ body {
   position: relative;
   width: 100%;
   max-width: 900px;
-  height: 550px;
+  height: auto;
+  min-height: 550px;
   background: transparent;
   overflow: hidden;
   display: flex;
@@ -272,7 +273,7 @@ body {
 @media (max-width: 900px) {
   .container {
     max-width: 760px;
-    height: 500px;
+    min-height: 500px;
   }
   
   .overlay-content h1 {
@@ -291,7 +292,7 @@ body {
 @media (max-width: 768px) {
   .container {
     max-width: 600px;
-    height: 480px;
+    min-height: 480px;
   }
   
   .right-panel {
@@ -330,41 +331,34 @@ body {
   }
 }
 
-/* Màn hình nhỏ thay đổi kiểu hiệu ứng từ trái-phải sang lên-xuống */
 @media (max-width: 576px) {
   .container {
     max-width: 450px;
     height: auto;
     flex-direction: column;
-    min-height: 700px;
+    min-height: auto;
   }
   
   .left-panel,
   .right-panel {
-    position: absolute;
+    position: relative;
     width: 100%;
     left: 0;
+    height: auto;
+    transform: none !important;
   }
   
   .left-panel {
-    top: 0;
-    height: 40%; /* Giảm chiều cao từ 50% xuống 40% */
-    transform: translateY(0);
+    min-height: 250px;
   }
   
   .right-panel {
-    top: 40%; /* Điều chỉnh top để bắt đầu ngay sau .left-panel */
-    height: 60%; /* Tăng chiều cao của .right-panel để lấp đầy phần còn lại */
-    transform: translateY(0);
+    padding: 30px;
   }
   
-  /* Chuyển đổi hiệu ứng sang lên-xuống */
-  .container.right-panel-active .left-panel {
-    transform: translateY(100%);
-  }
-  
+  .container.right-panel-active .left-panel,
   .container.right-panel-active .right-panel {
-    transform: translateY(-100%);
+    transform: none !important;
   }
   
   .overlay-content {
@@ -389,6 +383,7 @@ body {
   .form {
     max-width: 300px;
     padding: 20px 0;
+    width: 100%;
   }
   
   .form h2 {
@@ -406,7 +401,7 @@ body {
 @media (max-width: 375px) {
   .container {
     max-width: 350px;
-    min-height: 650px;
+    min-height: auto;
   }
   
   .overlay-content h1 {
@@ -439,7 +434,7 @@ body {
 /* Responsive cho mobile */
 @media (max-width: 576px) {
   .recaptcha-container {
-    transform: scale(0.85); /* Thu nhỏ reCAPTCHA trên mobile nếu cần */
+    transform: scale(0.85);
     transform-origin: center;
   }
 }
