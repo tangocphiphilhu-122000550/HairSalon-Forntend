@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { getUsername, getToken } from '../utils/tokenStorage'; // Thêm getToken
+import { getUsername, getToken } from '../utils/tokenStorage';
 import './AppointmentBooking.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ const AppointmentBooking = () => {
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [showLoginPrompt, setShowLoginPrompt] = useState(false); // Thêm state cho thông báo đăng nhập
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   const timeSlots = [
     '08:00', '09:00', '10:00', '11:00', '12:00',
@@ -149,7 +149,7 @@ const AppointmentBooking = () => {
 
     const token = await getToken();
     if (!token) {
-      setShowLoginPrompt(true); // Hiển thị thông báo yêu cầu đăng nhập
+      setShowLoginPrompt(true);
       return;
     }
 
@@ -207,35 +207,35 @@ const AppointmentBooking = () => {
   };
 
   return (
-    <div className="appointment-booking">
+    <div className="appointment-booking17">
       <h1>Đặt Dịch Vụ</h1>
 
       {bookingSuccess && (
-        <div className="success-notification">
-          <div className="success-message">
+        <div className="success-notification17">
+          <div className="success-message17">
             <i className="fas fa-check-circle"></i> Đặt lịch thành công!
           </div>
         </div>
       )}
 
-      {error && <div className="error-message">{error}</div>}
+      {error && <div className="error-message17">{error}</div>}
 
-      <div className="booking-container">
-        <div className="service-selection">
+      <div className="booking-container17">
+        <div className="service-selection17">
           <h2>Chọn Dịch Vụ</h2>
           {loading ? (
-            <div className="loading">Đang tải...</div>
+            <div className="loading17">Đang tải...</div>
           ) : (
-            <div className="service-list">
+            <div className="service-list17">
               {services.map((service) => (
                 <div
                   key={service.id}
-                  className={`service-card ${selectedService?.id === service.id ? 'selected' : ''}`}
+                  className={`service-card17 ${selectedService?.id === service.id ? 'selected17' : ''}`}
                   onClick={() => handleServiceSelect(service)}
                 >
                   <h3>{service.service_name}</h3>
                   <p>{service.description}</p>
-                  <div className="service-details">
+                  <div className="service-details17">
                     <span>Giá: {service.price.toLocaleString('vi-VN')} VND</span>
                     <span>Thời gian: {service.duration_minutes} phút</span>
                   </div>
@@ -246,23 +246,23 @@ const AppointmentBooking = () => {
         </div>
 
         {selectedService && (
-          <div className="barber-selection">
+          <div className="barber-selection17">
             <h2>Chọn Thợ Cắt Tóc</h2>
             {loading ? (
-              <div className="loading">Đang tải...</div>
+              <div className="loading17">Đang tải...</div>
             ) : (
-              <div className="barber-list">
+              <div className="barber-list17">
                 {barbers.map((barber) => (
                   <div
                     key={barber.id}
-                    className={`barber-card ${selectedBarber?.id === barber.id ? 'selected' : ''}`}
+                    className={`barber-card17 ${selectedBarber?.id === barber.id ? 'selected17' : ''}`}
                     onClick={() => handleBarberSelect(barber)}
                   >
-                    <div className="barber-avatar">
+                    <div className="barber-avatar17">
                       {barber.image ? (
                         <img src={barber.image} alt={barber.full_name} onError={(e) => e.target.style.display = 'none'} />
                       ) : (
-                        <div className="avatar-placeholder">{barber.full_name.charAt(0)}</div>
+                        <div className="avatar-placeholder17">{barber.full_name.charAt(0)}</div>
                       )}
                     </div>
                     <h3>{barber.full_name}</h3>
@@ -275,10 +275,10 @@ const AppointmentBooking = () => {
         )}
 
         {selectedService && selectedBarber && (
-          <div className="date-time-selection">
+          <div className="date-time-selection17">
             <h2>Chọn Ngày và Giờ</h2>
 
-            <div className="date-picker">
+            <div className="date-picker17">
               <label htmlFor="appointment-date">Ngày đặt lịch:</label>
               <input
                 type="date"
@@ -291,33 +291,33 @@ const AppointmentBooking = () => {
             </div>
 
             {selectedDate && (
-              <div className="time-slots">
+              <div className="time-slots17">
                 <h3>Chọn khung giờ cho {formatDate(selectedDate)}</h3>
-                <div className="time-slot-legend">
-                  <div className="legend-item">
-                    <span className="legend-color available"></span>
+                <div className="time-slot-legend17">
+                  <div className="legend-item17">
+                    <span className="legend-color17 available17"></span>
                     <span>Còn trống</span>
                   </div>
-                  <div className="legend-item">
-                    <span className="legend-color booked"></span>
+                  <div className="legend-item17">
+                    <span className="legend-color17 booked17"></span>
                     <span>Đã đặt</span>
                   </div>
-                  <div className="legend-item">
-                    <span className="legend-color past"></span>
+                  <div className="legend-item17">
+                    <span className="legend-color17 past17"></span>
                     <span>Đã qua</span>
                   </div>
                 </div>
 
                 {loading ? (
-                  <div className="loading">Đang tải...</div>
+                  <div className="loading17">Đang tải...</div>
                 ) : (
-                  <div className="time-slot-grid">
+                  <div className="time-slot-grid17">
                     {timeSlots.map((timeSlot) => {
                       const status = getTimeSlotStatus(timeSlot);
                       return (
                         <button
                           key={timeSlot}
-                          className={`time-slot ${status} ${selectedTimeSlot === timeSlot ? 'selected' : ''}`}
+                          className={`time-slot17 ${status} ${selectedTimeSlot === timeSlot ? 'selected17' : ''}`}
                           onClick={() => handleTimeSlotSelect(timeSlot)}
                           disabled={status !== 'available'}
                         >
@@ -331,7 +331,7 @@ const AppointmentBooking = () => {
             )}
 
             {selectedTimeSlot && (
-              <div className="booking-summary">
+              <div className="booking-summary17">
                 <h3>Tóm tắt đặt lịch</h3>
                 <p><strong>Dịch vụ:</strong> {selectedService.service_name}</p>
                 <p><strong>Thợ cắt tóc:</strong> {selectedBarber.full_name}</p>
@@ -340,7 +340,7 @@ const AppointmentBooking = () => {
                 <p><strong>Giá:</strong> {selectedService.price.toLocaleString('vi-VN')} VND</p>
 
                 <button
-                  className="book-button"
+                  className="book-button17"
                   onClick={handleBookingRequest}
                   disabled={loading}
                 >
@@ -353,27 +353,27 @@ const AppointmentBooking = () => {
       </div>
 
       {showConfirmation && (
-        <div className="confirmation-overlay">
-          <div className="confirmation-dialog">
+        <div className="confirmation-overlay17">
+          <div className="confirmation-dialog17">
             <h2>Xác nhận đặt lịch</h2>
             <p>Bạn có chắc chắn muốn đặt lịch với thông tin sau?</p>
-            <div className="confirmation-details">
+            <div className="confirmation-details17">
               <p><strong>Dịch vụ:</strong> {selectedService.service_name}</p>
               <p><strong>Thợ cắt tóc:</strong> {selectedBarber.full_name}</p>
               <p><strong>Ngày:</strong> {formatDate(selectedDate)}</p>
               <p><strong>Giờ:</strong> {selectedTimeSlot}</p>
               <p><strong>Giá:</strong> {selectedService.price.toLocaleString('vi-VN')} VND</p>
             </div>
-            <div className="confirmation-actions">
+            <div className="confirmation-actions17">
               <button
-                className="confirm-button"
+                className="confirm-button17"
                 onClick={confirmBooking}
                 disabled={loading}
               >
                 {loading ? 'Đang xử lý...' : 'Xác nhận'}
               </button>
               <button
-                className="cancel-button"
+                className="cancel-button17"
                 onClick={cancelConfirmation}
                 disabled={loading}
               >
@@ -385,13 +385,13 @@ const AppointmentBooking = () => {
       )}
 
       {showLoginPrompt && (
-        <div className="login-prompt-overlay">
-          <div className="login-prompt">
+        <div className="login-prompt-overlay17">
+          <div className="login-prompt17">
             <p>Bạn cần đăng nhập trước khi đặt lịch!</p>
-            <button className="login-button" onClick={handleLoginRedirect}>
+            <button className="login-button17" onClick={handleLoginRedirect}>
               Đăng nhập ngay
             </button>
-            <button className="cancel-button" onClick={() => setShowLoginPrompt(false)}>
+            <button className="cancel-button17" onClick={() => setShowLoginPrompt(false)}>
               Hủy
             </button>
           </div>
