@@ -44,14 +44,19 @@ const AppointmentHistory = () => {
         
         const appointmentsResponse = await api.get(`/api/appointments/${username}`);
         
-        setAppointments(appointmentsResponse.data);
-        setFilteredAppointments(appointmentsResponse.data);
+        // Sắp xếp dữ liệu theo created_at giảm dần (mới nhất lên đầu)
+        const sortedAppointments = appointmentsResponse.data.sort((a, b) => 
+          new Date(b.created_at) - new Date(a.created_at)
+        );
+        
+        setAppointments(sortedAppointments);
+        setFilteredAppointments(sortedAppointments);
         
         const initialRatings = {};
         const initialComments = {};
-        appointmentsResponse.data.forEach(appointment => {
-          initialRatings[appointment.id] = 0;
-          initialComments[appointment.id] = '';
+        sortedAppointments.forEach(appointment => {
+          initialRatings[appointment.id] = appointment.rating || 0;
+          initialComments[appointment.id] = appointment.review_text || '';
         });
         setRatings(initialRatings);
         setComments(initialComments);
@@ -121,12 +126,13 @@ const AppointmentHistory = () => {
 
       const updatedAppointments = appointments.map(app => 
         app.id === appointmentId ? { ...app, status: 'cancelled' } : app
-      );
-      setAppointments(updatedAppointments);
+      ).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sắp xếp lại sau khi cập nhật
       
       const updatedFilteredAppointments = filteredAppointments.map(app => 
         app.id === appointmentId ? { ...app, status: 'cancelled' } : app
-      );
+      ).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sắp xếp lại sau khi cập nhật
+      
+      setAppointments(updatedAppointments);
       setFilteredAppointments(updatedFilteredAppointments);
 
       setNotification({
@@ -219,7 +225,7 @@ const AppointmentHistory = () => {
           };
         }
         return appointment;
-      });
+      }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sắp xếp lại sau khi đánh giá
       
       setAppointments(updatedAppointments);
       setFilteredAppointments(
@@ -233,7 +239,7 @@ const AppointmentHistory = () => {
             };
           }
           return appointment;
-        })
+        }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)) // Sắp xếp lại sau khi đánh giá
       );
       
     } catch (err) {
@@ -289,7 +295,6 @@ const AppointmentHistory = () => {
   };
 
   const canReview = (appointment) => {
-    // Chỉ hiển thị form đánh giá khi status là 'pending'
     return appointment.status === 'pending';
   };
 

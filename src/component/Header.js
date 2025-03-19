@@ -165,7 +165,7 @@ const Header = () => {
             </div>
           ) : (
             <Link to="/auth" className="login-button-wrapper desktop-only">
-              <button className="login-button">Register</button>
+              <button className="login-button">Đăng Kí</button>
             </Link>
           )}
         </nav>
@@ -207,7 +207,7 @@ const Header = () => {
             ) : (
               <>
                 <FaSignInAlt className="taskbar-icon" />
-                <span>Đăng nhập / Đăng ký</span>
+                <span>Đăng ký</span>
               </>
             )}
           </div>

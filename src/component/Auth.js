@@ -186,7 +186,7 @@ const Auth = () => {
                 resetForm();
               }}
             >
-              {isLogin ? "Register" : "Login"}
+              {isLogin ? "Đăng Ký" : "Đăng Nhập"}
             </button>
           </div>
         </div>
@@ -200,7 +200,7 @@ const Auth = () => {
         >
           {showForgotPassword ? (
             <form className="form" onSubmit={handleForgotPassword}>
-              <h2>Forgot Password</h2>
+              <h2>Quên Mật Khẩu</h2>
               {message && (
                 <div className={`message ${messageType === "error" ? "error" : ""}`}>
                   {message}
@@ -222,13 +222,13 @@ const Auth = () => {
                     setShowForgotPassword(false);
                   }}
                 >
-                  Back to Login
+                  Quay Về Đăng Nhập
                 </a>
               </p>
             </form>
           ) : isLogin ? (
             <form className="form" onSubmit={handleSubmit}>
-              <h2>Login here.</h2>
+              <h2>Đăng Nhập</h2>
               {message && (
                 <div className={`message ${messageType === "error" ? "error" : ""}`}>
                   {message}
@@ -262,7 +262,7 @@ const Auth = () => {
                   setShowForgotPassword(true);
                 }}
               >
-                Forgot Password?
+                Quên Mật Khẩu ?
               </a>
               <div className="recaptcha-container">
                 <ReCAPTCHA
@@ -271,11 +271,11 @@ const Auth = () => {
                   onChange={handleCaptchaChange}
                 />
               </div>
-              <button type="submit">Login</button>
+              <button type="submit">Đăng Nhập</button>
             </form>
           ) : (
             <form className="form" onSubmit={handleSubmit}>
-              <h2>Register here.</h2>
+              <h2>Đăng Ký</h2>
               {message && (
                 <div className={`message ${messageType === "error" ? "error" : ""}`}>
                   {message}
@@ -324,7 +324,7 @@ const Auth = () => {
                   onChange={handleCaptchaChange}
                 />
               </div>
-              <button type="submit">Register</button>
+              <button type="submit">Đăng Ký</button>
             </form>
           )}
         </div>
