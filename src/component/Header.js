@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaUserCircle, FaHome, FaBoxOpen, FaInfoCircle, FaCog, FaSignInAlt, FaShoppingCart } from "react-icons/fa"; // Thêm lại FaShoppingCart
+import { FaUserCircle, FaHome, FaBoxOpen, FaInfoCircle, FaCog, FaSignInAlt, FaShoppingCart } from "react-icons/fa";
 import api from "../utils/api";
 import { getToken, clearToken, clearUsername } from "../utils/tokenStorage";
 import { useCart } from "../CartContext";
@@ -12,7 +12,6 @@ const Header = () => {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [showMobileDropdown, setShowMobileDropdown] = useState(false);
   const [hideTaskbar, setHideTaskbar] = useState(false);
   const { cart, resetCart } = useCart();
   const lastScrollPosition = useRef(0);
@@ -51,7 +50,6 @@ const Header = () => {
         setHideTaskbar(false);
       } else if (currentScrollPosition > lastScrollPosition.current) {
         setHideTaskbar(true);
-        setShowMobileDropdown(false);
       } else if (currentScrollPosition < lastScrollPosition.current) {
         setHideTaskbar(false);
       }
@@ -72,7 +70,6 @@ const Header = () => {
       }
       setIsLoggedIn(false);
       setShowDropdown(false);
-      setShowMobileDropdown(false);
       navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
@@ -86,23 +83,13 @@ const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest(".user-menu") && !event.target.closest(".mobile-user-menu")) {
+      if (!event.target.closest(".user-menu")) {
         setShowDropdown(false);
-        setShowMobileDropdown(false);
       }
     };
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
-
-  const handleMobileUserClick = (e) => {
-    if (isLoggedIn) {
-      e.preventDefault();
-      setShowMobileDropdown(!showMobileDropdown);
-    } else {
-      navigate("/auth");
-    }
-  };
 
   const handleCartClick = () => {
     navigate("/cart");
@@ -152,7 +139,7 @@ const Header = () => {
                   <Link to="/Profile" onClick={() => setShowDropdown(false)}>Thông tin cá nhân</Link>
                   <Link to="/OrderHistory" onClick={() => setShowDropdown(false)}>Lịch sử đặt hàng</Link>
                   <Link to="/History" onClick={() => setShowDropdown(false)}>Lịch sử cắt</Link>
-                  <Link to="/ChangePassword" onClick={() => setShowMobileDropdown(false)}>Đổi mật khẩu</Link>
+                  <Link to="/ChangePassword" onClick={() => setShowDropdown(false)}>Đổi mật khẩu</Link>
                   <button onClick={handleLogout}>Đăng xuất</button>
                 </div>
               )}
@@ -183,28 +170,17 @@ const Header = () => {
             <FaInfoCircle className="taskbar-icon" />
             <span>Giới thiệu</span>
           </Link>
-          <div className="taskbar-item mobile-user-menu" onClick={handleMobileUserClick}>
-            {isLoggedIn ? (
-              <>
-                <FaUserCircle className="taskbar-icon" />
-                <span>Cá nhân</span>
-                {showMobileDropdown && (
-                  <div className="mobile-dropdown-menu">
-                    <Link to="/profile" onClick={() => setShowMobileDropdown(false)}>Thông tin cá nhân</Link>
-                    <Link to="/OrderHistory" onClick={() => setShowMobileDropdown(false)}>Lịch sử đặt hàng</Link>
-                    <Link to="/History" onClick={() => setShowDropdown(false)}>Lịch sử cắt</Link>
-                    <Link to="/ChangePassword" onClick={() => setShowMobileDropdown(false)}>Đổi mật khẩu</Link>
-                    <button onClick={handleLogout}>Đăng xuất</button>
-                  </div>
-                )}
-              </>
-            ) : (
-              <>
-                <FaSignInAlt className="taskbar-icon" />
-                <span>Đăng ký</span>
-              </>
-            )}
-          </div>
+          {isLoggedIn ? (
+            <Link to="/account" className={`taskbar-item ${location.pathname === "/account" ? "active" : ""}`}>
+              <FaUserCircle className="taskbar-icon" />
+              <span>Cá nhân</span>
+            </Link>
+          ) : (
+            <Link to="/auth" className={`taskbar-item ${location.pathname === "/auth" ? "active" : ""}`}>
+              <FaSignInAlt className="taskbar-icon" />
+              <span>Đăng ký</span>
+            </Link>
+          )}
         </div>
       </div>
     </>

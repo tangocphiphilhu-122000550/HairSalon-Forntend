@@ -1,0 +1,63 @@
+.account-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .account-container h1 {
+    font-size: 2rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+  }
+  
+  .account-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .account-item {
+    display: block;
+    padding: 1rem;
+    background: linear-gradient(90deg, #3498db, #2ecc71);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .account-item:hover {
+    background: linear-gradient(90deg, #2980b9, #27ae60);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logout-button {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+    border: none;
+    cursor: pointer;
+  }
+  
+  .logout-button:hover {
+    background: linear-gradient(90deg, #c0392b, #a93226);
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .account-container {
+      padding: 1rem;
+    }
+  
+    .account-container h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    .account-item {
+      padding: 0.8rem;
+      font-size: 0.9rem;
+    }
+  }
