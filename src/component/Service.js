@@ -16,9 +16,11 @@ const AppointmentBooking = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [showDateErrorOverlay, setShowDateErrorOverlay] = useState(false); // Trạng thái cho overlay
+  const [dateErrorMessage, setDateErrorMessage] = useState(''); // Nội dung thông báo lỗi
   const [loading, setLoading] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
-  const [isMobile, setIsMobile] = useState(false); // Thêm trạng thái để kiểm tra thiết bị mobile
+  const [isMobile, setIsMobile] = useState(false);
 
   const timeSlots = [
     '08:00', '09:00', '10:00', '11:00', '12:00',
@@ -26,11 +28,11 @@ const AppointmentBooking = () => {
     '18:00', '19:00'
   ];
 
-  // Kiểm tra thiết bị mobile khi component được mount
+  // Kiểm tra thiết bị mobile
   useEffect(() => {
     const checkIfMobile = () => {
       const width = window.innerWidth;
-      setIsMobile(width <= 768); // Coi thiết bị có chiều rộng <= 768px là mobile
+      setIsMobile(width <= 768);
     };
 
     checkIfMobile();
@@ -148,17 +150,23 @@ const AppointmentBooking = () => {
     const selectedDateValue = e.target.value;
     const selectedDateObj = new Date(selectedDateValue);
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Đặt giờ về 00:00:00 để so sánh ngày
+    today.setHours(0, 0, 0, 0);
 
     // Kiểm tra nếu là thiết bị mobile và ngày được chọn là ngày trong quá khứ
     if (isMobile && selectedDateObj < today) {
-      setError('Không thể chọn ngày trong quá khứ. Vui lòng chọn ngày hôm nay hoặc trong tương lai.');
-      setSelectedDate(''); // Reset ngày về rỗng
-      setSelectedTimeSlot(null); // Reset khung giờ
+      setDateErrorMessage('Không thể chọn ngày trong quá khứ. Vui lòng chọn ngày hôm nay hoặc trong tương lai.');
+      setShowDateErrorOverlay(true);
+      setSelectedDate('');
+      setSelectedTimeSlot(null);
+      // Tự động ẩn overlay sau 3 giây
+      setTimeout(() => {
+        setShowDateErrorOverlay(false);
+        setDateErrorMessage('');
+      }, 3000);
       return;
     }
 
-    setError(''); // Xóa thông báo lỗi nếu ngày hợp lệ
+    setError('');
     setSelectedDate(selectedDateValue);
     setSelectedTimeSlot(null);
   };
@@ -247,6 +255,14 @@ const AppointmentBooking = () => {
       )}
 
       {error && <div className="error-message17">{error}</div>}
+
+      {showDateErrorOverlay && (
+        <div className="date-error-overlay17">
+          <div className="date-error-message17">
+            {dateErrorMessage}
+          </div>
+        </div>
+      )}
 
       <div className="booking-container17">
         <div className="service-selection17">
