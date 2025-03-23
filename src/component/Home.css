@@ -246,12 +246,13 @@
 /* Nút Zalo và Giỏ hàng */
 .zalo-button17 {
   position: fixed;
-  bottom: 20px; /* Cách viền dưới 20px */
+  bottom:87px;; /* Cách viền dưới 20px */
   right: 20px; /* Cách viền phải 20px */
   z-index: 9999;
 }
 
 .cart-button17 {
+  display: none; /* Ẩn mặc định trên desktop */
   position: fixed;
   bottom: 90px; /* Cách nút Zalo 10px (60px chiều cao Zalo + 10px khoảng cách) */
   right: 20px; /* Cùng viền phải với Zalo */
@@ -274,6 +275,7 @@
   font-size: 11px;
   font-weight: bold;
   box-shadow: 0 2px 5px rgba(255, 62, 62, 0.5);
+  border: 2px solid #000;
 }
 
 /* Hiệu ứng cuộn vô hạn chung */
@@ -394,6 +396,7 @@
   .cart-button17 {
     bottom: 150px;
     right: 16px;
+    display: block;
   }
 }
 
