@@ -1,3 +1,4 @@
+// Home.js
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
@@ -11,7 +12,6 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Initialize AOS
     AOS.init({
       duration: 1000,
       once: false,
@@ -38,7 +38,7 @@ const Home = () => {
         }}
         data-aos="fade-down"
       >
-        <button className="cta-button" onClick={handleBookNow} >
+        <button className="cta-button" onClick={handleBookNow}>
           Đặt lịch ngay
         </button>
       </div>
@@ -155,33 +155,11 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Nút Zalo */}
-      <a
-        href="https://zalo.me/0343894612"
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          position: "fixed",
-          bottom: "60px",
-          right: "20px",
-          zIndex: "9999",
-        }}
-        data-aos="fade-up"
-        data-aos-offset="0"
-        data-aos-duration="800"
-      >
-        <img
-          src="/LogoZalo.webp"
-          alt="Liên hệ Zalo"
-          style={{ width: "60px", height: "60px" }}
-        />
-      </a>
-
       {/* ReviewSlider với animation */}
       <div data-aos="fade-up">
         <ReviewSlider />
       </div>
-      
+
       {/* FeedbackForm với animation */}
       <div data-aos="fade-up" data-aos-anchor-placement="top-bottom">
         <FeedbackForm />

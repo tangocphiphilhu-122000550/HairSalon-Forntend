@@ -3,9 +3,9 @@
     background: #191919;
     padding: 15px 0;
     box-shadow: 0 4px 6px rgba(19, 15, 15, 0.1);
-    position: sticky; /* Giữ header cố định trên đầu */
+    position: sticky;
     top: 0;
-    z-index: 1000; /* Đảm bảo header trên cùng */
+    z-index: 1000;
 }
 
 .navbar {
@@ -81,7 +81,7 @@
     width: 140px;
 }
 
-/* Biểu tượng giỏ hàng */
+/* Biểu tượng giỏ hàng trên desktop */
 .cart-icon-header {
     position: absolute;
     top: 50%;
@@ -94,7 +94,7 @@
     color: white;
 }
 
-/* Số lượng trong giỏ hàng */
+/* Số lượng trong giỏ hàng trên desktop */
 .cart-count {
     position: absolute;
     top: -5px;
@@ -199,18 +199,21 @@
     background: linear-gradient(220deg, #D32F2F, #212121);
 }
 
-/* Mobile Taskbar */
+/* Enhanced Mobile Taskbar Styles */
 .mobile-taskbar {
     display: none;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(135deg, #444e94, #d1d1d1);
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #2d3436, #000000);
+    box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.3);
     z-index: 999;
-    padding: 8px 0;
-    transition: transform 0.3s ease;
+    padding: 12px 0 8px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.3s ease;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
 }
 
 .taskbar-hidden {
@@ -221,61 +224,116 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 0 10px;
 }
 
 .taskbar-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: white;
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
     font-size: 12px;
+    font-weight: 500;
     position: relative;
+    transition: all 0.3s ease;
+    padding: 8px 0;
+    width: 20%;
+}
+
+.taskbar-item:active {
+    transform: scale(0.9);
 }
 
 .taskbar-item.active {
     color: #ff7eb3;
-    font-weight: bold;
+}
+
+.taskbar-item.active .taskbar-icon {
+    transform: translateY(-5px);
+    text-shadow: 0 10px 20px rgba(255, 126, 179, 0.5);
+}
+
+.taskbar-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background-color: #ff7eb3;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 10px #ff7eb3;
+    animation: pulse 1.5s infinite;
+}
+
+/* Fix for touch handling on all items */
+.taskbar-item:active,
+.taskbar-item:focus {
+    color: #ff7eb3;
 }
 
 .taskbar-icon {
-    font-size: 20px;
-    margin-bottom: 4px;
+    font-size: 22px;
+    margin-bottom: 5px;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
-.mobile-user-menu {
-    cursor: pointer;
+.taskbar-item:hover .taskbar-icon,
+.taskbar-item:active .taskbar-icon {
+    transform: translateY(-3px);
+    color: #ff7eb3;
 }
 
+.taskbar-item span {
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+}
+
+.taskbar-item:hover span,
+.taskbar-item:active span {
+    opacity: 1;
+    color: #ff7eb3;
+}
+
+/* Mobile dropdown menu styling */
 .mobile-dropdown-menu {
     position: absolute;
-    bottom: 42px;
-    left: -70%;
-    transform: translateX(-50%);
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
-    width: 180px;
-    padding: 10px 0;
+    width: 220px;
+    padding: 8px 0;
     z-index: 1001;
+    opacity: 0;
+    animation: fadeInUp 0.3s forwards;
 }
 
 .mobile-dropdown-menu::after {
     content: "";
     position: absolute;
-    bottom: -9px;
-    left: 80%;
+    bottom: -10px;
+    left: 50%;
     transform: translateX(-50%);
-    border-width: 5px;
+    border-width: 10px 10px 0 10px;
     border-style: solid;
-    border-color: white transparent transparent transparent;
+    border-color: rgba(255, 255, 255, 0.95) transparent transparent transparent;
 }
 
 .mobile-dropdown-menu a,
 .mobile-dropdown-menu button {
-    padding: 12px 15px;
+    padding: 14px 20px;
     text-decoration: none;
     color: #333;
     display: block;
@@ -286,27 +344,61 @@
     cursor: pointer;
     font-size: 14px;
     font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.mobile-dropdown-menu a:before,
+.mobile-dropdown-menu button:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background-color: #ff7eb3;
+    transform: scaleY(0);
+    transition: transform 0.2s ease;
+}
+
+.mobile-dropdown-menu a:hover:before,
+.mobile-dropdown-menu button:hover:before {
+    transform: scaleY(1);
 }
 
 .mobile-dropdown-menu a:hover,
 .mobile-dropdown-menu button:hover {
-    background: #f1f1f1;
+    background: rgba(0, 0, 0, 0.05);
+    padding-left: 25px;
 }
 
 .mobile-dropdown-menu button {
     color: #e74c3c;
     font-weight: 600;
-    border-top: 1px solid #eee;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     margin-top: 5px;
 }
 
-.mobile-only {
-    display: none;
+.mobile-dropdown-menu button:hover {
+    background: rgba(231, 76, 60, 0.1);
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 126, 179, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(255, 126, 179, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 126, 179, 0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
 }
 
 /* Container chính (đảm bảo không bị đè) */
 .home-container {
-  padding-top: 0px; /* Thêm padding-top bằng chiều cao header + margin */
+    padding-top: 0px;
 }
 
 /* Responsive styles */
@@ -352,49 +444,10 @@
     }
     .nav-links.left,
     .nav-links.right {
-        display: none; /* Ẩn nav-links trên màn hình nhỏ hơn 900px */
-    }
-    .mobile-taskbar {
-        display: block; /* Hiển thị taskbar mobile */
-    }
-    .logo {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    .logo img {
-        width: 100px;
-    }
-    .desktop-only {
         display: none;
     }
-    .user-menu {
-        right: 60px;
-    }
-    .cart-icon-header {
-        right: 100px;
-    }
-    .login-button-wrapper {
-        right: 10px;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .header {
-        position: sticky;
-        top: 0;
-    }
-    .navbar {
-        height: 60px;
-        justify-content: center;
-        padding: 0 10px;
-    }
-    .nav-links.left,
-    .nav-links.right {
-        display: none; /* Ẩn nav-links trên màn hình nhỏ hơn 900px */
-    }
     .mobile-taskbar {
-        display: block; /* Hiển thị taskbar mobile */
+        display: block;
     }
     .logo {
         position: absolute;
@@ -426,13 +479,18 @@
         width: 80px;
     }
     .mobile-taskbar {
-        padding: 5px 0;
+        padding: 10px 0 5px;
     }
     .taskbar-icon {
-        font-size: 18px;
+        font-size: 20px;
     }
     .taskbar-item {
-        font-size: 10px;
+        font-size: 11px;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .taskbar-item.active::after {
+        width: 4px;
+        height: 4px;
     }
     .user-menu {
         right: 50px;
@@ -446,5 +504,29 @@
     .login-button {
         padding: 8px 14px;
         font-size: 14px;
+    }
+}
+
+.mobile-taskbar:hover {
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    .mobile-dropdown-menu {
+        background: rgba(30, 30, 30, 0.95);
+    }
+    .mobile-dropdown-menu::after {
+        border-color: rgba(30, 30, 30, 0.95) transparent transparent transparent;
+    }
+    .mobile-dropdown-menu a,
+    .mobile-dropdown-menu button {
+        color: #eee;
+    }
+    .mobile-dropdown-menu a:hover,
+    .mobile-dropdown-menu button:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+    .mobile-dropdown-menu button {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 }

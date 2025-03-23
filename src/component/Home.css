@@ -53,6 +53,8 @@
 
 .cta-button:hover {
   transform: translate(-50%, -50%) scale(1.05);
+  background: linear-gradient(10deg, #f44336, #424242);
+  box-shadow: 0 5px 15px rgba(242, 97, 97, 0.4);
 }
 
 /* Hiệu ứng tưng tưng */
@@ -78,9 +80,6 @@
   align-items: center;
   justify-content: center;
 }
-
-
-
 
 /* Phần dịch vụ */
 .services {
@@ -244,6 +243,39 @@
   color: #ddd;
 }
 
+/* Nút Zalo và Giỏ hàng */
+.zalo-button17 {
+  position: fixed;
+  bottom: 20px; /* Cách viền dưới 20px */
+  right: 20px; /* Cách viền phải 20px */
+  z-index: 9999;
+}
+
+.cart-button17 {
+  position: fixed;
+  bottom: 90px; /* Cách nút Zalo 10px (60px chiều cao Zalo + 10px khoảng cách) */
+  right: 20px; /* Cùng viền phải với Zalo */
+  z-index: 9999;
+  cursor: pointer;
+}
+
+.cart-count-home {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: #ff3e3e;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(255, 62, 62, 0.5);
+}
+
 /* Hiệu ứng cuộn vô hạn chung */
 @keyframes infiniteScroll {
   0% { transform: translateX(0); }
@@ -347,20 +379,21 @@
   }
 
   .hairstyle-info {
-    position: absolute;
     bottom: 33px;
-    left: 0;
-    width: 100%;
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.7);
-    opacity: 0;
-    transform: translateY(20px);
-    transition: all 0.3s ease;
-    text-align: left;
   }
 
   .cta-button {
     top: 80%;
+  }
+
+  .zalo-button17 {
+    bottom: 71px;
+    right: 7px;
+  }
+
+  .cart-button17 {
+    bottom: 150px;
+    right: 16px;
   }
 }
 
@@ -589,11 +622,6 @@
 /* Cải thiện hiệu ứng cho button */
 .cta-button {
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.cta-button:hover {
-  background: linear-gradient(10deg, #f44336, #424242);
-  box-shadow: 0 5px 15px rgba(242, 97, 97, 0.4);
 }
 
 /* Hiệu ứng cho section title */

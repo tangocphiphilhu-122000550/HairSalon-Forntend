@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { FaUserCircle, FaHome, FaBoxOpen, FaInfoCircle, FaCog, FaSignInAlt, FaShoppingCart } from "react-icons/fa";
+import { FaUserCircle, FaHome, FaBoxOpen, FaInfoCircle, FaCog, FaSignInAlt, FaShoppingCart } from "react-icons/fa"; // Thêm lại FaShoppingCart
 import api from "../utils/api";
 import { getToken, clearToken, clearUsername } from "../utils/tokenStorage";
 import { useCart } from "../CartContext";
@@ -41,7 +41,6 @@ const Header = () => {
         setIsLoggedIn(false);
       }
     };
-
     checkAuthStatus();
   }, []);
 
@@ -58,7 +57,6 @@ const Header = () => {
       }
       lastScrollPosition.current = currentScrollPosition;
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -66,22 +64,18 @@ const Header = () => {
   const handleLogout = async () => {
     try {
       const res = await api.post("/api/auth/logout", {});
-      const { clearToken: shouldClearToken } = res.data; // Lấy giá trị clearToken từ phản hồi
-
-      // Nếu backend yêu cầu xóa token, thực hiện xóa token trong IndexedDB
+      const { clearToken: shouldClearToken } = res.data;
       if (shouldClearToken) {
         await clearToken();
         await clearUsername();
         resetCart();
       }
-
       setIsLoggedIn(false);
       setShowDropdown(false);
       setShowMobileDropdown(false);
       navigate("/");
     } catch (error) {
       console.error("Logout error:", error);
-      // Trong trường hợp lỗi, vẫn xóa token để đảm bảo an toàn
       await clearToken();
       await clearUsername();
       resetCart();
@@ -210,11 +204,6 @@ const Header = () => {
                 <span>Đăng ký</span>
               </>
             )}
-          </div>
-          <div className="taskbar-item" onClick={handleCartClick}>
-            <FaShoppingCart className="taskbar-icon" />
-            <span>Giỏ hàng</span>
-            {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
           </div>
         </div>
       </div>

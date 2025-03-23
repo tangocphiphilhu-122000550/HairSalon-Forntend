@@ -24,6 +24,7 @@ import OrderManagement from "./Admin/OrderManagement.js"
 import ReviewManagement from "./Admin/ReviewManagement.js";
 import AppointmentManagement from "./Admin/AppointmentManagement.js";
 import { AppointmentProvider } from "./context/AppointmentContext";
+import Layout from "./component/Layout";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
       <AppointmentProvider>
     <Router>
       <Routes>
+      <Route element={<Layout />}>
         <Route path="/auth" element={<Auth />} />
         <Route path="/" element={<MainLayout><Home /></MainLayout>} />
         <Route path="/ChangePassword" element={<MainLayout><ChangePassword /></MainLayout>} />
@@ -46,6 +48,7 @@ function App() {
         <Route path="/OrderHistory" element={<MainLayout><OrderHistory /></MainLayout>} />
         <Route path="/About" element={<MainLayout><About /></MainLayout>} />
         <Route path="/ProtectedRoute" element={<MainLayout><ProtectedRoute /></MainLayout>} />
+        </Route>
         <Route path="/admin" element={<ProtectedRoute allowedUserTypeId={1} />} />
         <Route path="/UserManagement" element={<UserManagement />} />
         <Route path="/ServiceManagement" element={<ServiceManagement />} />
