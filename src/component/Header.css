@@ -304,7 +304,7 @@
 .mobile-dropdown-menu {
     position: absolute;
     bottom: 60px;
-    left: 50%;
+    left: -156%;
     transform: translateX(-50%) translateY(10px);
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -324,7 +324,7 @@
     content: "";
     position: absolute;
     bottom: -10px;
-    left: 50%;
+    left:78%;
     transform: translateX(-50%);
     border-width: 10px 10px 0 10px;
     border-style: solid;
