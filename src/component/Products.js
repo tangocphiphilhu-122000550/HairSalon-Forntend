@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom"; // Thêm useNavigate
+import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 import { getToken } from "../utils/tokenStorage";
 import styled from "styled-components";
+import { useCart } from "../CartContext"; // Import useCart
+import { FaShoppingCart } from "react-icons/fa"; // Import icon giỏ hàng
 import "./Products.css";
 
 const Products = () => {
-  const navigate = useNavigate(); // Khai báo useNavigate
+  const navigate = useNavigate();
+  const { addToCart } = useCart(); // Sử dụng useCart để lấy hàm addToCart
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,13 +20,14 @@ const Products = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [showNotification, setShowNotification] = useState(null); // Trạng thái thông báo
   const searchRef = useRef(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const token = await getToken();
-        const response = await api.get("/api/products/getall"); // Sửa endpoint thành /products như đã sửa trước đó
+        const response = await api.get("/api/products/getall");
         setProducts(response.data);
         setFilteredProducts(response.data);
         setLoading(false);
@@ -35,6 +39,14 @@ const Products = () => {
 
     fetchProducts();
   }, []);
+
+  // Hàm định dạng giá thành dạng 30.000 VND
+  const formatPrice = (price) => {
+    // Chuyển price thành số nguyên (bỏ .00)
+    const intPrice = Math.floor(Number(price));
+    // Định dạng số với dấu chấm phân cách hàng nghìn
+    return intPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND";
+  };
 
   const filterAndSortProducts = () => {
     let result = [...products];
@@ -97,7 +109,14 @@ const Products = () => {
   };
 
   const handleProductClick = (product) => {
-    navigate(`/ProductDetail/${product.name}`, { state: { product } }); // Chuyển hướng đến trang chi tiết sản phẩm
+    navigate(`/ProductDetail/${product.name}`, { state: { product } });
+  };
+
+  const handleAddToCart = (product, e) => {
+    e.stopPropagation(); // Ngăn sự kiện onClick của product-card lan ra ngoài
+    addToCart(product, 1); // Thêm sản phẩm với số lượng mặc định là 1
+    setShowNotification(product.name); // Hiển thị thông báo với tên sản phẩm
+    setTimeout(() => setShowNotification(null), 3000); // Ẩn thông báo sau 3 giây
   };
 
   useEffect(() => {
@@ -219,7 +238,7 @@ const Products = () => {
             <div
               key={product.name}
               className="product-card"
-              onClick={() => handleProductClick(product)} // Thêm sự kiện onClick
+              onClick={() => handleProductClick(product)}
             >
               {product.image_url && (
                 <img
@@ -231,14 +250,26 @@ const Products = () => {
               <div className="product-content">
                 <h2>{product.name}</h2>
                 <div className="product-footer">
-                  <p className="price">Giá: {product.price} VND</p>
+                  <p className="price">Giá: {formatPrice(product.price)}</p>
                   <p className="stock">Còn lại: {product.stock} sản phẩm</p>
                 </div>
+                <button
+                  className="add-to-cart-btn"
+                  onClick={(e) => handleAddToCart(product, e)}
+                >
+                  <FaShoppingCart className="cart-icon" /> Thêm vào giỏ
+                </button>
               </div>
             </div>
           ))
         )}
       </div>
+
+      {showNotification && (
+        <div className="notification-dropdown">
+          <p>{`Sản phẩm ${showNotification} đã được thêm vào giỏ hàng!`}</p>
+        </div>
+      )}
     </div>
   );
 };

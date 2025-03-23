@@ -286,6 +286,42 @@
   color: #7f8c8d;
 }
 
+/* Nút Thêm vào giỏ hàng */
+.add-to-cart-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, #3498db, #2ecc71);
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.add-to-cart-btn:hover {
+  background: linear-gradient(90deg, #2980b9, #27ae60);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.add-to-cart-btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.cart-icon {
+  font-size: 1rem;
+}
+
 /* Responsive styles */
 
 /* Tablet (dưới 768px) */
@@ -380,6 +416,10 @@
   .loading,
   .error {
     font-size: 1.1rem;
+  }
+  .add-to-cart-btn {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
   }
 }
 
@@ -498,6 +538,11 @@
   .error {
     font-size: 1rem;
   }
+
+  .add-to-cart-btn {
+    padding: 0.4rem 0.6rem;
+    font-size: 0.85rem;
+  }
 }
 
 /* Tắt hiệu ứng hover trên thiết bị cảm ứng */
@@ -511,3 +556,4 @@
     box-shadow: inherit;
   }
 }
+

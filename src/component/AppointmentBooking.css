@@ -73,6 +73,9 @@
   cursor: pointer;
   transition: all 0.3s ease;
   border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
 }
 
 .service-card17:hover {
@@ -96,6 +99,12 @@
   color: #7f8c8d;
   font-size: 0.95rem;
   line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 0;
 }
 
 .service-details17 {
@@ -104,7 +113,9 @@
   font-size: 0.9rem;
   color: #3498db;
   font-weight: 600;
+  margin-top: auto;
 }
+
 
 /* Barber selection styles */
 .barber-list17 {
