@@ -18,12 +18,26 @@ const AppointmentBooking = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [isMobile, setIsMobile] = useState(false); // Thêm trạng thái để kiểm tra thiết bị mobile
 
   const timeSlots = [
     '08:00', '09:00', '10:00', '11:00', '12:00',
     '13:00', '14:00', '15:00', '16:00', '17:00',
     '18:00', '19:00'
   ];
+
+  // Kiểm tra thiết bị mobile khi component được mount
+  useEffect(() => {
+    const checkIfMobile = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 768); // Coi thiết bị có chiều rộng <= 768px là mobile
+    };
+
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -131,7 +145,21 @@ const AppointmentBooking = () => {
   };
 
   const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
+    const selectedDateValue = e.target.value;
+    const selectedDateObj = new Date(selectedDateValue);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Đặt giờ về 00:00:00 để so sánh ngày
+
+    // Kiểm tra nếu là thiết bị mobile và ngày được chọn là ngày trong quá khứ
+    if (isMobile && selectedDateObj < today) {
+      setError('Không thể chọn ngày trong quá khứ. Vui lòng chọn ngày hôm nay hoặc trong tương lai.');
+      setSelectedDate(''); // Reset ngày về rỗng
+      setSelectedTimeSlot(null); // Reset khung giờ
+      return;
+    }
+
+    setError(''); // Xóa thông báo lỗi nếu ngày hợp lệ
+    setSelectedDate(selectedDateValue);
     setSelectedTimeSlot(null);
   };
 
