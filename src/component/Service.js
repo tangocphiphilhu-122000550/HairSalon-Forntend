@@ -265,29 +265,32 @@ const AppointmentBooking = () => {
       )}
 
       <div className="booking-container17">
-        <div className="service-selection17">
-          <h2>Chọn Dịch Vụ</h2>
-          {loading ? (
-            <div className="loading17">Đang tải...</div>
-          ) : (
-            <div className="service-list17">
-              {services.map((service) => (
-                <div
-                  key={service.id}
-                  className={`service-card17 ${selectedService?.id === service.id ? 'selected17' : ''}`}
-                  onClick={() => handleServiceSelect(service)}
-                >
-                  <h3>{service.service_name}</h3>
-                  <p>{service.description}</p>
-                  <div className="service-details17">
-                    <span>Giá: {service.price.toLocaleString('vi-VN')} VND</span>
-                    <span>Thời gian: {service.duration_minutes} phút</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
+      <div className="service-selection17">
+  <h2>Chọn Dịch Vụ</h2>
+  {loading ? (
+    <div className="loader">
+      <span className="loader-text">loading</span>
+      <span className="load"></span>
+    </div>
+  ) : (
+    <div className="service-list17">
+      {services.map((service) => (
+        <div
+          key={service.id}
+          className={`service-card17 ${selectedService?.id === service.id ? 'selected17' : ''}`}
+          onClick={() => handleServiceSelect(service)}
+        >
+          <h3>{service.service_name}</h3>
+          <p>{service.description}</p>
+          <div className="service-details17">
+            <span>Giá: {service.price.toLocaleString('vi-VN')} VND</span>
+            <span>Thời gian: {service.duration_minutes} phút</span>
+          </div>
         </div>
+      ))}
+    </div>
+  )}
+</div>
 
         {selectedService && (
           <div className="barber-selection17">

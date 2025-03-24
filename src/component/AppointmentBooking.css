@@ -33,6 +33,7 @@
   padding: 2rem;
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  position: relative; /* Thêm position: relative để loader căn giữa trong phần tử này */
 }
 
 .service-selection17 h2,
@@ -496,12 +497,129 @@
   border: 1px solid #c8e6c9;
 }
 
-/* Loading indicator */
-.loading17 {
-  text-align: center;
-  padding: 1.5rem;
-  color: #7f8c8d;
-  font-style: italic;
+/* From Uiverse.io by alexruix */
+.loader {
+  width: 80px;
+  height: 50px;
+  position: absolute; /* Sử dụng absolute để căn giữa trong service-selection17 */
+  top: 50%; /* Đặt ở giữa theo chiều dọc */
+  left: 50%; /* Đặt ở giữa theo chiều ngang */
+  transform: translate(-50%, -50%); /* Dịch chuyển ngược lại 50% chiều rộng và chiều cao để căn giữa chính xác */
+  z-index: 10; /* Đảm bảo loader nằm trên các phần tử khác trong service-selection17 */
+}
+
+.loader-text {
+  position: absolute;
+  top: 0; /* Điều chỉnh vị trí của text */
+  padding: 0;
+  margin: 0;
+  color: #C8B6FF;
+  animation: text_713 3.5s ease both infinite;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.load {
+  background-color: #9A79FF;
+  border-radius: 50px;
+  display: block;
+  height: 16px;
+  width: 16px;
+  bottom: 0;
+  position: absolute;
+  transform: translateX(64px);
+  animation: loading_713 3.5s ease both infinite;
+}
+
+.load::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #D1C2FF;
+  border-radius: inherit;
+  animation: loading2_713 3.5s ease both infinite;
+}
+
+@keyframes text_713 {
+  0% {
+    letter-spacing: 1px;
+    transform: translateX(0px);
+  }
+
+  40% {
+    letter-spacing: 2px;
+    transform: translateX(26px);
+  }
+
+  80% {
+    letter-spacing: 1px;
+    transform: translateX(32px);
+  }
+
+  90% {
+    letter-spacing: 2px;
+    transform: translateX(0px);
+  }
+
+  100% {
+    letter-spacing: 1px;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes loading_713 {
+  0% {
+    width: 16px;
+    transform: translateX(0px);
+  }
+
+  40% {
+    width: 100%;
+    transform: translateX(0px);
+  }
+
+  80% {
+    width: 16px;
+    transform: translateX(64px);
+  }
+
+  90% {
+    width: 100%;
+    transform: translateX(0px);
+  }
+
+  100% {
+    width: 16px;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes loading2_713 {
+  0% {
+    transform: translateX(0px);
+    width: 16px;
+  }
+
+  40% {
+    transform: translateX(0%);
+    width: 80%;
+  }
+
+  80% {
+    width: 100%;
+    transform: translateX(0px);
+  }
+
+  90% {
+    width: 80%;
+    transform: translateX(15px);
+  }
+
+  100% {
+    transform: translateX(0px);
+    width: 16px;
+  }
 }
 
 /* Success notification */
@@ -572,6 +690,21 @@
   .barber-selection17,
   .date-time-selection17 {
     padding: 1rem;
+    position: relative; /* Đảm bảo position: relative trên mobile */
+  }
+
+  .loader {
+    width: 60px; /* Giảm kích thước trên mobile */
+    height: 40px;
+  }
+
+  .loader-text {
+    font-size: 0.7rem;
+  }
+
+  .load {
+    height: 12px;
+    width: 12px;
   }
 
   .service-selection17 h2,

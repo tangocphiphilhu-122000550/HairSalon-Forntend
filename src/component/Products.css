@@ -41,16 +41,38 @@
 .toggle-filter-btn {
   padding: 10px 20px;
   background: #3498db;
-  color: #fff;
+  color: #000000;
   border: none;
   border-radius: 25px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  user-select: none;
 }
 
 .toggle-filter-btn:hover {
   background: #2980b9;
+  color: #000000;
+}
+
+.toggle-filter-btn:active {
+  background: #2980b9;
+  color: #000000;
+}
+
+.toggle-filter-btn:focus {
+  background: #3498db;
+  color: #000000;
+  outline: none;
+}
+
+/* Ẩn nút toggle trên thiết bị responsive */
+.desktop-only {
+  display: block;
 }
 
 .filters {
@@ -59,6 +81,15 @@
   border-radius: 10px;
   max-width: 400px;
   margin-top: 10px;
+  display: none; /* Ẩn mặc định trên desktop */
+}
+
+.filters.show {
+  display: block; /* Hiển thị khi toggle trên desktop */
+}
+
+.filters.hide {
+  display: none; /* Ẩn khi toggle trên desktop */
 }
 
 .filter-form {
@@ -155,11 +186,28 @@
   border-radius: 25px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  user-select: none;
 }
 
 .apply-filter-btn:hover {
   background: #27ae60;
+  color: #fff;
+}
+
+.apply-filter-btn:active {
+  background: #27ae60;
+  color: #fff;
+}
+
+.apply-filter-btn:focus {
+  background: #2ecc71;
+  color: #fff;
+  outline: none;
 }
 
 /* Suggestions */
@@ -328,7 +376,7 @@
 @media (max-width: 768px) {
   .products-container {
     padding: 15px;
-    max-width: 100%; /* Đảm bảo container chiếm hết chiều rộng */
+    max-width: 100%;
   }
 
   .header-title {
@@ -344,9 +392,15 @@
     margin-bottom: 20px;
   }
 
+  .desktop-only {
+    display: none; /* Ẩn nút toggle trên tablet và mobile */
+  }
+
   .filters {
+    display: block; /* Hiển thị mặc định trên tablet và mobile */
     padding: 15px;
-    max-width: 100%; /* Mở rộng toàn bộ chiều rộng */
+    max-width: 100%;
+    margin-top: 0; /* Bỏ margin-top vì không còn nút toggle */
   }
 
   .filter-form {
@@ -362,7 +416,6 @@
     padding: 6px;
   }
 
-  .toggle-filter-btn,
   .apply-filter-btn {
     padding: 8px 15px;
     font-size: 0.95rem;
@@ -417,6 +470,7 @@
   .error {
     font-size: 1.1rem;
   }
+
   .add-to-cart-btn {
     padding: 0.5rem 0.8rem;
     font-size: 0.9rem;
@@ -439,7 +493,12 @@
     gap: 10px;
   }
 
+  .desktop-only {
+    display: none; /* Ẩn nút toggle trên mobile */
+  }
+
   .filters {
+    display: block; /* Hiển thị mặc định trên mobile */
     padding: 10px;
   }
 
@@ -455,7 +514,7 @@
   }
 
   .price-filter input {
-    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    width: 100%;
     padding: 6px;
   }
 
@@ -464,15 +523,14 @@
     padding: 6px;
   }
 
-  .toggle-filter-btn,
   .apply-filter-btn {
     padding: 6px 12px;
     font-size: 0.9rem;
-    width: 100%; /* Nút chiếm toàn bộ chiều rộng */
+    width: 100%;
   }
 
   .input.expanded {
-    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    width: 100%;
     padding: 12px 35px 12px 10px;
   }
 
@@ -509,7 +567,7 @@
   }
 
   .products-grid {
-    grid-template-columns: 1fr; /* Chuyển thành 1 cột */
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 
@@ -547,13 +605,17 @@
 
 /* Tắt hiệu ứng hover trên thiết bị cảm ứng */
 @media (hover: none) {
-  .toggle-filter-btn:hover,
   .apply-filter-btn:hover,
   .product-card:hover,
-  .suggestion-item:hover {
-    background: inherit; /* Giữ màu gốc */
+  .suggestion-item:hover,
+  .add-to-cart-btn:hover {
+    background: inherit;
     transform: none;
     box-shadow: inherit;
   }
-}
 
+  .apply-filter-btn:active {
+    background: #2ecc71;
+    color: #fff;
+  }
+}
