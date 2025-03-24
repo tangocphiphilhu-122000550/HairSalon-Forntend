@@ -502,7 +502,7 @@
   width: 80px;
   height: 50px;
   position: absolute; /* Sử dụng absolute để căn giữa trong service-selection17 */
-  top: 50%; /* Đặt ở giữa theo chiều dọc */
+  top: 60%; /* Đặt ở giữa theo chiều dọc */
   left: 50%; /* Đặt ở giữa theo chiều ngang */
   transform: translate(-50%, -50%); /* Dịch chuyển ngược lại 50% chiều rộng và chiều cao để căn giữa chính xác */
   z-index: 10; /* Đảm bảo loader nằm trên các phần tử khác trong service-selection17 */
