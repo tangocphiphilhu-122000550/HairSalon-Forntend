@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 import { getToken } from "../utils/tokenStorage";
 import styled from "styled-components";
-import { useCart } from "../CartContext"; // Import useCart
-import { FaShoppingCart } from "react-icons/fa"; // Import icon giỏ hàng
+import { useCart } from "../CartContext";
+import { FaShoppingCart } from "react-icons/fa";
 import "./Products.css";
 
 const Products = () => {
   const navigate = useNavigate();
-  const { addToCart } = useCart(); // Sử dụng useCart để lấy hàm addToCart
+  const { addToCart } = useCart();
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ const Products = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [suggestions, setSuggestions] = useState([]);
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-  const [showNotification, setShowNotification] = useState(null); // Trạng thái thông báo
+  const [showNotification, setShowNotification] = useState(null);
   const searchRef = useRef(null);
 
   useEffect(() => {
@@ -40,11 +40,8 @@ const Products = () => {
     fetchProducts();
   }, []);
 
-  // Hàm định dạng giá thành dạng 30.000 VND
   const formatPrice = (price) => {
-    // Chuyển price thành số nguyên (bỏ .00)
     const intPrice = Math.floor(Number(price));
-    // Định dạng số với dấu chấm phân cách hàng nghìn
     return intPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " VND";
   };
 
@@ -113,10 +110,10 @@ const Products = () => {
   };
 
   const handleAddToCart = (product, e) => {
-    e.stopPropagation(); // Ngăn sự kiện onClick của product-card lan ra ngoài
-    addToCart(product, 1); // Thêm sản phẩm với số lượng mặc định là 1
-    setShowNotification(product.name); // Hiển thị thông báo với tên sản phẩm
-    setTimeout(() => setShowNotification(null), 3000); // Ẩn thông báo sau 3 giây
+    e.stopPropagation();
+    addToCart(product, 1);
+    setShowNotification(product.name);
+    setTimeout(() => setShowNotification(null), 3000);
   };
 
   useEffect(() => {
@@ -130,7 +127,18 @@ const Products = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  if (loading) return <div className="loading">Đang tải sản phẩm...</div>;
+  // Thay thế phần loading bằng loader mới
+  if (loading) {
+    return (
+      <div className="loader-overlay">
+        <div className="loader">
+          <span className="loader-text">Đang tải...</span>
+          <span className="load"></span>
+        </div>
+      </div>
+    );
+  }
+
   if (error) return <div className="error">{error}</div>;
 
   return (
