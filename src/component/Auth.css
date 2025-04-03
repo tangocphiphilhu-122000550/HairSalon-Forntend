@@ -287,6 +287,7 @@ body {
   margin-top: 5px;
   display: block;
   text-align: left;
+  padding-left: 10px; /* Thụt vào 10px để thẳng hàng với input */
 }
 
 /* Điều kiện mật khẩu */
@@ -295,6 +296,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  padding-left: 10px; /* Thụt vào 10px để thẳng hàng với input */
 }
 
 .password-conditions span {

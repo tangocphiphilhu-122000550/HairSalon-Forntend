@@ -50,7 +50,7 @@ const Auth = () => {
     if (name === "username" && !isLogin) {
       setErrors((prev) => ({
         ...prev,
-        username: isValidUsername(value) ? "" : "Chỉ dùng chữ cái không dấu và số, không khoảng trắng",
+        username: isValidUsername(value) ? "" : "Username không đúng định dạng",
       }));
     }
 
@@ -113,7 +113,7 @@ const Auth = () => {
       if (!isValidUsername(form.username)) {
         setErrors((prev) => ({
           ...prev,
-          username: "Chỉ dùng chữ cái không dấu và số, không khoảng trắng",
+          username: "Username không đúng định dạng",
         }));
         return;
       }
