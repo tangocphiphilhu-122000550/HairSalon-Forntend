@@ -43,6 +43,16 @@ const Auth = () => {
     return () => setMessage("");
   }, [isLogin, showForgotPassword]);
 
+  // Tự động ẩn thông báo sau 2 giây
+  useEffect(() => {
+    if (message) {
+      const timer = setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -64,11 +74,16 @@ const Auth = () => {
     setCaptchaToken(token);
   };
 
-  // Hàm kiểm tra định dạng username
+  // Kiểm tra định dạng username
   const isValidUsername = (username) => {
-    // Biểu thức chính quy: chỉ cho phép chữ cái không dấu (a-z, A-Z), số (0-9), và không có khoảng trắng
     const usernameRegex = /^[a-zA-Z0-9]+$/;
     return usernameRegex.test(username);
+  };
+
+  // Kiểm tra định dạng mật khẩu
+  const isValidPassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
+    return passwordRegex.test(password);
   };
 
   const handleSubmit = async (e) => {
@@ -85,7 +100,16 @@ const Auth = () => {
     // Kiểm tra username khi đăng ký
     if (!isLogin) {
       if (!isValidUsername(form.username)) {
-        setMessage("Username không hợp lệ! Chỉ được dùng chữ cái không dấu và số, không có khoảng trắng.");
+        setMessage("Username không hợp lệ!");
+        setMessageType("error");
+        return;
+      }
+
+      // Kiểm tra mật khẩu khi đăng ký
+      if (!isValidPassword(form.password)) {
+        setMessage(
+          "Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ cái, số, 1 chữ cái in hoa và 1 ký tự đặc biệt!"
+        );
         setMessageType("error");
         return;
       }
@@ -213,11 +237,6 @@ const Auth = () => {
           {showForgotPassword ? (
             <form className="form" onSubmit={handleForgotPassword}>
               <h2>Quên Mật Khẩu</h2>
-              {message && (
-                <div className={`message ${messageType === "error" ? "error" : ""}`}>
-                  {message}
-                </div>
-              )}
               <input
                 type="email"
                 placeholder="Your email"
@@ -241,11 +260,6 @@ const Auth = () => {
           ) : isLogin ? (
             <form className="form" onSubmit={handleSubmit}>
               <h2>Đăng Nhập</h2>
-              {message && (
-                <div className={`message ${messageType === "error" ? "error" : ""}`}>
-                  {message}
-                </div>
-              )}
               <input
                 type="text"
                 name="username"
@@ -288,11 +302,6 @@ const Auth = () => {
           ) : (
             <form className="form" onSubmit={handleSubmit}>
               <h2>Đăng Ký</h2>
-              {message && (
-                <div className={`message ${messageType === "error" ? "error" : ""}`}>
-                  {message}
-                </div>
-              )}
               <input
                 type="text"
                 name="username"
@@ -341,6 +350,13 @@ const Auth = () => {
           )}
         </div>
       </div>
+
+      {/* Overlay thông báo */}
+      {message && (
+        <div className={`overlay-message ${messageType === "error" ? "error" : "success"}`}>
+          {message}
+        </div>
+      )}
     </div>
   );
 };
