@@ -3,7 +3,7 @@ import api from "../utils/api";
 import { setToken, setUsername } from "../utils/tokenStorage";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import ReCAPTCHA from "react-google-recaptcha"; // Import reCAPTCHA
+import ReCAPTCHA from "react-google-recaptcha";
 import "./Auth.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF, faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -26,8 +26,8 @@ const Auth = () => {
   const [forgotEmail, setForgotEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [messageType, setMessageType] = useState("success");
-  const [captchaToken, setCaptchaToken] = useState(null); // Lưu token từ reCAPTCHA
-  const recaptchaRef = useRef(); // Ref để reset reCAPTCHA
+  const [captchaToken, setCaptchaToken] = useState(null);
+  const recaptchaRef = useRef();
 
   useEffect(() => {
     const handleResize = () => {
@@ -54,28 +54,43 @@ const Auth = () => {
       password: "",
       phone: "",
     });
-    setCaptchaToken(null); // Reset CAPTCHA sau khi submit
+    setCaptchaToken(null);
     if (recaptchaRef.current) {
       recaptchaRef.current.reset();
     }
   };
 
-  // Hàm xử lý khi người dùng xác minh CAPTCHA
   const handleCaptchaChange = (token) => {
     setCaptchaToken(token);
+  };
+
+  // Hàm kiểm tra định dạng username
+  const isValidUsername = (username) => {
+    // Biểu thức chính quy: chỉ cho phép chữ cái không dấu (a-z, A-Z), số (0-9), và không có khoảng trắng
+    const usernameRegex = /^[a-zA-Z0-9]+$/;
+    return usernameRegex.test(username);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
-  
-    // Kiểm tra xem CAPTCHA đã được xác minh chưa
+
+    // Kiểm tra CAPTCHA
     if (!captchaToken) {
       setMessage("Vui lòng xác minh rằng bạn không phải robot!");
       setMessageType("error");
       return;
     }
-  
+
+    // Kiểm tra username khi đăng ký
+    if (!isLogin) {
+      if (!isValidUsername(form.username)) {
+        setMessage("Username không hợp lệ! Chỉ được dùng chữ cái không dấu và số, không có khoảng trắng.");
+        setMessageType("error");
+        return;
+      }
+    }
+
     try {
       const endpoint = isLogin ? "/login" : "/register";
       const data = isLogin
@@ -87,13 +102,12 @@ const Auth = () => {
             phone: form.phone,
             recaptchaToken: captchaToken,
           };
-  
+
       const res = await api.post(`${API_URL}${endpoint}`, data, {
         withCredentials: true,
       });
       setMessage(res.data.message);
       setMessageType("success");
-
 
       if (isLogin) {
         const { token } = res.data;
@@ -162,7 +176,6 @@ const Auth = () => {
         }`}
         style={isMobile ? { flexDirection: "column" } : {}}
       >
-        {/* Left panel (Image + Button) */}
         <div
           className="overlay-panel left-panel"
           style={{
@@ -191,7 +204,6 @@ const Auth = () => {
           </div>
         </div>
 
-        {/* Right panel (Login/Register/Forgot Password Form) */}
         <div
           className="form-panel right-panel"
           style={{
@@ -267,7 +279,7 @@ const Auth = () => {
               <div className="recaptcha-container">
                 <ReCAPTCHA
                   ref={recaptchaRef}
-                  sitekey="6LeUJfYqAAAAAO6afJrKKKgBuNb1_08zpfNoe1kq" // Site Key từ Google reCAPTCHA
+                  sitekey="6LeUJfYqAAAAAO6afJrKKKgBuNb1_08zpfNoe1kq"
                   onChange={handleCaptchaChange}
                 />
               </div>
@@ -320,7 +332,7 @@ const Auth = () => {
               <div className="recaptcha-container">
                 <ReCAPTCHA
                   ref={recaptchaRef}
-                  sitekey="6LeUJfYqAAAAAO6afJrKKKgBuNb1_08zpfNoe1kq" // Site Key từ Google reCAPTCHA
+                  sitekey="6LeUJfYqAAAAAO6afJrKKKgBuNb1_08zpfNoe1kq"
                   onChange={handleCaptchaChange}
                 />
               </div>
