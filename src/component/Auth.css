@@ -269,6 +269,46 @@ body {
   }
 }
 
+/* Container cho input để chứa thông báo lỗi */
+.input-container {
+  position: relative;
+  width: 100%;
+}
+
+/* Viền đỏ khi có lỗi */
+.input-error {
+  border: 1px solid #dc3545 !important;
+}
+
+/* Thông báo lỗi dưới input */
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+  display: block;
+  text-align: left;
+}
+
+/* Điều kiện mật khẩu */
+.password-conditions {
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.password-conditions span {
+  font-size: 12px;
+}
+
+.valid {
+  color: #28a745; /* Xanh lá khi điều kiện đạt */
+}
+
+.invalid {
+  color: #dc3545; /* Đỏ khi điều kiện chưa đạt */
+}
+
 /* Responsive Design */
 @media (max-width: 900px) {
   .container {
@@ -422,8 +462,6 @@ body {
   }
 }
 
-/* Auth.css */
-
 /* Container cho reCAPTCHA */
 .recaptcha-container {
   display: flex;
@@ -436,67 +474,5 @@ body {
   .recaptcha-container {
     transform: scale(0.85);
     transform-origin: center;
-  }
-}
-.overlay-message {
-  position: fixed;
-  top: 50%;
-  left: 30%;
-  transform: translate(-50%, -50%);
-  padding: 20px 40px;
-  border-radius: 8px;
-  color: rgb(219, 0, 0);
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  z-index: 1000;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 80%;
-  word-wrap: break-word;
-  animation: fadeInOut 2s ease-in-out;
-}
-
-.overlay-message.success {
-  background-color: #28a745; /* Màu xanh cho thành công */
-}
-
-.overlay-message.error {
-  background-color: #ffffff; /* Màu đỏ cho lỗi */
-}
-
-/* Animation cho overlay */
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, -60%);
-  }
-  10% {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-  90% {
-    opacity: 1;
-    transform: translate(-50%, -50%);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, -60%);
-  }
-}
-
-/* Responsive cho mobile */
-@media (max-width: 576px) {
-  .overlay-message {
-    padding: 15px 25px;
-    font-size: 14px;
-    max-width: 90%;
-  }
-}
-
-@media (max-width: 375px) {
-  .overlay-message {
-    padding: 10px 20px;
-    font-size: 12px;
-    max-width: 95%;
   }
 }

@@ -21,12 +21,15 @@ const Auth = () => {
     password: "",
     phone: "",
   });
-  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({
+    username: "",
+    password: "",
+  });
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [messageType, setMessageType] = useState("success");
   const [captchaToken, setCaptchaToken] = useState(null);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const recaptchaRef = useRef();
 
   useEffect(() => {
@@ -39,22 +42,24 @@ const Auth = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  useEffect(() => {
-    return () => setMessage("");
-  }, [isLogin, showForgotPassword]);
-
-  // Tự động ẩn thông báo sau 2 giây
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage("");
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
-
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+
+    // Kiểm tra lỗi ngay khi người dùng nhập
+    if (name === "username" && !isLogin) {
+      setErrors((prev) => ({
+        ...prev,
+        username: isValidUsername(value) ? "" : "Chỉ dùng chữ cái không dấu và số, không khoảng trắng",
+      }));
+    }
+
+    if (name === "password" && !isLogin) {
+      setErrors((prev) => ({
+        ...prev,
+        password: isValidPassword(value) ? "" : "Mật khẩu chưa đủ mạnh",
+      }));
+    }
   };
 
   const resetForm = () => {
@@ -64,6 +69,7 @@ const Auth = () => {
       password: "",
       phone: "",
     });
+    setErrors({ username: "", password: "" });
     setCaptchaToken(null);
     if (recaptchaRef.current) {
       recaptchaRef.current.reset();
@@ -80,37 +86,43 @@ const Auth = () => {
     return usernameRegex.test(username);
   };
 
-  // Kiểm tra định dạng mật khẩu
+  // Kiểm tra từng điều kiện mật khẩu
+  const checkPasswordConditions = (password) => {
+    return {
+      minLength: password.length >= 6,
+      hasUpperCase: /[A-Z]/.test(password),
+      hasSpecialChar: /[!@#$%^&*]/.test(password),
+    };
+  };
+
+  // Kiểm tra toàn bộ mật khẩu
   const isValidPassword = (password) => {
-    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,}$/;
-    return passwordRegex.test(password);
+    const conditions = checkPasswordConditions(password);
+    return conditions.minLength && conditions.hasUpperCase && conditions.hasSpecialChar;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
 
-    // Kiểm tra CAPTCHA
     if (!captchaToken) {
-      setMessage("Vui lòng xác minh rằng bạn không phải robot!");
-      setMessageType("error");
+      alert("Vui lòng xác minh rằng bạn không phải robot!");
       return;
     }
 
-    // Kiểm tra username khi đăng ký
     if (!isLogin) {
       if (!isValidUsername(form.username)) {
-        setMessage("Username không hợp lệ!");
-        setMessageType("error");
+        setErrors((prev) => ({
+          ...prev,
+          username: "Chỉ dùng chữ cái không dấu và số, không khoảng trắng",
+        }));
         return;
       }
 
-      // Kiểm tra mật khẩu khi đăng ký
       if (!isValidPassword(form.password)) {
-        setMessage(
-          "Mật khẩu phải có ít nhất 6 ký tự, bao gồm chữ cái, số, 1 chữ cái in hoa và 1 ký tự đặc biệt!"
-        );
-        setMessageType("error");
+        setErrors((prev) => ({
+          ...prev,
+          password: "Mật khẩu chưa đủ mạnh",
+        }));
         return;
       }
     }
@@ -130,8 +142,7 @@ const Auth = () => {
       const res = await api.post(`${API_URL}${endpoint}`, data, {
         withCredentials: true,
       });
-      setMessage(res.data.message);
-      setMessageType("success");
+      alert(res.data.message);
 
       if (isLogin) {
         const { token } = res.data;
@@ -161,36 +172,34 @@ const Auth = () => {
         error.response?.data?.message ||
         error.response?.data?.error ||
         "Đã xảy ra lỗi, vui lòng thử lại!";
-      setMessage(errorMessage);
-      setMessageType("error");
+      alert(errorMessage);
       resetForm();
     }
   };
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    setMessage("");
     try {
       const res = await api.post(
         `${API_URL}/forgot-password`,
         { email: forgotEmail },
         { withCredentials: true }
       );
-      setMessage(res.data.message);
-      setMessageType("success");
+      alert(res.data.message);
       setForgotEmail("");
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
         "Đã xảy ra lỗi, vui lòng thử lại!";
-      setMessage(errorMessage);
-      setMessageType("error");
+      alert(errorMessage);
     }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  const passwordConditions = checkPasswordConditions(form.password);
 
   return (
     <div className="auth-container">
@@ -302,14 +311,18 @@ const Auth = () => {
           ) : (
             <form className="form" onSubmit={handleSubmit}>
               <h2>Đăng Ký</h2>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={form.username}
-                onChange={handleChange}
-                required
-              />
+              <div className="input-container">
+                <input
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={form.username}
+                  onChange={handleChange}
+                  required
+                  className={errors.username ? "input-error" : ""}
+                />
+                {errors.username && <span className="error-message">{errors.username}</span>}
+              </div>
               <input
                 type="email"
                 name="email"
@@ -332,11 +345,27 @@ const Auth = () => {
                   placeholder="Password"
                   value={form.password}
                   onChange={handleChange}
+                  onFocus={() => setIsPasswordFocused(true)}
+                  onBlur={() => setIsPasswordFocused(false)}
                   required
+                  className={errors.password ? "input-error" : ""}
                 />
                 <span className="password-toggle" onClick={togglePasswordVisibility}>
                   {showPassword ? "Hide" : "Show"}
                 </span>
+                {isPasswordFocused && (
+                  <div className="password-conditions">
+                    <span className={passwordConditions.minLength ? "valid" : "invalid"}>
+                      Ít nhất 6 ký tự
+                    </span>
+                    <span className={passwordConditions.hasUpperCase ? "valid" : "invalid"}>
+                      Có 1 chữ cái in hoa
+                    </span>
+                    <span className={passwordConditions.hasSpecialChar ? "valid" : "invalid"}>
+                      Có 1 ký tự đặc biệt
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="recaptcha-container">
                 <ReCAPTCHA
@@ -350,13 +379,6 @@ const Auth = () => {
           )}
         </div>
       </div>
-
-      {/* Overlay thông báo */}
-      {message && (
-        <div className={`overlay-message ${messageType === "error" ? "error" : "success"}`}>
-          {message}
-        </div>
-      )}
     </div>
   );
 };
