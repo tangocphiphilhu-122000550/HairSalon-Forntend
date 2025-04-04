@@ -106,21 +106,18 @@ const AppointmentBooking = () => {
   };
 
   const getTimeSlotStatus = (timeSlot) => {
-    const now = new Date();
-    const selectedDateObj = new Date(selectedDate);
-    const [hours, minutes] = timeSlot.split(':').map(Number);
-    const timeSlotDate = new Date(selectedDate);
+    const now = new Date(); // Thời điểm hiện tại
+    const selectedDateObj = new Date(selectedDate); // Ngày được chọn
+    const [hours, minutes] = timeSlot.split(':').map(Number); // Giờ và phút của khung giờ
+    const timeSlotDate = new Date(selectedDate); // Ngày và giờ của khung giờ
     timeSlotDate.setHours(hours, minutes, 0, 0);
-
-    if (
-      selectedDateObj.getDate() === now.getDate() &&
-      selectedDateObj.getMonth() === now.getMonth() &&
-      selectedDateObj.getFullYear() === now.getFullYear() &&
-      timeSlotDate < now
-    ) {
+  
+    // Kiểm tra nếu khung giờ đã qua (so với thời điểm hiện tại)
+    if (timeSlotDate < now) {
       return 'past';
     }
-
+  
+    // Kiểm tra nếu khung giờ đã được đặt
     const appointment = existingAppointments.find((app) => {
       const appDate = new Date(app.appointment_date);
       const localHour = appDate.getHours();
@@ -128,7 +125,7 @@ const AppointmentBooking = () => {
       const appTime = `${localHour.toString().padStart(2, '0')}:${localMinute.toString().padStart(2, '0')}`;
       return appTime === timeSlot && app.status === 'pending';
     });
-
+  
     return appointment ? 'booked' : 'available';
   };
 
@@ -338,43 +335,42 @@ const AppointmentBooking = () => {
             </div>
 
             {selectedDate && (
-              <div className="time-slots17">
-                <h3>Chọn khung giờ cho {formatDate(selectedDate)}</h3>
-                <div className="time-slot-legend17">
-                  <div className="legend-item17">
-                    <span className="legend-color17 available17"></span>
-                    <span>Còn trống</span>
-                  </div>
-                  <div className="legend-item17">
-                    <span className="legend-color17 booked17"></span>
-                    <span>Đã đặt</span>
-                  </div>
-                  <div className="legend-item17">
-                    <span className="legend-color17 past17"></span>
-                    <span>Đã qua</span>
-                  </div>
-                </div>
-
-                {loading ? (
-                  <div className="loading17">Đang tải...</div>
-                ) : (
-                  <div className="time-slot-grid17">
-                    {timeSlots.map((timeSlot) => {
-                      const status = getTimeSlotStatus(timeSlot);
-                      return (
-                        <button
-                          key={timeSlot}
-                          className={`time-slot17 ${status} ${selectedTimeSlot === timeSlot ? 'selected17' : ''}`}
-                          onClick={() => handleTimeSlotSelect(timeSlot)}
-                          disabled={status !== 'available'}
-                        >
-                          {timeSlot}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
+            <div className="time-slots17">
+            <h3>Chọn khung giờ cho {formatDate(selectedDate)}</h3>
+            <div className="time-slot-legend17">
+              <div className="legend-item17">
+                <span className="legend-color17 available17"></span>
+                <span>Còn trống</span>
               </div>
+              <div className="legend-item17">
+                <span className="legend-color17 booked17"></span>
+                <span>Đã đặt</span>
+              </div>
+            </div>
+          
+            {loading ? (
+              <div className="loading17">Đang tải...</div>
+            ) : (
+              <div className="time-slot-grid17">
+                {timeSlots.map((timeSlot) => {
+                  const status = getTimeSlotStatus(timeSlot);
+                  const isPast = status === 'past';
+                  return (
+                    <button
+                      key={timeSlot}
+                      className={`time-slot17 ${isPast ? 'past17' : status} ${
+                        selectedTimeSlot === timeSlot && status === 'available' ? 'selected17' : ''
+                      }`}
+                      onClick={() => handleTimeSlotSelect(timeSlot)}
+                      disabled={status !== 'available'}
+                    >
+                      {timeSlot}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
             )}
 
             {selectedTimeSlot && (

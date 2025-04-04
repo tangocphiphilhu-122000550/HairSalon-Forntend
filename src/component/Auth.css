@@ -131,7 +131,7 @@ body {
   max-width: 350px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 12px;
 }
 
 .form h2 {
@@ -151,11 +151,18 @@ body {
   color: #1f2029;
   font-size: 14px;
   outline: none;
-  transition: border 0.3s ease;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form input:focus {
   border: 1px solid #ce4eff;
+  box-shadow: 0 0 5px rgba(206, 78, 255, 0.3);
+}
+
+/* Input error state */
+.input-error {
+  border: 1px solid #dc3545 !important;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.3) !important;
 }
 
 .password-container {
@@ -269,46 +276,78 @@ body {
   }
 }
 
-/* Container cho input để chứa thông báo lỗi */
+/* Update the auth-error-message class in your Auth.css file */
+.auth-error-message {
+  color: #dc3545;
+  font-size: 11px;
+  display: block;
+  text-align: left;
+  padding: 8px 15px;
+  border-radius: 6px;
+  margin-top: -6px;
+  margin-bottom: -28px;
+  width: 100%;
+  animation: fadeIn 0.3sease;
+  position: relative;
+  left: 0;
+  clear: both;
+}
+
+/* Update the input-container class */
 .input-container {
   position: relative;
   width: 100%;
+  margin-bottom: 5px;
+  display: flex; /* Change this */
+  flex-direction: column; /* Add this */
 }
-
-/* Viền đỏ khi có lỗi */
-.input-error {
-  border: 1px solid #dc3545 !important;
-}
-
-/* Thông báo lỗi dưới input */
-.error-message {
-  color: #dc3545;
-  font-size: 12px;
-  margin-top: 5px;
-  display: block;
-  text-align: left;
-  padding-left: 10px; /* Thụt vào 10px để thẳng hàng với input */
-}
-
-/* Điều kiện mật khẩu */
+/* Password validation conditions */
 .password-conditions {
-  margin-top: 5px;
+  margin-top: 23px ;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding-left: 10px; /* Thụt vào 10px để thẳng hàng với input */
+  gap: 4px;
+  margin-left: -65px;
+  animation: fadeIn 0.3s ease;
 }
 
 .password-conditions span {
   font-size: 12px;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.password-conditions span::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
 }
 
 .valid {
-  color: #28a745; /* Xanh lá khi điều kiện đạt */
+  color: #28a745;
+}
+
+.valid::before {
+  background-color: #28a745;
 }
 
 .invalid {
-  color: #dc3545; /* Đỏ khi điều kiện chưa đạt */
+  color: #dc3545;
+}
+
+.invalid::before {
+  background-color: #dc3545;
+}
+
+/* Container for reCAPTCHA */
+.recaptcha-container {
+  display: flex;
+  justify-content: center;
+  margin: -7px 0;
 }
 
 /* Responsive Design */
@@ -438,6 +477,36 @@ body {
     padding: 10px 15px;
     font-size: 12px;
   }
+  
+  .recaptcha-container {
+    transform: scale(0.85);
+    transform-origin: center;
+  }
+
+  .auth-error-message {
+    color: #dc3545;
+    font-size: 11px;
+    display: block;
+    text-align: left;
+    padding: 8px 15px;
+    border-radius: 6px;
+    margin-top: -6px;
+    margin-bottom: -19px;
+    width: 100%;
+    position: relative;
+    left: 0;
+    clear: both;
+}
+
+.password-conditions {
+  margin-top: 20px ;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-left: -27px;
+  animation: fadeIn 0.3s ease;
+}
+
 }
 
 @media (max-width: 375px) {
@@ -462,19 +531,5 @@ body {
   .form {
     max-width: 280px;
   }
-}
-
-/* Container cho reCAPTCHA */
-.recaptcha-container {
-  display: flex;
-  justify-content: center;
-  margin: -7px 0;
-}
-
-/* Responsive cho mobile */
-@media (max-width: 576px) {
-  .recaptcha-container {
-    transform: scale(0.85);
-    transform-origin: center;
-  }
+  
 }

@@ -117,7 +117,6 @@
   margin-top: auto;
 }
 
-
 /* Barber selection styles */
 .barber-list17 {
   display: grid;
@@ -230,6 +229,7 @@
   height: 16px;
   border-radius: 4px;
   margin-right: 0.5rem;
+  background-color: #b6abab;
 }
 
 .legend-color17.available17 {
@@ -237,14 +237,13 @@
   border: 1px solid #3498db;
 }
 
-.legend-color17.pending17 {
-  background-color: #fff8e1;
-  border: 1px solid #ffc107;
+.legend-color17.booked17 {
+  background-color: #ffe0b2; /* Màu cam nhạt cho booked */
+  border: 1px solid #ff9800; /* Viền cam đậm */
 }
 
-.legend-color17.confirmed17 {
-  background-color: #e8f5e9;
-  border: 1px solid #4caf50;
+.legend-color17.past17 {
+  background-color: #4d3e3e;
 }
 
 .time-slot-grid17 {
@@ -272,10 +271,6 @@
   opacity: 0.7;
 }
 
-.legend-color17.past17 {
-  background-color: #e0e0e0;
-}
-
 .time-slot17.available17 {
   background-color: #f0f9ff;
   color: #3498db;
@@ -285,6 +280,13 @@
 .time-slot17.available17:hover {
   background-color: #e1f5fe;
   transform: translateY(-2px);
+}
+
+.time-slot17.booked17 {
+  background-color: #ffe0b2; /* Màu cam nhạt cho booked */
+  color: #ff9800; /* Màu chữ cam đậm */
+  border: 1px solid #ffcc80; /* Viền cam nhạt */
+  cursor: not-allowed;
 }
 
 .time-slot17.pending17 {

@@ -25,12 +25,17 @@ const Auth = () => {
     username: "",
     password: "",
   });
+  const [touched, setTouched] = useState({
+    username: false,
+    password: false,
+  });
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [forgotEmail, setForgotEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [captchaToken, setCaptchaToken] = useState(null);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const recaptchaRef = useRef();
+  // Thêm state mới để kiểm soát việc hiển thị điều kiện mật khẩu
+  const [passwordFocused, setPasswordFocused] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -46,19 +51,48 @@ const Auth = () => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
-    // Kiểm tra lỗi ngay khi người dùng nhập
-    if (name === "username" && !isLogin) {
+    // Only update username validation as user types
+    if (name === "username") {
       setErrors((prev) => ({
         ...prev,
-        username: isValidUsername(value) ? "" : "Username không đúng định dạng",
+        username: isValidUsername(value) ? "" : "Username chỉ được chứa chữ cái và số",
       }));
     }
+    
+    // For password, we don't set error while typing - just to show conditions
+  };
 
-    if (name === "password" && !isLogin) {
+  // Thêm handler cho sự kiện focus vào input password
+  const handlePasswordFocus = () => {
+    setPasswordFocused(true);
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched({ ...touched, [name]: true });
+    
+    // Cập nhật trạng thái focus cho password
+    if (name === "password") {
+      setPasswordFocused(false);
+    }
+    
+    // Chỉ kiểm tra khi người dùng đã nhập dữ liệu
+    if (name === "username" && value.trim() !== "") {
+      setErrors((prev) => ({
+        ...prev,
+        username: isValidUsername(value) ? "" : "Username chỉ được chứa chữ cái và số",
+      }));
+    } else if (name === "username" && value.trim() === "") {
+      setErrors((prev) => ({ ...prev, username: "" }));
+    }
+    
+    if (name === "password" && value.trim() !== "") {
       setErrors((prev) => ({
         ...prev,
         password: isValidPassword(value) ? "" : "Mật khẩu chưa đủ mạnh",
       }));
+    } else if (name === "password" && value.trim() === "") {
+      setErrors((prev) => ({ ...prev, password: "" }));
     }
   };
 
@@ -70,7 +104,9 @@ const Auth = () => {
       phone: "",
     });
     setErrors({ username: "", password: "" });
+    setTouched({ username: false, password: false });
     setCaptchaToken(null);
+    setPasswordFocused(false);
     if (recaptchaRef.current) {
       recaptchaRef.current.reset();
     }
@@ -80,25 +116,29 @@ const Auth = () => {
     setCaptchaToken(token);
   };
 
-  // Kiểm tra định dạng username
   const isValidUsername = (username) => {
     const usernameRegex = /^[a-zA-Z0-9]+$/;
     return usernameRegex.test(username);
   };
 
-  // Kiểm tra từng điều kiện mật khẩu
   const checkPasswordConditions = (password) => {
     return {
       minLength: password.length >= 6,
       hasUpperCase: /[A-Z]/.test(password),
       hasSpecialChar: /[!@#$%^&*]/.test(password),
+      hasNumber: /[0-9]/.test(password),
+      hasLetter: /[a-zA-Z]/.test(password),
+      isValid: password.length >= 6 && 
+               /[A-Z]/.test(password) && 
+               /[!@#$%^&*]/.test(password) && 
+               /[0-9]/.test(password) && 
+               /[a-zA-Z]/.test(password)
     };
   };
 
-  // Kiểm tra toàn bộ mật khẩu
   const isValidPassword = (password) => {
     const conditions = checkPasswordConditions(password);
-    return conditions.minLength && conditions.hasUpperCase && conditions.hasSpecialChar;
+    return conditions.isValid;
   };
 
   const handleSubmit = async (e) => {
@@ -110,10 +150,16 @@ const Auth = () => {
     }
 
     if (!isLogin) {
+      // Set all fields as touched for validation on submit
+      setTouched({
+        username: true,
+        password: true
+      });
+      
       if (!isValidUsername(form.username)) {
         setErrors((prev) => ({
           ...prev,
-          username: "Username không đúng định dạng",
+          username: "Username chỉ được chứa chữ cái và số",
         }));
         return;
       }
@@ -201,6 +247,11 @@ const Auth = () => {
 
   const passwordConditions = checkPasswordConditions(form.password);
 
+  // Điều kiện hiển thị danh sách điều kiện password:
+  // 1. Đang focus vào input password HOẶC
+  // 2. Đã nhập dữ liệu và đã blur (click ra ngoài)
+  const shouldShowPasswordConditions = passwordFocused || (form.password && touched.password);
+
   return (
     <div className="auth-container">
       <div
@@ -269,26 +320,37 @@ const Auth = () => {
           ) : isLogin ? (
             <form className="form" onSubmit={handleSubmit}>
               <h2>Đăng Nhập</h2>
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={form.username}
-                onChange={handleChange}
-                required
-              />
-              <div className="password-container">
+              <div className="input-container">
                 <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  value={form.password}
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={form.username}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   required
+                  className={touched.username && errors.username ? "input-error" : ""}
                 />
-                <span className="password-toggle" onClick={togglePasswordVisibility}>
-                  {showPassword ? "Hide" : "Show"}
-                </span>
+                {touched.username && errors.username && <span className="auth-error-message">{errors.username}</span>}
+              </div>
+              <div className="input-container">
+                <div className="password-container">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    onFocus={handlePasswordFocus}
+                    required
+                    className={touched.password && errors.password ? "input-error" : ""}
+                  />
+                  <span className="password-toggle" onClick={togglePasswordVisibility}>
+                    {showPassword ? "Hide" : "Show"}
+                  </span>
+                </div>
+                {touched.password && errors.password && <span className="auth-error-message">{errors.password}</span>}
               </div>
               <a
                 href="#"
@@ -318,10 +380,11 @@ const Auth = () => {
                   placeholder="Username"
                   value={form.username}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   required
-                  className={errors.username ? "input-error" : ""}
+                  className={touched.username && errors.username ? "input-error" : ""}
                 />
-                {errors.username && <span className="error-message">{errors.username}</span>}
+                {touched.username && errors.username && <span className="auth-error-message">{errors.username}</span>}
               </div>
               <input
                 type="email"
@@ -338,31 +401,38 @@ const Auth = () => {
                 value={form.phone}
                 onChange={handleChange}
               />
-              <div className="password-container">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  placeholder="Password"
-                  value={form.password}
-                  onChange={handleChange}
-                  onFocus={() => setIsPasswordFocused(true)}
-                  onBlur={() => setIsPasswordFocused(false)}
-                  required
-                  className={errors.password ? "input-error" : ""}
-                />
-                <span className="password-toggle" onClick={togglePasswordVisibility}>
-                  {showPassword ? "Hide" : "Show"}
-                </span>
-                {isPasswordFocused && (
+              <div className="input-container">
+                <div className="password-container">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    onFocus={handlePasswordFocus}
+                    required
+                    className={touched.password && errors.password ? "input-error" : ""}
+                  />
+                  <span className="password-toggle" onClick={togglePasswordVisibility}>
+                    {showPassword ? "Hide" : "Show"}
+                  </span>
+                </div>
+                {touched.password && errors.password && <span className="auth-error-message">{errors.password}</span>}
+                {/* Chỉ hiển thị điều kiện khi đang focus hoặc đã nhập và blur */}
+                {shouldShowPasswordConditions && (
                   <div className="password-conditions">
-                    <span className={passwordConditions.minLength ? "valid" : "invalid"}>
-                      Ít nhất 6 ký tự
+                    <span className={passwordConditions.minLength && passwordConditions.hasLetter && passwordConditions.hasNumber ? "valid" : "invalid"}>
+                      Ít nhất 6 ký tự (bao gồm chữ và số)
                     </span>
                     <span className={passwordConditions.hasUpperCase ? "valid" : "invalid"}>
                       Có 1 chữ cái in hoa
                     </span>
                     <span className={passwordConditions.hasSpecialChar ? "valid" : "invalid"}>
-                      Có 1 ký tự đặc biệt
+                      Có 1 ký tự đặc biệt (!@#$%^&*)
+                    </span>
+                    <span className={passwordConditions.hasNumber ? "valid" : "invalid"}>
+                      Có ít nhất 1 chữ số
                     </span>
                   </div>
                 )}

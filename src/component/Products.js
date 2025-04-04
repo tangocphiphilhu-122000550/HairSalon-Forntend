@@ -116,6 +116,10 @@ const Products = () => {
     setTimeout(() => setShowNotification(null), 3000);
   };
 
+  const handleToggleFilters = () => {
+    setShowFilters(!showFilters);
+  };
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (searchRef.current && !searchRef.current.contains(e.target)) {
@@ -146,46 +150,48 @@ const Products = () => {
       <h1 className="header-title">Danh sách sản phẩm</h1>
       <div className="controls-section">
         <div className="filter-section">
+         
+          
+          {/* For mobile view, we'll add a separate button that's only visible on mobile */}
           <button
-            className="toggle-filter-btn"
-            onClick={() => setShowFilters(!showFilters)}
+            className="toggle-filter-btn mobile-only"
+            onClick={handleToggleFilters}
           >
             {showFilters ? "Ẩn bộ lọc" : "Hiển thị bộ lọc"}
           </button>
-          {showFilters && (
-            <div className="filters">
-              <form onSubmit={handleApplyFilters} className="filter-form">
-                <div className="price-filter">
-                  <input
-                    type="number"
-                    name="min"
-                    value={priceRange.min}
-                    onChange={handlePriceChange}
-                    placeholder="Giá tối thiểu (VND)"
-                    min="0"
-                  />
-                  <input
-                    type="number"
-                    name="max"
-                    value={priceRange.max}
-                    onChange={handlePriceChange}
-                    placeholder="Giá tối đa (VND)"
-                    min="0"
-                  />
-                </div>
-                <div className="sort-filter">
-                  <select value={sortOrder} onChange={handleSortChange}>
-                    <option value="">Sắp xếp mặc định</option>
-                    <option value="asc">Giá: Thấp đến Cao</option>
-                    <option value="desc">Giá: Cao đến Thấp</option>
-                  </select>
-                </div>
-                <button type="submit" className="apply-filter-btn">
-                  Áp dụng
-                </button>
-              </form>
-            </div>
-          )}
+          
+          <div className={`filters ${showFilters ? 'show' : 'hide'}`}>
+            <form onSubmit={handleApplyFilters} className="filter-form">
+              <div className="price-filter">
+                <input
+                  type="number"
+                  name="min"
+                  value={priceRange.min}
+                  onChange={handlePriceChange}
+                  placeholder="Giá tối thiểu (VND)"
+                  min="0"
+                />
+                <input
+                  type="number"
+                  name="max"
+                  value={priceRange.max}
+                  onChange={handlePriceChange}
+                  placeholder="Giá tối đa (VND)"
+                  min="0"
+                />
+              </div>
+              <div className="sort-filter">
+                <select value={sortOrder} onChange={handleSortChange}>
+                  <option value="">Sắp xếp mặc định</option>
+                  <option value="asc">Giá: Thấp đến Cao</option>
+                  <option value="desc">Giá: Cao đến Thấp</option>
+                </select>
+              </div>
+              <button type="submit" className="apply-filter-btn">
+                Áp dụng
+              </button>
+            </form>
+          </div>
         </div>
         <StyledWrapper className="search-container" ref={searchRef}>
           <div className="input-container">
