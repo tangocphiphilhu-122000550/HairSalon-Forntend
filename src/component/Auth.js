@@ -33,8 +33,9 @@ const Auth = () => {
   const [forgotEmail, setForgotEmail] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [captchaToken, setCaptchaToken] = useState(null);
+  const [message, setMessage] = useState(""); // Thêm state cho thông báo thành công
+  const [errorMessage, setErrorMessage] = useState(""); // Thêm state cho thông báo lỗi
   const recaptchaRef = useRef();
-  // Thêm state mới để kiểm soát việc hiển thị điều kiện mật khẩu
   const [passwordFocused, setPasswordFocused] = useState(false);
 
   useEffect(() => {
@@ -47,22 +48,29 @@ const Auth = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  useEffect(() => {
+    // Tự động ẩn thông báo sau 3 giây
+    if (message || errorMessage) {
+      const timer = setTimeout(() => {
+        setMessage("");
+        setErrorMessage("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, errorMessage]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
-    // Only update username validation as user types
     if (name === "username") {
       setErrors((prev) => ({
         ...prev,
         username: isValidUsername(value) ? "" : "Username chỉ được chứa chữ cái và số",
       }));
     }
-    
-    // For password, we don't set error while typing - just to show conditions
   };
 
-  // Thêm handler cho sự kiện focus vào input password
   const handlePasswordFocus = () => {
     setPasswordFocused(true);
   };
@@ -70,13 +78,11 @@ const Auth = () => {
   const handleBlur = (e) => {
     const { name, value } = e.target;
     setTouched({ ...touched, [name]: true });
-    
-    // Cập nhật trạng thái focus cho password
+
     if (name === "password") {
       setPasswordFocused(false);
     }
-    
-    // Chỉ kiểm tra khi người dùng đã nhập dữ liệu
+
     if (name === "username" && value.trim() !== "") {
       setErrors((prev) => ({
         ...prev,
@@ -85,7 +91,7 @@ const Auth = () => {
     } else if (name === "username" && value.trim() === "") {
       setErrors((prev) => ({ ...prev, username: "" }));
     }
-    
+
     if (name === "password" && value.trim() !== "") {
       setErrors((prev) => ({
         ...prev,
@@ -128,11 +134,12 @@ const Auth = () => {
       hasSpecialChar: /[!@#$%^&*]/.test(password),
       hasNumber: /[0-9]/.test(password),
       hasLetter: /[a-zA-Z]/.test(password),
-      isValid: password.length >= 6 && 
-               /[A-Z]/.test(password) && 
-               /[!@#$%^&*]/.test(password) && 
-               /[0-9]/.test(password) && 
-               /[a-zA-Z]/.test(password)
+      isValid:
+        password.length >= 6 &&
+        /[A-Z]/.test(password) &&
+        /[!@#$%^&*]/.test(password) &&
+        /[0-9]/.test(password) &&
+        /[a-zA-Z]/.test(password),
     };
   };
 
@@ -145,17 +152,16 @@ const Auth = () => {
     e.preventDefault();
 
     if (!captchaToken) {
-      alert("Vui lòng xác minh rằng bạn không phải robot!");
+      setErrorMessage("Vui lòng xác minh rằng bạn không phải robot!");
       return;
     }
 
     if (!isLogin) {
-      // Set all fields as touched for validation on submit
       setTouched({
         username: true,
-        password: true
+        password: true,
       });
-      
+
       if (!isValidUsername(form.username)) {
         setErrors((prev) => ({
           ...prev,
@@ -188,7 +194,10 @@ const Auth = () => {
       const res = await api.post(`${API_URL}${endpoint}`, data, {
         withCredentials: true,
       });
-      alert(res.data.message);
+
+      // Hiển thị thông báo thành công
+      setMessage(res.data.message);
+      setErrorMessage(""); // Xóa thông báo lỗi nếu có
 
       if (isLogin) {
         const { token } = res.data;
@@ -214,11 +223,12 @@ const Auth = () => {
         }, 1000);
       }
     } catch (error) {
-      const errorMessage =
+      const errorMsg =
         error.response?.data?.message ||
         error.response?.data?.error ||
         "Đã xảy ra lỗi, vui lòng thử lại!";
-      alert(errorMessage);
+      setErrorMessage(errorMsg); // Hiển thị thông báo lỗi
+      setMessage(""); // Xóa thông báo thành công nếu có
       resetForm();
     }
   };
@@ -231,13 +241,15 @@ const Auth = () => {
         { email: forgotEmail },
         { withCredentials: true }
       );
-      alert(res.data.message);
+      setMessage(res.data.message); // Hiển thị thông báo thành công
+      setErrorMessage("");
       setForgotEmail("");
     } catch (error) {
-      const errorMessage =
+      const errorMsg =
         error.response?.data?.message ||
         "Đã xảy ra lỗi, vui lòng thử lại!";
-      alert(errorMessage);
+      setErrorMessage(errorMsg); // Hiển thị thông báo lỗi
+      setMessage("");
     }
   };
 
@@ -246,14 +258,22 @@ const Auth = () => {
   };
 
   const passwordConditions = checkPasswordConditions(form.password);
-
-  // Điều kiện hiển thị danh sách điều kiện password:
-  // 1. Đang focus vào input password HOẶC
-  // 2. Đã nhập dữ liệu và đã blur (click ra ngoài)
   const shouldShowPasswordConditions = passwordFocused || (form.password && touched.password);
 
   return (
     <div className="auth-container">
+      {/* Hiển thị thông báo thành công */}
+      {message && (
+        <div className="notification success">
+          <span>{message}</span>
+        </div>
+      )}
+      {/* Hiển thị thông báo lỗi */}
+      {errorMessage && (
+        <div className="notification error">
+          <span>{errorMessage}</span>
+        </div>
+      )}
       <div
         className={`container ${!isLogin ? "right-panel-active" : ""} ${
           showForgotPassword ? "forgot-active" : ""
@@ -419,7 +439,6 @@ const Auth = () => {
                   </span>
                 </div>
                 {touched.password && errors.password && <span className="auth-error-message">{errors.password}</span>}
-                {/* Chỉ hiển thị điều kiện khi đang focus hoặc đã nhập và blur */}
                 {shouldShowPasswordConditions && (
                   <div className="password-conditions">
                     <span className={passwordConditions.minLength && passwordConditions.hasLetter && passwordConditions.hasNumber ? "valid" : "invalid"}>
