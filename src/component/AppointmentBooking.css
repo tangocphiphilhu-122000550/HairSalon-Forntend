@@ -314,6 +314,7 @@
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
+  background-color: #ffe0b2
 }
 
 /* Booking summary styles */
