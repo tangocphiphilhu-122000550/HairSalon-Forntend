@@ -35,7 +35,7 @@ function App() {
     <Router>
       <Routes>
       <Route element={<Layout />}>
-        <Route path="/auth" element={<Auth />} />
+        
         <Route path="/" element={<MainLayout><Home /></MainLayout>} />
         <Route path="/ChangePassword" element={<MainLayout><ChangePassword /></MainLayout>} />
         <Route path="/ReviewSlider" element={<MainLayout><ReviewSlider /></MainLayout>} />
@@ -49,8 +49,9 @@ function App() {
         <Route path="/OrderHistory" element={<MainLayout><OrderHistory /></MainLayout>} />
         <Route path="/About" element={<MainLayout><About /></MainLayout>} />
         <Route path="/ProtectedRoute" element={<MainLayout><ProtectedRoute /></MainLayout>} />
-        <Route path="/account" element={<MainLayout><Account /></MainLayout>} />
+        <Route path="/account" element={<Account />} />
         </Route>
+        <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<ProtectedRoute allowedUserTypeId={1} />} />
         <Route path="/UserManagement" element={<UserManagement />} />
         <Route path="/ServiceManagement" element={<ServiceManagement />} />
